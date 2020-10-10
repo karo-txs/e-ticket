@@ -1,4 +1,4 @@
-# <img src= "https://user-images.githubusercontent.com/58193125/95666492-8903de80-0b30-11eb-82eb-de66fd288027.png" heigth="150" width = "100">e-ticket: Gerenciamento de Reservas e Entreterimentos
+# <img src= "https://user-images.githubusercontent.com/58193125/95666608-a2595a80-0b31-11eb-88bb-8f280743082d.png" heigth="150" width = "100">e-ticket: Gerenciamento de Reservas e Entreterimentos
 
 ## Resumo do Projeto:
 O e-ticket é um gerenciador de reservas e eventos facilitado. Nele os estabalecimentos controlam suas reservas e eventos com segurança e os clientes tem um local unificado para gerenciar suas diversões de forma segura.
@@ -13,8 +13,8 @@ O e-ticket é um gerenciador de reservas e eventos facilitado. Nele os estabalec
 
 - Cliente:
   - Fazer Reservas/ Cancelar Reservas;
-  - Criar Grupos de passeio e reservar para grupo;
-  - Dar notas a estabelecimentos, filmes e peças; [Em andamento]
+  - Criar Grupos de passeio e reservar para grupo; [Em andamento]
+  - Dar notas a estabelecimentos, filmes e peças;
   - Acessar QR-code de suas reservas, facilitando sua identificação;
   - Fazer buscas.
   
@@ -38,5 +38,3 @@ O e-ticket é um gerenciador de reservas e eventos facilitado. Nele os estabalec
 
 ## Referências
 https://github.com/poo29004/java-qrcode-barcode-jar (Gerar QrCode)
-
-
