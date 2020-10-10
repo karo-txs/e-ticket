@@ -1,0 +1,189 @@
+package br.unicap.eticket.view;
+
+import br.unicap.eticket.view.admin.TelaCadastrarLocal;
+import br.unicap.eticket.control.usuarios.AdminControl;
+import br.unicap.eticket.control.usuarios.ClienteControl;
+import br.unicap.eticket.excecoes.CadastroInexistenteException;
+import br.unicap.eticket.excecoes.DadosInvalidosException;
+import br.unicap.eticket.excecoes.DadosRepetidosException;
+import br.unicap.eticket.excecoes.SenhaInvalidaException;
+import br.unicap.eticket.model.usuarios.Admin;
+import br.unicap.eticket.model.usuarios.Cliente;
+import br.unicap.eticket.model.usuarios.Usuario;
+import br.unicap.eticket.view.jDialogs.TelaPopupNickname;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class TelaCadastrarUser extends javax.swing.JPanel {
+
+    private boolean isAdmin;
+
+    public TelaCadastrarUser(boolean isAdmin) {
+        initComponents();
+        this.isAdmin = isAdmin;
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lblEntrar = new javax.swing.JLabel();
+        jbtCriarConta = new javax.swing.JButton();
+        fldNome = new javax.swing.JTextField();
+        lblNome = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblSenha = new javax.swing.JLabel();
+        lblSenhaC = new javax.swing.JLabel();
+        fldEmail = new javax.swing.JTextField();
+        fldSenha = new javax.swing.JPasswordField();
+        fldSenhaConf = new javax.swing.JPasswordField();
+        lblLogo = new javax.swing.JLabel();
+        lblBackCine = new javax.swing.JLabel();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblEntrar.setBackground(new java.awt.Color(255, 255, 255));
+        lblEntrar.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
+        lblEntrar.setForeground(new java.awt.Color(255, 255, 255));
+        lblEntrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEntrar.setText("Cadastro");
+        add(lblEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 490, 90));
+
+        jbtCriarConta.setBackground(new java.awt.Color(227, 0, 0));
+        jbtCriarConta.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jbtCriarConta.setForeground(new java.awt.Color(255, 255, 255));
+        jbtCriarConta.setText("Criar conta");
+        jbtCriarConta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtCriarConta.setContentAreaFilled(false);
+        jbtCriarConta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtCriarConta.setOpaque(true);
+        jbtCriarConta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbtCriarContaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtCriarContaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtCriarContaMouseExited(evt);
+            }
+        });
+        add(jbtCriarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 600, 180, 60));
+
+        fldNome.setBackground(new java.awt.Color(204, 204, 204));
+        fldNome.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        fldNome.setForeground(new java.awt.Color(102, 102, 102));
+        fldNome.setPreferredSize(new java.awt.Dimension(302, 38));
+        add(fldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 350, 40));
+
+        lblNome.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblNome.setForeground(new java.awt.Color(255, 255, 255));
+        lblNome.setText("Digite seu nome de usuário");
+        add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, 200, 30));
+
+        lblEmail.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(255, 255, 255));
+        lblEmail.setText("Digite seu endereço de email");
+        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, 220, 30));
+
+        lblSenha.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblSenha.setForeground(new java.awt.Color(255, 255, 255));
+        lblSenha.setText("Digite uma senha");
+        add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, 200, 30));
+
+        lblSenhaC.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblSenhaC.setForeground(new java.awt.Color(255, 255, 255));
+        lblSenhaC.setText("Confirme a senha");
+        add(lblSenhaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, 200, 30));
+
+        fldEmail.setBackground(new java.awt.Color(204, 204, 204));
+        fldEmail.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        fldEmail.setForeground(new java.awt.Color(102, 102, 102));
+        fldEmail.setPreferredSize(new java.awt.Dimension(302, 38));
+        add(fldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, 350, 40));
+
+        fldSenha.setBackground(new java.awt.Color(204, 204, 204));
+        fldSenha.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        fldSenha.setForeground(new java.awt.Color(102, 102, 102));
+        add(fldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 350, 40));
+
+        fldSenhaConf.setBackground(new java.awt.Color(204, 204, 204));
+        fldSenhaConf.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        fldSenhaConf.setForeground(new java.awt.Color(102, 102, 102));
+        add(fldSenhaConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 510, 350, 40));
+
+        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoNome.png"))); // NOI18N
+        add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 210, 190));
+
+        lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cine2.png"))); // NOI18N
+        add(lblBackCine, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtCriarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseClicked
+
+        ClienteControl clienteC = new ClienteControl();
+        AdminControl admC = new AdminControl();
+        Usuario user;
+        if (senhaIgual(String.valueOf(fldSenha.getPassword()), String.valueOf(fldSenhaConf.getPassword()))) {
+            try {
+                if (!this.isAdmin) {
+
+                    clienteC.cadastrar(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
+                    Cliente c = new Cliente(fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
+                    Cliente busca = clienteC.buscar(c);
+                    TelaPopupNickname telaConf = FrameInicio.mostrarNick(busca);
+                    if (telaConf.getConfirmarAcao()) {
+                        FrameInicio.getFrame().setContentPane(new TelaInicio());
+                        FrameInicio.getFrame().revalidate();
+                    }
+                } else {
+                    admC.validarDadosAdmin(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
+                    user = new Admin(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
+                    FrameInicio.getFrame().setContentPane(new TelaCadastrarLocal((Admin) user));
+                    FrameInicio.getFrame().revalidate();
+                }
+            } catch (DadosInvalidosException | DadosRepetidosException | CadastroInexistenteException ex) {
+                FrameInicio.mostrarPopUp(ex.getMessage());
+            } catch (SenhaInvalidaException ex) {
+                FrameInicio.MostrarSenhaInvalida(ex.getMessage());
+            } catch (IOException ex) {
+                Logger.getLogger(TelaCadastrarUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }else{
+            FrameInicio.mostrarPopUp("Senhas não conferem!");
+        }
+    }//GEN-LAST:event_jbtCriarContaMouseClicked
+
+    private void jbtCriarContaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseEntered
+        jbtCriarConta.setBackground(new java.awt.Color(204, 0, 0));
+        jbtCriarConta.setForeground(new java.awt.Color(204, 204, 204));
+    }//GEN-LAST:event_jbtCriarContaMouseEntered
+
+    private void jbtCriarContaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseExited
+        jbtCriarConta.setBackground(new java.awt.Color(204, 0, 0));
+        jbtCriarConta.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_jbtCriarContaMouseExited
+
+    private boolean senhaIgual(String senhaA, String senhaB) {
+        return senhaA.equals(senhaB);
+    }
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField fldEmail;
+    private javax.swing.JTextField fldNome;
+    private javax.swing.JPasswordField fldSenha;
+    private javax.swing.JPasswordField fldSenhaConf;
+    private javax.swing.JButton jbtCriarConta;
+    private javax.swing.JLabel lblBackCine;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEntrar;
+    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblSenhaC;
+    // End of variables declaration//GEN-END:variables
+}

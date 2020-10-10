@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm    
+                        http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                 version="1.0">
+    
+    <named-query name="reservasPorLocal">
+        <query>
+            select r from Reserva r
+            where r.sessao.local = :local
+        </query>
+    </named-query>
+    
+    <named-query name="reservaPorSessaoEAssento">
+        <query>
+            select r from Reserva r
+            where r.sessao = :sessao and
+            r.assento = :assento
+        </query>
+    </named-query>
+    
+    <named-query name="reservasDaSessao">
+        <query>
+            select r from Reserva r
+            where r.sessao = :sessao
+        </query>
+    </named-query>
+    
+    <!--GANHOS POR DIA-->
+    <named-query name="ganhosPorEntreterimentoNoDia">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.entretenimento = :entreterimento and
+            r.sessao.data = :data
+        </query>
+    </named-query>
+    
+    <named-query name="ganhosPorSalaNoDia">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.sala = :sala and
+            r.sessao.data = :data
+        </query>
+    </named-query>
+    
+     <named-query name="ganhosPorSalaNoDia2">
+        <query>
+            select count(r.valorIngresso) from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.sala = :sala and
+            r.sessao.data = :data
+        </query>
+    </named-query>
+    
+    <named-query name="ganhosPorTipoDeSalaNoDia">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.sala.tipoSala = :tipoSala and
+            r.sessao.data = :data
+        </query>
+    </named-query>
+    
+    <named-query name="ganhosPorSessaoNoDia">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao = :sessao and
+            r.sessao.data = :data
+        </query>
+    </named-query>
+    
+    <named-query name="ganhosPorDia">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.data = :data
+        </query>
+    </named-query>
+    
+    <!--GANHOS POR MES-->
+    
+    <!--GANHOS TOTAIS-->
+    <named-query name="ganhosDoLocal">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local
+        </query>
+    </named-query>
+    
+    <named-query name="ganhosTotaisDoEntreterimento">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.entretenimento = :entreterimento
+        </query>
+    </named-query>
+    
+    <named-query name="ganhosTotaisDaSala">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.sala = :sala
+        </query>
+    </named-query>
+    
+    <named-query name="ganhosTotaisPorTipoSala">
+        <query>
+            select r.valorIngresso from Reserva r
+            where r.sessao.local = :local and
+            r.sessao.sala.tipoSala = :tipoSala
+        </query>
+    </named-query>
+</entity-mappings>

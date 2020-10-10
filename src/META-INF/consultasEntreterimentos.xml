@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm    
+                        http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                        version="1.0">
+    
+    
+    
+    <!---ENTRETERIMENTOS-->
+    <named-query name="entreterimentoPorLocal">
+        <query>
+            select distinct s.entretenimento from Sessao s
+            where s.local = :local
+        </query>
+    </named-query>
+    
+     <named-query name="entreterimentoPorLocalEDia">
+        <query>
+            select distinct s.entretenimento from Sessao s
+            where s.local = :local and
+                  s.data = :data
+        </query>
+    </named-query>
+    
+    <named-query name="entreterimentosPorNome">
+        <query>
+            select distinct e from Entretenimento e
+            where e.nome = :nome
+        </query>
+    </named-query>
+    
+    <named-query name="entreterimentosEmCartaz">
+        <query>
+            select distinct s.entretenimento from Sessao s
+        </query>
+    </named-query>
+    
+    <named-query name="todosFilmes">
+        <query>
+            select f from Filme f
+        </query>
+    </named-query>
+    <named-query name="todasPecas">
+        <query>
+            select p from Peca p
+        </query>
+    </named-query>
+    
+    <!---PECAS-->
+    <named-query name="pecasPorNome">
+        <query>
+            select distinct p from Peca p
+            where p.nome = :nome
+        </query>
+    </named-query>
+    
+    <named-query name="pecasNotaMaiorQue">
+        <query>
+            select distinct p from Peca p
+            where p.nota > :nota
+        </query>
+    </named-query>
+    
+    <!---FILMES-->
+    <named-query name="filmesPorNome">
+        <query>
+            select distinct f from Filme f
+            where f.nome = :nome
+        </query>
+    </named-query>
+    
+    <named-query name="filmesNotaMaiorQue">
+        <query>
+            select distinct f from Filme f
+            where f.nota > :nota
+        </query>
+    </named-query>
+    
+    
+</entity-mappings>

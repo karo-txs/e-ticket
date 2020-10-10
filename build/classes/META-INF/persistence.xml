@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="eticket-jpa">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <mapping-file>META-INF/consultasEntreterimentos.xml</mapping-file>
+    <mapping-file>META-INF/consultasReservas.xml</mapping-file>
+    <mapping-file>META-INF/consultasUsuarios.xml</mapping-file>
+    <mapping-file>META-INF/consultasLocais.xml</mapping-file>
+    <class>br.unicap.eticket.model.auxiliares.Endereco</class>
+    <class>br.unicap.eticket.model.auxiliares.Reserva</class>
+    <class>br.unicap.eticket.model.locais.Cinema</class>
+    <class>br.unicap.eticket.model.locais.LocalGenerico</class>
+    <class>br.unicap.eticket.model.locais.Teatro</class>
+    <class>br.unicap.eticket.model.locaisAuxiliares.Sessao</class>
+    <class>br.unicap.eticket.model.locaisAuxiliares.Filme</class>
+    <class>br.unicap.eticket.model.locaisAuxiliares.Assento</class>
+    <class>br.unicap.eticket.model.locaisAuxiliares.Peca</class>
+    <class>br.unicap.eticket.model.locaisAuxiliares.Sala</class>
+    <class>br.unicap.eticket.model.usuarios.Cliente</class>
+    <class>br.unicap.eticket.model.usuarios.Admin</class>
+    <class>br.unicap.eticket.model.usuarios.Usuario</class>
+    <class>br.unicap.eticket.model.locaisAuxiliares.Entretenimento</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eticketbd?useTimezone=true&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.password" value="eticket"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate-java8" value="org.hibernate:hibernate-java8"/>
+    </properties>
+  </persistence-unit>
+</persistence>
