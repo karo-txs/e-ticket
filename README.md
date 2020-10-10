@@ -30,6 +30,8 @@ O e-ticket é um gerenciador de reservas e eventos facilitado. Nele os estabalec
 ## Tecnologias/Bibliotecas Utilizadas
 - Java EE 8
 - Java Swing
+- Passay 1.0
+- Stella Core 2.1.2
 - JXing 3.4
 - JPA 2.2
 - Hibernate 5.4
