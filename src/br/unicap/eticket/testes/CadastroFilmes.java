@@ -1,12 +1,14 @@
 package br.unicap.eticket.testes;
 
 import br.unicap.eticket.control.auxiliares.EntretenimentoControl;
+import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.model.locaisAuxiliares.Classificacao;
 import br.unicap.eticket.model.locaisAuxiliares.Filme;
 
 public class CadastroFilmes {
-    public static void main(String[] args) throws DadosInvalidosException{
+    public static void main(String[] args) throws CadastroInexistenteException, DadosInvalidosException{
+        
         EntretenimentoControl filmeC = new EntretenimentoControl();
         Filme f1 = new Filme("40 Dias - O Milagre da Vida", "Cary Solomon, Chuck Konzelman", 110,Classificacao.DEZOITO, "Baseado no livro autobiográfico de Abby Johnson, 40 Dias: O Milagre da Vida chega aos cinemas nacionais em 14 de maio e traz relatos reais de uma ex-funcionária da Paternidade Planejada, organização responsável por metade dos abortos realizados nos Estados Unidos. Abby renunciou ao cargo de diretora de uma das clínica em 2009 e, desde então, atua como ativista pró-vida na luta contra o aborto. “Eu queria que as pessoas vissem aquilo que eu vi. Eu queria que elas sentissem o mesmo sentimento de urgência que eu sinto todos os dias”, afirma a escritora e ativista.");
         filmeC.cadastrar(f1, "src\\br\\unicap\\eticket\\imagens\\filmesCapas\\40 Dias - O Milagre da Vida.png");

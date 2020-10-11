@@ -175,7 +175,7 @@ public class SalaControl implements BaseControl<Sala> {
         dao.abrirTransacao();
         Sala busca = sala.getId() == null ? this.buscar(sala) : sala;
 
-        List<Sessao> sessoes = sessaoD.consultar("sessoesDaSala", "id", busca.getId());
+        List<Sessao> sessoes = sessaoD.consultar("sessoesDaSala", "sala", busca);
 
         if (!sessoes.isEmpty()) {
             for (Sessao s : sessoes) {
