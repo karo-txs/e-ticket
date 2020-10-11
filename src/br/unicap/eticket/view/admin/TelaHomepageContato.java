@@ -9,6 +9,7 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.viewAuxiliares.Notas;
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import java.util.logging.Level;
@@ -19,10 +20,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 public class TelaHomepageContato extends javax.swing.JPanel {
-
+    
     private Admin adm;
     private LocalGenerico local;
-
+    
     public TelaHomepageContato(Admin adm) {
         initComponents();
         this.adm = adm;
@@ -32,17 +33,17 @@ public class TelaHomepageContato extends javax.swing.JPanel {
         this.initContato();
         this.initLocal();
     }
-
+    
     private void initLocal() {
         this.lblNomeDoLocal.setText(local.getNome());
         String caminho = Notas.qualCaminho(local.getNota()).getCaminho();
         lblEstrelas.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-
+        
         Image im = new ImageIcon(local.getBanner()).getImage();
         Icon ic = new ImageIcon(im);
         jlbBanner.setIcon(ic);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -379,11 +380,13 @@ public class TelaHomepageContato extends javax.swing.JPanel {
         add(lblCategoriasBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 1080, 70));
 
         jbtAlterarContato.setBackground(new java.awt.Color(255, 255, 255));
-        jbtAlterarContato.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
+        jbtAlterarContato.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jbtAlterarContato.setForeground(new java.awt.Color(255, 255, 255));
+        jbtAlterarContato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
         jbtAlterarContato.setText("Editar");
-        jbtAlterarContato.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtAlterarContato.setBorder(null);
         jbtAlterarContato.setContentAreaFilled(false);
-        jbtAlterarContato.setOpaque(true);
+        jbtAlterarContato.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtAlterarContato.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtAlterarContatoMouseClicked(evt);
@@ -400,7 +403,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
                 jbtAlterarContatoActionPerformed(evt);
             }
         });
-        add(jbtAlterarContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 620, 110, 30));
+        add(jbtAlterarContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 610, 220, 40));
 
         lblLinhaDadP.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contatos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         add(lblLinhaDadP, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 290, 320, 370));
@@ -417,11 +420,18 @@ public class TelaHomepageContato extends javax.swing.JPanel {
 
     private void initContato() {
         this.trocarEditable();
-        fldTelefone.setText(local.getTelefone());
-        fldEmailLocal.setText(local.getEmail());
-        fldEmailAdm.setText(adm.getEmail());
-        fldFacebook.setText(local.getRedeSocial_facebook());
-        fldInstagram.setText(local.getRedeSocial_instragam());
+        LocalControl localC = new LocalControl();
+        LocalGenerico atual;
+        try {
+            atual = localC.buscarPorId(this.local.getId());
+            fldTelefone.setText(atual.getTelefone());
+            fldEmailLocal.setText(atual.getEmail());
+            fldEmailAdm.setText(atual.getAdmin().getEmail());
+            fldFacebook.setText(atual.getRedeSocial_facebook());
+            fldInstagram.setText(atual.getRedeSocial_instragam());
+        } catch (CadastroInexistenteException ex) {
+            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+        }
     }
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
@@ -467,7 +477,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     }//GEN-LAST:event_lblControleOrcamentoMouseExited
 
     private void lblSessoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseClicked
-
+        
         FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSessoesMouseClicked
@@ -481,7 +491,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSessoesMouseExited
 
     private void lblSalasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseClicked
-
+        
         FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSalasMouseClicked
@@ -495,7 +505,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSalasMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
-
+        
         FrameInicio.getFrame().setContentPane(new TelaHomepageContato(local.getAdmin()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblHomePageMouseClicked
@@ -577,35 +587,37 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     }//GEN-LAST:event_lblEnderecoMouseExited
 
     private void jbtAlterarContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseClicked
-
+        
         if (jbtAlterarContato.getText().equalsIgnoreCase("Salvar")) {
             LocalControl localC = new LocalControl();
             LocalGenerico novo;
             try {
+                
                 novo = (LocalGenerico) local.clone();
                 novo.setTelefone(fldTelefone.getText());
                 novo.setEmail(fldEmailLocal.getText());
                 novo.setRedeSocial_facebook(fldFacebook.getText());
                 novo.setRedeSocial_instragam(fldInstagram.getText());
+                System.out.println("Novo" + novo.getRedeSocial_facebook());
                 localC.atualizar(novo);
                 adm.atualizarEmail(fldEmailAdm.getText());
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(TelaHomepageContato.class.getName()).log(Level.SEVERE, null, ex);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(), true);
             }
-
+            
         }
         trocarNome();
         trocarEditable();
     }//GEN-LAST:event_jbtAlterarContatoMouseClicked
 
     private void jbtAlterarContatoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseEntered
-        // TODO add your handling code here:
+         jbtAlterarContato.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtAlterarContatoMouseEntered
 
     private void jbtAlterarContatoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseExited
-        // TODO add your handling code here:
+        jbtAlterarContato.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtAlterarContatoMouseExited
 
     private void jbtAlterarContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarContatoActionPerformed
@@ -621,11 +633,11 @@ public class TelaHomepageContato extends javax.swing.JPanel {
             File file = new File("Caminho");
             file = arquivo.getSelectedFile();
             String fileName = file.getAbsolutePath();
-
+            
             ImageIcon img = new ImageIcon(arquivo.getSelectedFile().getPath());
             jlbBanner.setIcon(new ImageIcon(img.getImage().getScaledInstance(
                     jlbBanner.getWidth(), jlbBanner.getHeight(), Image.SCALE_DEFAULT)));
-
+            
             String caminhoCompleto = this.caminhoCompleto(fileName);
             adm.getLocalAdministrado().inserirBannerESalvar(caminhoCompleto);
         }
@@ -638,15 +650,15 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     private void jbtAlterarBannerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtAlterarBannerMouseExited
-
+    
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
-
+    
     private void apagarBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(255, 255, 255));
     }
-
+    
     private void selecionarBotao(JLabel lbl) {
         lblEmCartaz.setForeground(new java.awt.Color(255, 255, 255));
         lblContato.setForeground(new java.awt.Color(255, 255, 255));
@@ -655,11 +667,11 @@ public class TelaHomepageContato extends javax.swing.JPanel {
         lblSobre.setForeground(new java.awt.Color(255, 255, 255));
         lbl.setForeground(new java.awt.Color(51, 102, 255));
     }
-
+    
     private void trocarNome() {
         jbtAlterarContato.setText(jbtAlterarContato.getText().equalsIgnoreCase("Editar") ? "Salvar" : "Editar");
     }
-
+    
     private void trocarEditable() {
         fldTelefone.setEditable(!fldTelefone.isEditable());
         fldEmailLocal.setEditable(!fldEmailLocal.isEditable());
@@ -667,11 +679,11 @@ public class TelaHomepageContato extends javax.swing.JPanel {
         fldFacebook.setEditable(!fldFacebook.isEditable());
         fldInstagram.setEditable(!fldInstagram.isEditable());
     }
-
+    
     private String caminhoCompleto(String caminho) {
         char[] chars = caminho.toCharArray();
         String aux = "";
-
+        
         for (int i = 0; i < chars.length; i++) {
             if (chars[i] != '\\') {
                 aux = aux.concat(Character.toString(chars[i]));
@@ -679,7 +691,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
                 aux = aux.concat(Character.toString(chars[i])).concat(Character.toString(chars[i]));
             }
         }
-
+        
         return aux;
     }
 

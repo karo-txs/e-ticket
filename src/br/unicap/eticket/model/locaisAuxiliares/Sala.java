@@ -197,7 +197,7 @@ public class Sala implements Serializable {
         SessaoControl sc = new SessaoControl();
         ReservaControl rc = new ReservaControl();
 
-        Sala s = sd.buscar(new Sala(this.getNome()));
+        Sala s = sd.buscar(new Sala(this.getLocal(),this.getNome()));
         Sessao ses = sc.buscar(sessao);
 
         Assento assento = s.buscaAssentoPorNum(a.getNumeracao());

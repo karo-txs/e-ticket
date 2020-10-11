@@ -3,7 +3,7 @@ package br.unicap.eticket.view;
 import br.unicap.eticket.control.usuarios.ClienteControl;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
-import br.unicap.eticket.view.jDialogs.TelaPopupErros;
+import br.unicap.eticket.view.jDialogs.TelaPopupComum;
 import br.unicap.eticket.view.jDialogs.TelaPopupNickname;
 import br.unicap.eticket.view.jDialogs.TelaPopupSenhaInvalida;
 import br.unicap.eticket.viewAuxiliares.ClockSessao;
@@ -90,8 +90,8 @@ public class FrameInicio extends JFrame {
         return frame;
     }
 
-    public static void mostrarPopUp(String msg) {
-        TelaPopupErros telaErro = new TelaPopupErros(FrameInicio.getFrame(), true, msg);
+    public static void mostrarPopUp(String msg,boolean isErro) {
+        TelaPopupComum telaErro = new TelaPopupComum(FrameInicio.getFrame(), true, msg,isErro);
         telaErro.setLocationRelativeTo(null);
         telaErro.setVisible(true);
     }

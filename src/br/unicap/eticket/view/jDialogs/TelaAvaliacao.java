@@ -218,7 +218,7 @@ public class TelaAvaliacao extends javax.swing.JDialog {
                 this.dispose();
                 
             } catch (CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             } 
             
        /* } else {

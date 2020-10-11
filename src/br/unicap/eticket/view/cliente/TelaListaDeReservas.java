@@ -79,12 +79,11 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
         jbtRemoverSala.setBackground(new java.awt.Color(255, 0, 0));
         jbtRemoverSala.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jbtRemoverSala.setForeground(new java.awt.Color(255, 255, 255));
-        jbtRemoverSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/remIcon.png"))); // NOI18N
-        jbtRemoverSala.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtRemoverSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Remove.png"))); // NOI18N
+        jbtRemoverSala.setBorder(null);
         jbtRemoverSala.setContentAreaFilled(false);
         jbtRemoverSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtRemoverSala.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtRemoverSala.setOpaque(true);
         jbtRemoverSala.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtRemoverSalaMouseClicked(evt);
@@ -107,13 +106,13 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 830, 340));
 
         jbtFazerAvaliacao.setBackground(new java.awt.Color(51, 51, 255));
-        jbtFazerAvaliacao.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtFazerAvaliacao.setForeground(new java.awt.Color(255, 255, 255));
+        jbtFazerAvaliacao.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jbtFazerAvaliacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
         jbtFazerAvaliacao.setText("Fazer Avaliação");
-        jbtFazerAvaliacao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtFazerAvaliacao.setBorder(null);
         jbtFazerAvaliacao.setContentAreaFilled(false);
         jbtFazerAvaliacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtFazerAvaliacao.setOpaque(true);
+        jbtFazerAvaliacao.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtFazerAvaliacao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtFazerAvaliacaoMouseClicked(evt);
@@ -125,7 +124,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
                 jbtFazerAvaliacaoMouseExited(evt);
             }
         });
-        add(jbtFazerAvaliacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 500, 160, 40));
+        add(jbtFazerAvaliacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 500, 220, 40));
 
         lblDeslogar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         lblDeslogar.setForeground(new java.awt.Color(255, 255, 255));
@@ -230,7 +229,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
                     FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
                     FrameInicio.getFrame().revalidate();
                 } catch (CadastroInexistenteException ex) {
-                    FrameInicio.mostrarPopUp(ex.getMessage());
+                    FrameInicio.mostrarPopUp(ex.getMessage(),true);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(TelaListaDeReservas.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -306,25 +305,25 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
                     this.initReservas(cliente);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
                     FrameInicio.getFrame().revalidate();
-                    FrameInicio.mostrarPopUp("Avaliação concluída!");
+                    FrameInicio.mostrarPopUp("Avaliação concluída!",false);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(TelaListaDeReservas.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
         } else {
-            FrameInicio.mostrarPopUp("Avaliação não disponível!");
+            FrameInicio.mostrarPopUp("Avaliação não disponível!",true);
         }
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseClicked
 
     private void jbtFazerAvaliacaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFazerAvaliacaoMouseEntered
-        jbtFazerAvaliacao.setBackground(new java.awt.Color(204, 0, 0));
-        jbtFazerAvaliacao.setForeground(new java.awt.Color(204, 204, 204));
+        
+        jbtFazerAvaliacao.setForeground(new java.awt.Color(191,30,30));
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseEntered
 
     private void jbtFazerAvaliacaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFazerAvaliacaoMouseExited
-        jbtFazerAvaliacao.setBackground(new java.awt.Color(227, 0, 0));
-        jbtFazerAvaliacao.setForeground(new java.awt.Color(255, 255, 255));
+        
+        jbtFazerAvaliacao.setForeground(new java.awt.Color(0,0,0));
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseExited
 
     private void acenderBotao(JLabel lbl) {
@@ -339,8 +338,6 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbtCadastrar;
-    private javax.swing.JButton jbtCadastrar1;
     private javax.swing.JButton jbtFazerAvaliacao;
     private javax.swing.JButton jbtRemoverSala;
     private javax.swing.JLabel lblBackground;

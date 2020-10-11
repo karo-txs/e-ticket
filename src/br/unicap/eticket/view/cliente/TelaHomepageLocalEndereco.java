@@ -253,7 +253,7 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
 
         lblCEP.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblCEP.setForeground(new java.awt.Color(255, 255, 255));
-        lblCEP.setText("Digite Seu CEP");
+        lblCEP.setText("CEP");
         add(lblCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 340, -1, -1));
 
         fldCEP.setBackground(new java.awt.Color(204, 204, 204));
@@ -412,11 +412,11 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomepage1MouseClicked
 
     private void lblHomepage1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomepage1MouseEntered
-        acenderBotao(lblHomepage);
+        acenderBotao(lblHomepage1);
     }//GEN-LAST:event_lblHomepage1MouseEntered
 
     private void lblHomepage1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomepage1MouseExited
-        apagarBotao(lblHomepage);
+        apagarBotao(lblHomepage1);
     }//GEN-LAST:event_lblHomepage1MouseExited
 
     private void lblMinhasReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinhasReservasMouseClicked
@@ -499,7 +499,6 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
     private javax.swing.JLabel lblEmCartaz;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblEstrelas;
-    private javax.swing.JLabel lblHomepage;
     private javax.swing.JLabel lblHomepage1;
     private javax.swing.JLabel lblLinhaEnd;
     private javax.swing.JLabel lblLinhinha;

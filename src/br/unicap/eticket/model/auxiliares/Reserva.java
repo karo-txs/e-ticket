@@ -168,7 +168,7 @@ public class Reserva implements Serializable, Comparable<Reserva> {
     
     @Override
     public String toString() {
-        return "Local=" + this.getSessao().getLocal().getNome() + ", Sessão=" + this.getSessao().getNome() + ", Assento=" + assento;
+        return "Local=" + this.getSessao().getLocal().getNome() + " | Sessão=" + this.getSessao().getNome() + " | Assento=" + assento;
     }
     
     @Override

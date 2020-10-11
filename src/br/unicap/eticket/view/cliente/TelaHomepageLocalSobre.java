@@ -266,7 +266,7 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
         lblCategoriasBar.setOpaque(true);
         add(lblCategoriasBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 1080, 70));
 
-        txtSobre.setBackground(new java.awt.Color(255, 255, 0));
+        txtSobre.setBackground(new java.awt.Color(204, 204, 204));
         txtSobre.setColumns(20);
         txtSobre.setRows(5);
         ScrollSobre.setViewportView(txtSobre);

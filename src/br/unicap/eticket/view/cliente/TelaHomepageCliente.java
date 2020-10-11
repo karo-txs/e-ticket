@@ -17,41 +17,46 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 
 public class TelaHomepageCliente extends javax.swing.JPanel {
-    
+
     private Cliente cliente;
     private JLabel label = new JLabel();
     private int bannerAtual = 1;
     private boolean primeiraEntrada = true;
-    
+
     public TelaHomepageCliente(Cliente cliente) {
         initComponents();
         this.cliente = cliente;
         lblCinemasMsg.setVisible(false);
         lblTeatrosMsg.setVisible(false);
-        
+        jpnScrollCinemas.setVisible(true);
+        jpnScrollTeatro.setVisible(true);
+
         LocalControl localC = new LocalControl();
         List<LocalGenerico> cines = localC.todosCinemas();
-        
+
         this.trocarBanner();
         if (this.primeiraEntrada) {
             if (cines.isEmpty()) {
                 lblCinemasMsg.setVisible(true);
+                jpnScrollCinemas.setVisible(false);
             } else {
                 mostrarLocais(cines);
             }
-            
+
             List<LocalGenerico> teatros = localC.todosTeatros();
             if (teatros.isEmpty()) {
                 lblTeatrosMsg.setVisible(true);
+                jpnScrollTeatro.setVisible(false);
             } else {
                 mostrarLocais(teatros);
             }
         }
         this.primeiraEntrada = false;
-        if(cliente.getNickName()!=null)
-        this.lblUsername.setText("@"+cliente.getNickName());
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -290,7 +295,7 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomepageMouseExited
 
     private void lblMinhasReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinhasReservasMouseClicked
-        
+
         FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblMinhasReservasMouseClicked
@@ -315,16 +320,16 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
     private void lblMeuPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMeuPerfilMouseExited
         apagarBotao(lblMeuPerfil);
     }//GEN-LAST:event_lblMeuPerfilMouseExited
-    
+
     private void mostrarLocais(List<LocalGenerico> local) {
-        
+
         int x = local.size();
-        
+
         VetorLocais locais = new VetorLocais(local);
         locais.setCliente(cliente);
         if (x != 0) {
             if (local.get(0) instanceof Cinema) {
-                
+
                 if (x < 5) {
                     jpnScrollCinemas.setPreferredSize(new Dimension((223) * x, 145));
                 } else {
@@ -332,12 +337,12 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
                 }
                 jpnScrollInternoCinema.setPreferredSize(new Dimension((213 + 10) * x, 145));
                 jpnScrollInternoCinema.setLayout(new GridLayout(1, 10, x, 0));
-                
+
                 for (int i = 0; i < x; i++) {
                     jpnScrollInternoCinema.add(locais.getLocais()[i]);
                 }
             } else {
-                
+
                 if (x < 5) {
                     jpnScrollTeatro.setPreferredSize(new Dimension((223) * x, 145));
                 } else {
@@ -345,16 +350,16 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
                 }
                 jpnScrollInternoTeatro.setPreferredSize(new Dimension((213 + 10) * x, 145));
                 jpnScrollInternoTeatro.setLayout(new GridLayout(1, 10, x, 0));
-                
+
                 for (int i = 0; i < x; i++) {
                     jpnScrollInternoTeatro.add(locais.getLocais()[i]);
                 }
             }
         }
-        
+
         FrameInicio.getFrame().revalidate();
     }
-    
+
     private void trocarBanner() {
         Timer t = new Timer(5000, e -> {
             troca();
@@ -362,7 +367,7 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         t.setInitialDelay(0);
         t.start();
     }
-    
+
     private boolean troca() {
         ImageIcon im;
         Icon ic = null;
@@ -375,11 +380,11 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         this.jlbBanner.setIcon(ic);
         return true;
     }
-    
+
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
-    
+
     private void apagarBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(255, 255, 255));
     }

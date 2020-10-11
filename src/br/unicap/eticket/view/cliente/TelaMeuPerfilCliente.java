@@ -73,7 +73,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         lblLogo = new javax.swing.JLabel();
         lblDeslogar = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
-        jbtAlterarContato = new javax.swing.JButton();
+        jbtAlterarPerfil = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(21, 17, 17));
@@ -155,22 +155,29 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         jbtLocalizarCEP.setBackground(new java.awt.Color(227, 0, 0));
         jbtLocalizarCEP.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         jbtLocalizarCEP.setForeground(new java.awt.Color(255, 255, 255));
+        jbtLocalizarCEP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoLupa (2).png"))); // NOI18N
         jbtLocalizarCEP.setText("Localizar CEP");
-        jbtLocalizarCEP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtLocalizarCEP.setBorder(null);
         jbtLocalizarCEP.setContentAreaFilled(false);
-        jbtLocalizarCEP.setOpaque(true);
+        jbtLocalizarCEP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtLocalizarCEP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtLocalizarCEPMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtLocalizarCEPMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtLocalizarCEPMouseExited(evt);
+            }
         });
-        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 200, 100, 30));
+        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 200, 160, 30));
 
         fldRua.setBackground(new java.awt.Color(204, 204, 204));
         fldRua.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldRua.setForeground(new java.awt.Color(102, 102, 102));
         fldRua.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 270, 250, 20));
+        add(fldRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 270, 280, 20));
 
         lblRua.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblRua.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,7 +188,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         fldCidade.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldCidade.setForeground(new java.awt.Color(102, 102, 102));
         fldCidade.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 330, 250, 20));
+        add(fldCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 330, 280, 20));
 
         lblCidade.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblCidade.setForeground(new java.awt.Color(255, 255, 255));
@@ -192,7 +199,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         fldBairro.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldBairro.setForeground(new java.awt.Color(102, 102, 102));
         fldBairro.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 390, 250, 20));
+        add(fldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 390, 280, 20));
 
         lblBairro.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblBairro.setForeground(new java.awt.Color(255, 255, 255));
@@ -208,18 +215,18 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         fldUF.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldUF.setForeground(new java.awt.Color(102, 102, 102));
         fldUF.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 450, 120, 20));
+        add(fldUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 450, 120, 20));
 
         lblUF.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblUF.setForeground(new java.awt.Color(255, 255, 255));
         lblUF.setText("UF");
-        add(lblUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 430, -1, -1));
+        add(lblUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 430, -1, -1));
 
         fldComplemento.setBackground(new java.awt.Color(204, 204, 204));
         fldComplemento.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldComplemento.setForeground(new java.awt.Color(102, 102, 102));
         fldComplemento.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 510, 250, 20));
+        add(fldComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 510, 280, 20));
 
         lblComplemento.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblComplemento.setForeground(new java.awt.Color(255, 255, 255));
@@ -230,7 +237,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         fldPais.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldPais.setForeground(new java.awt.Color(102, 102, 102));
         fldPais.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 570, 250, 20));
+        add(fldPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 570, 280, 20));
 
         lblPais.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblPais.setForeground(new java.awt.Color(255, 255, 255));
@@ -263,7 +270,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         add(fldCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, 250, 20));
 
         lblLinhaEnd.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Endereço", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-        add(lblLinhaEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 150, 320, 460));
+        add(lblLinhaEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 150, 330, 460));
 
         lblLinhaDadP.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         add(lblLinhaDadP, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 310, 310));
@@ -352,29 +359,31 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         lblBordaEsquerda.setText("jLabel3");
         add(lblBordaEsquerda, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 0, 320, 770));
 
-        jbtAlterarContato.setBackground(new java.awt.Color(255, 255, 255));
-        jbtAlterarContato.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
-        jbtAlterarContato.setText("Editar");
-        jbtAlterarContato.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jbtAlterarContato.setContentAreaFilled(false);
-        jbtAlterarContato.setOpaque(true);
-        jbtAlterarContato.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbtAlterarPerfil.setBackground(new java.awt.Color(255, 255, 255));
+        jbtAlterarPerfil.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jbtAlterarPerfil.setForeground(new java.awt.Color(255, 255, 255));
+        jbtAlterarPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
+        jbtAlterarPerfil.setText("Editar");
+        jbtAlterarPerfil.setBorder(null);
+        jbtAlterarPerfil.setContentAreaFilled(false);
+        jbtAlterarPerfil.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtAlterarPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtAlterarContatoMouseClicked(evt);
+                jbtAlterarPerfilMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtAlterarContatoMouseEntered(evt);
+                jbtAlterarPerfilMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtAlterarContatoMouseExited(evt);
+                jbtAlterarPerfilMouseExited(evt);
             }
         });
-        jbtAlterarContato.addActionListener(new java.awt.event.ActionListener() {
+        jbtAlterarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAlterarContatoActionPerformed(evt);
+                jbtAlterarPerfilActionPerformed(evt);
             }
         });
-        add(jbtAlterarContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 640, 110, 30));
+        add(jbtAlterarPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, -1, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundoGigante.png"))); // NOI18N
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1370, 770));
@@ -391,7 +400,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
                 fldCidade.setText(endereco.get("Cidade"));
                 fldUF.setText(endereco.get("UF"));
             } catch (DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             }
 
         }
@@ -473,9 +482,9 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
 
-    private void jbtAlterarContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseClicked
+    private void jbtAlterarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseClicked
 
-        if (jbtAlterarContato.getText().equalsIgnoreCase("Salvar")) {
+        if (jbtAlterarPerfil.getText().equalsIgnoreCase("Salvar")) {
             ClienteControl cc = new ClienteControl();
             //Se endereço for nulo....
             Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
@@ -492,30 +501,36 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
                 cc.atualizar(novo);
                 this.cliente = cc.buscar(cliente);
                 this.initDados(cliente);
-                FrameInicio.mostrarPopUp("Atualizado Com Sucesso!");
+                FrameInicio.mostrarPopUp("Atualizado Com Sucesso!",false);
 
-            } catch (CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
-            } catch (AtualizacaoMalSucedidaException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+            } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             }
 
         }
         trocarNome();
         trocarEditable();
-    }//GEN-LAST:event_jbtAlterarContatoMouseClicked
+    }//GEN-LAST:event_jbtAlterarPerfilMouseClicked
 
-    private void jbtAlterarContatoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAlterarContatoMouseEntered
+    private void jbtAlterarPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseEntered
+        jbtAlterarPerfil.setForeground(new java.awt.Color(0,0,0));
+    }//GEN-LAST:event_jbtAlterarPerfilMouseEntered
 
-    private void jbtAlterarContatoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAlterarContatoMouseExited
+    private void jbtAlterarPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseExited
+        jbtAlterarPerfil.setForeground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_jbtAlterarPerfilMouseExited
 
-    private void jbtAlterarContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarContatoActionPerformed
+    private void jbtAlterarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAlterarContatoActionPerformed
+    }//GEN-LAST:event_jbtAlterarPerfilActionPerformed
+
+    private void jbtLocalizarCEPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseEntered
+        jbtLocalizarCEP.setForeground(new java.awt.Color(0,0,0));
+    }//GEN-LAST:event_jbtLocalizarCEPMouseEntered
+
+    private void jbtLocalizarCEPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseExited
+       jbtLocalizarCEP.setForeground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
     private void setFieldsEditable(boolean b) {
         fldNome.setEditable(b);
@@ -544,7 +559,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     }
 
     private void trocarNome() {
-        jbtAlterarContato.setText(jbtAlterarContato.getText().equalsIgnoreCase("Editar") ? "Salvar" : "Editar");
+        jbtAlterarPerfil.setText(jbtAlterarPerfil.getText().equalsIgnoreCase("Editar") ? "Salvar" : "Editar");
     }
 
     private void trocarEditable() {
@@ -584,7 +599,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     private javax.swing.JTextField fldTelefone;
     private javax.swing.JTextField fldUF;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton jbtAlterarContato;
+    private javax.swing.JButton jbtAlterarPerfil;
     private javax.swing.JButton jbtLocalizarCEP;
     private javax.swing.JLabel lblBairro;
     private javax.swing.JLabel lblBordaEsquerda;

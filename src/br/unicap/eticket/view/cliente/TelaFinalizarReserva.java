@@ -34,8 +34,9 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         this.numCadeira = numCadeira;
         initReserva();
         initLocal();
-        if(cliente.getNickName()!=null)
-        this.lblUsername.setText("@"+cliente.getNickName());
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -97,7 +98,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
                 jbtFinalizarMouseExited(evt);
             }
         });
-        add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 550, 240, 40));
+        add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 550, 180, 40));
 
         lblPreco.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblPreco.setForeground(new java.awt.Color(255, 255, 255));
@@ -193,13 +194,13 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         add(lblNomeSessao1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 490, 180, 30));
 
         jbtVoltar.setBackground(new java.awt.Color(227, 0, 0));
-        jbtVoltar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtVoltar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtVoltar.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jbtVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoRetorno.png"))); // NOI18N
         jbtVoltar.setText("Voltar");
-        jbtVoltar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtVoltar.setBorder(null);
         jbtVoltar.setContentAreaFilled(false);
         jbtVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtVoltar.setOpaque(true);
+        jbtVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtVoltarMouseClicked(evt);
@@ -211,7 +212,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
                 jbtVoltarMouseExited(evt);
             }
         });
-        add(jbtVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 610, 120, 60));
+        add(jbtVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 560, 160, 60));
 
         lblBack.setBackground(new java.awt.Color(153, 0, 0));
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/FundoTicketDeitado.png"))); // NOI18N
@@ -320,16 +321,17 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         Icon ic = new ImageIcon(im);
         lblFilmeCapa.setIcon(ic);
     }
-    private void initLocal(){
+
+    private void initLocal() {
         lblLocalNome.setText(this.reserva.getSessao().getLocal().getNome());
         Endereco end = this.reserva.getSessao().getLocal().getEndereco();
-        lblEndRuaENum.setText(end.getLogradouro()+", "+end.getNum());
-        lblEndLocaBairroCidadeUF.setText(end.getBairro()+", "+end.getCidade()+", "+end.getUf());
+        lblEndRuaENum.setText(end.getLogradouro() + ", " + end.getNum());
+        lblEndLocaBairroCidadeUF.setText(end.getBairro() + ", " + end.getCidade() + ", " + end.getUf());
         Image im = new ImageIcon(this.sessao.getLocal().getCapa()).getImage();
         Icon ic = new ImageIcon(im);
         lblLocalCapa.setIcon(ic);
     }
-    
+
     private void jbtFinalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseClicked
         try {
             System.out.println(cliente);
@@ -339,22 +341,16 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
             ppQrCode.setLocationRelativeTo(null);
             ppQrCode.setVisible(true);
 
-        } catch (CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
-        } catch (DadosRepetidosException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
-        } catch (DadosInvalidosException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
+        } catch (CadastroInexistenteException | DadosRepetidosException | DadosInvalidosException ex) {
+            FrameInicio.mostrarPopUp(ex.getMessage(), true);
         }
     }//GEN-LAST:event_jbtFinalizarMouseClicked
 
     private void jbtFinalizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseEntered
-        jbtFinalizar.setBackground(new java.awt.Color(204, 0, 0));
-        jbtFinalizar.setForeground(new java.awt.Color(204, 204, 204));
+        jbtFinalizar.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtFinalizarMouseEntered
 
     private void jbtFinalizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseExited
-        jbtFinalizar.setBackground(new java.awt.Color(204, 0, 0));
         jbtFinalizar.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtFinalizarMouseExited
 
@@ -369,11 +365,11 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtVoltarMouseClicked
 
     private void jbtVoltarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtVoltarMouseEntered
-        // TODO add your handling code here:
+        jbtVoltar.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtVoltarMouseEntered
 
     private void jbtVoltarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtVoltarMouseExited
-        // TODO add your handling code here:
+        jbtVoltar.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtVoltarMouseExited
 
     private void lblHomepageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomepageMouseClicked

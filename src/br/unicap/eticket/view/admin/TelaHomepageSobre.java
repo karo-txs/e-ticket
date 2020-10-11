@@ -7,6 +7,7 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.viewAuxiliares.Notas;
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import javax.swing.Icon;
@@ -308,11 +309,13 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
         add(lblEstrelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, 170, 30));
 
         jbtAlterarSobre.setBackground(new java.awt.Color(255, 255, 255));
-        jbtAlterarSobre.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
+        jbtAlterarSobre.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jbtAlterarSobre.setForeground(new java.awt.Color(255, 255, 255));
+        jbtAlterarSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
         jbtAlterarSobre.setText("Editar");
-        jbtAlterarSobre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtAlterarSobre.setBorder(null);
         jbtAlterarSobre.setContentAreaFilled(false);
-        jbtAlterarSobre.setOpaque(true);
+        jbtAlterarSobre.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtAlterarSobre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtAlterarSobreMouseClicked(evt);
@@ -329,7 +332,7 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
                 jbtAlterarSobreActionPerformed(evt);
             }
         });
-        add(jbtAlterarSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 640, 110, 30));
+        add(jbtAlterarSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 630, 210, 40));
 
         lblNomeDoLocal.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         lblNomeDoLocal.setForeground(new java.awt.Color(255, 255, 255));
@@ -346,7 +349,7 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
         lblCategoriasBar.setOpaque(true);
         add(lblCategoriasBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 1080, 70));
 
-        txtSobre.setBackground(new java.awt.Color(255, 255, 0));
+        txtSobre.setBackground(new java.awt.Color(204, 204, 204));
         txtSobre.setColumns(20);
         txtSobre.setRows(5);
         ScrollSobre.setViewportView(txtSobre);
@@ -531,7 +534,7 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
             try {
                 local.atualizarSobre(txtSobre.getText());
             } catch (CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             }
         }
         trocarNome();
@@ -539,11 +542,11 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarSobreMouseClicked
 
     private void jbtAlterarSobreMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarSobreMouseEntered
-        // TODO add your handling code here:
+        jbtAlterarSobre.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtAlterarSobreMouseEntered
 
     private void jbtAlterarSobreMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarSobreMouseExited
-        // TODO add your handling code here:
+       jbtAlterarSobre.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtAlterarSobreMouseExited
 
     private void jbtAlterarSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarSobreActionPerformed

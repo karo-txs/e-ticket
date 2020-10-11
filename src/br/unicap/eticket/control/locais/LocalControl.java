@@ -5,7 +5,6 @@ import br.unicap.eticket.control.interfaces.BaseControl;
 import br.unicap.eticket.control.usuarios.AdminControl;
 import br.unicap.eticket.control.validacoes.ValidaDados;
 import br.unicap.eticket.dao.LocalDAO;
-import br.unicap.eticket.dao.SalaDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -92,6 +91,15 @@ public class LocalControl implements BaseControl<LocalGenerico> {
         if (busca != null) {
             return busca;
         } else {
+            throw new CadastroInexistenteException("Local");
+        }
+    }
+    
+    public LocalGenerico buscarPorId(Long id) throws CadastroInexistenteException{
+        LocalGenerico busca = dao.buscarPorId(id);
+        if(busca != null){
+            return busca;
+        }else{
             throw new CadastroInexistenteException("Local");
         }
     }

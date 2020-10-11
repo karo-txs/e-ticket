@@ -71,11 +71,10 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
         jbtAdicionarSala.setBackground(new java.awt.Color(255, 0, 0));
         jbtAdicionarSala.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jbtAdicionarSala.setForeground(new java.awt.Color(255, 255, 255));
-        jbtAdicionarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/addIcon.png"))); // NOI18N
-        jbtAdicionarSala.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtAdicionarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Adiciona.png"))); // NOI18N
+        jbtAdicionarSala.setBorder(null);
         jbtAdicionarSala.setContentAreaFilled(false);
         jbtAdicionarSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtAdicionarSala.setOpaque(true);
         jbtAdicionarSala.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtAdicionarSalaMouseClicked(evt);
@@ -87,17 +86,16 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
                 jbtAdicionarSalaMouseExited(evt);
             }
         });
-        add(jbtAdicionarSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 510, 50, 50));
+        add(jbtAdicionarSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 510, 50, 50));
 
         jbtRemoverSala.setBackground(new java.awt.Color(255, 0, 0));
         jbtRemoverSala.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jbtRemoverSala.setForeground(new java.awt.Color(255, 255, 255));
-        jbtRemoverSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/remIcon.png"))); // NOI18N
-        jbtRemoverSala.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtRemoverSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Remove.png"))); // NOI18N
+        jbtRemoverSala.setBorder(null);
         jbtRemoverSala.setContentAreaFilled(false);
         jbtRemoverSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtRemoverSala.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtRemoverSala.setOpaque(true);
         jbtRemoverSala.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtRemoverSalaMouseClicked(evt);
@@ -109,16 +107,15 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
                 jbtRemoverSalaMouseExited(evt);
             }
         });
-        add(jbtRemoverSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 510, 50, 50));
+        add(jbtRemoverSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 510, 50, 50));
 
         jbtEditarSala.setBackground(new java.awt.Color(255, 0, 0));
         jbtEditarSala.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jbtEditarSala.setForeground(new java.awt.Color(255, 255, 255));
-        jbtEditarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/editIcon.png"))); // NOI18N
-        jbtEditarSala.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtEditarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Editar.png"))); // NOI18N
+        jbtEditarSala.setBorder(null);
         jbtEditarSala.setContentAreaFilled(false);
         jbtEditarSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtEditarSala.setOpaque(true);
         jbtEditarSala.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtEditarSalaMouseClicked(evt);
@@ -297,7 +294,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
                 FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
                 FrameInicio.getFrame().revalidate();
             } catch (CadastroInexistenteException | InterruptedException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             }
         }
     }//GEN-LAST:event_jbtRemoverSalaMouseClicked

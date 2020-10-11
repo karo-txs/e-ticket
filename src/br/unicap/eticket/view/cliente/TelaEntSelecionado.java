@@ -41,8 +41,9 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         initEntretenimento();
         initSessoes(Calendar.getInstance());
         initDatas();
-        if(cliente.getNickName()!=null)
-        this.lblUsername.setText("@"+cliente.getNickName());
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
     }
 
     private void initSessoes(Calendar dia) throws CadastroInexistenteException {
@@ -99,7 +100,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         lblEstrelas.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
         String caminhoIconClassificacao = ent.getClassificacao().getCaminho();
         lblClassificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminhoIconClassificacao)));
-         
+
     }
 
     @SuppressWarnings("unchecked")
@@ -170,13 +171,13 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         add(lblSessoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 130, 90, 30));
 
         jbtSelecionarAssentos.setBackground(new java.awt.Color(227, 0, 0));
-        jbtSelecionarAssentos.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtSelecionarAssentos.setForeground(new java.awt.Color(255, 255, 255));
+        jbtSelecionarAssentos.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jbtSelecionarAssentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido2 (1)_1.png"))); // NOI18N
         jbtSelecionarAssentos.setText("<html><center>Selecionar assentos");
-        jbtSelecionarAssentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtSelecionarAssentos.setBorder(null);
         jbtSelecionarAssentos.setContentAreaFilled(false);
         jbtSelecionarAssentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtSelecionarAssentos.setOpaque(true);
+        jbtSelecionarAssentos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtSelecionarAssentos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtSelecionarAssentosMouseClicked(evt);
@@ -188,7 +189,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
                 jbtSelecionarAssentosMouseExited(evt);
             }
         });
-        add(jbtSelecionarAssentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 570, 140, 80));
+        add(jbtSelecionarAssentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 590, 260, 50));
 
         lblClassificacao.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblClassificacao.setForeground(new java.awt.Color(255, 255, 255));
@@ -507,13 +508,11 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtSelecionarAssentosMouseClicked
 
     private void jbtSelecionarAssentosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentosMouseEntered
-        jbtSelecionarAssentos.setBackground(new java.awt.Color(204, 0, 0));
-        jbtSelecionarAssentos.setForeground(new java.awt.Color(204, 204, 204));
+        jbtSelecionarAssentos.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtSelecionarAssentosMouseEntered
 
     private void jbtSelecionarAssentosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentosMouseExited
-        jbtSelecionarAssentos.setBackground(new java.awt.Color(227, 0, 0));
-        jbtSelecionarAssentos.setForeground(new java.awt.Color(255, 255, 255));
+        jbtSelecionarAssentos.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtSelecionarAssentosMouseExited
 
     private void jbtHojeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtHojeMouseClicked

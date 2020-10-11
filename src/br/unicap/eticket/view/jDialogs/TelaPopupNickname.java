@@ -1,11 +1,8 @@
 package br.unicap.eticket.view.jDialogs;
 
 import br.unicap.eticket.excecoes.DadosInvalidosException;
-import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.view.FrameInicio;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TelaPopupNickname extends javax.swing.JDialog {
     
@@ -90,7 +87,7 @@ public class TelaPopupNickname extends javax.swing.JDialog {
             this.confirmarAcao = true;
             this.dispose();
         } catch (DadosInvalidosException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
+            FrameInicio.mostrarPopUp(ex.getMessage(),true);
         }
         
     }//GEN-LAST:event_jbtFinalizarMouseClicked

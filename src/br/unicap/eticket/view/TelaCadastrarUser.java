@@ -52,12 +52,12 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
 
         jbtCriarConta.setBackground(new java.awt.Color(227, 0, 0));
         jbtCriarConta.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtCriarConta.setForeground(new java.awt.Color(255, 255, 255));
+        jbtCriarConta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
         jbtCriarConta.setText("Criar conta");
-        jbtCriarConta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtCriarConta.setBorder(null);
         jbtCriarConta.setContentAreaFilled(false);
         jbtCriarConta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtCriarConta.setOpaque(true);
+        jbtCriarConta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtCriarConta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtCriarContaMouseClicked(evt);
@@ -69,7 +69,7 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
                 jbtCriarContaMouseExited(evt);
             }
         });
-        add(jbtCriarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 600, 180, 60));
+        add(jbtCriarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 600, 210, 60));
 
         fldNome.setBackground(new java.awt.Color(204, 204, 204));
         fldNome.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
@@ -114,7 +114,7 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
         add(fldSenhaConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 510, 350, 40));
 
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoNome.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoColorida.png"))); // NOI18N
         add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 210, 190));
 
         lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cine2.png"))); // NOI18N
@@ -145,26 +145,24 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
                     FrameInicio.getFrame().revalidate();
                 }
             } catch (DadosInvalidosException | DadosRepetidosException | CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(), true);
             } catch (SenhaInvalidaException ex) {
                 FrameInicio.MostrarSenhaInvalida(ex.getMessage());
             } catch (IOException ex) {
                 Logger.getLogger(TelaCadastrarUser.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }else{
-            FrameInicio.mostrarPopUp("Senhas não conferem!");
+        } else {
+            FrameInicio.mostrarPopUp("Senhas não conferem!", true);
         }
     }//GEN-LAST:event_jbtCriarContaMouseClicked
 
     private void jbtCriarContaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseEntered
-        jbtCriarConta.setBackground(new java.awt.Color(204, 0, 0));
-        jbtCriarConta.setForeground(new java.awt.Color(204, 204, 204));
+        jbtCriarConta.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtCriarContaMouseEntered
 
     private void jbtCriarContaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseExited
-        jbtCriarConta.setBackground(new java.awt.Color(204, 0, 0));
-        jbtCriarConta.setForeground(new java.awt.Color(255, 255, 255));
+        jbtCriarConta.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtCriarContaMouseExited
 
     private boolean senhaIgual(String senhaA, String senhaB) {

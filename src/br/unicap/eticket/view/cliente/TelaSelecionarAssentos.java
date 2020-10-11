@@ -32,7 +32,7 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jbtCriarConta = new javax.swing.JButton();
+        jbtSelecionarAssento = new javax.swing.JButton();
         jpnAssentos = new javax.swing.JPanel();
         lblFilmeTitulo = new javax.swing.JLabel();
         lblTela = new javax.swing.JLabel();
@@ -54,26 +54,26 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(1366, 768));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jbtCriarConta.setBackground(new java.awt.Color(227, 0, 0));
-        jbtCriarConta.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtCriarConta.setForeground(new java.awt.Color(255, 255, 255));
-        jbtCriarConta.setText("Continuar");
-        jbtCriarConta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jbtCriarConta.setContentAreaFilled(false);
-        jbtCriarConta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtCriarConta.setOpaque(true);
-        jbtCriarConta.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbtSelecionarAssento.setBackground(new java.awt.Color(227, 0, 0));
+        jbtSelecionarAssento.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jbtSelecionarAssento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
+        jbtSelecionarAssento.setText("Continuar");
+        jbtSelecionarAssento.setBorder(null);
+        jbtSelecionarAssento.setContentAreaFilled(false);
+        jbtSelecionarAssento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtSelecionarAssento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtSelecionarAssento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtCriarContaMouseClicked(evt);
+                jbtSelecionarAssentoMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtCriarContaMouseEntered(evt);
+                jbtSelecionarAssentoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtCriarContaMouseExited(evt);
+                jbtSelecionarAssentoMouseExited(evt);
             }
         });
-        add(jbtCriarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 630, 150, 60));
+        add(jbtSelecionarAssento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 640, 200, 60));
 
         jpnAssentos.setLayout(new java.awt.GridLayout(5, 5, 10, 10));
         add(jpnAssentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 970, 510));
@@ -232,20 +232,20 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
         FrameInicio.getFrame().revalidate();
 
     }
-    private void jbtCriarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseClicked
+    private void jbtSelecionarAssentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseClicked
         FrameInicio.getFrame().setContentPane(new TelaFinalizarReserva(cliente, sessao, assentos.getAtual().getName()));
         FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_jbtCriarContaMouseClicked
+    }//GEN-LAST:event_jbtSelecionarAssentoMouseClicked
 
-    private void jbtCriarContaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseEntered
-        jbtCriarConta.setBackground(new java.awt.Color(204, 0, 0));
-        jbtCriarConta.setForeground(new java.awt.Color(204, 204, 204));
-    }//GEN-LAST:event_jbtCriarContaMouseEntered
+    private void jbtSelecionarAssentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseEntered
+        
+        jbtSelecionarAssento.setForeground(new java.awt.Color(191,30,30));
+    }//GEN-LAST:event_jbtSelecionarAssentoMouseEntered
 
-    private void jbtCriarContaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseExited
-        jbtCriarConta.setBackground(new java.awt.Color(227, 0, 0));
-        jbtCriarConta.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_jbtCriarContaMouseExited
+    private void jbtSelecionarAssentoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseExited
+        
+        jbtSelecionarAssento.setForeground(new java.awt.Color(0,0,0));
+    }//GEN-LAST:event_jbtSelecionarAssentoMouseExited
 
     private void lblHomepageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomepageMouseClicked
         FrameInicio.getFrame().setContentPane(new TelaHomepageCliente(cliente));
@@ -313,7 +313,7 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton jbtCriarConta;
+    private javax.swing.JButton jbtSelecionarAssento;
     private javax.swing.JPanel jpnAssentos;
     private javax.swing.JPanel jpnHorz;
     private javax.swing.JPanel jpnVert;

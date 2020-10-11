@@ -104,11 +104,12 @@ public class TelaEditarSala extends javax.swing.JPanel {
         jbtEditar.setBackground(new java.awt.Color(227, 0, 0));
         jbtEditar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jbtEditar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
         jbtEditar.setText("EDITAR");
-        jbtEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtEditar.setBorder(null);
         jbtEditar.setContentAreaFilled(false);
         jbtEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtEditar.setOpaque(true);
+        jbtEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtEditarMouseClicked(evt);
@@ -120,7 +121,7 @@ public class TelaEditarSala extends javax.swing.JPanel {
                 jbtEditarMouseExited(evt);
             }
         });
-        add(jbtEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, 100, 60));
+        add(jbtEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 580, 210, 60));
 
         jcbTipoSala.setBackground(new java.awt.Color(204, 204, 204));
         jcbTipoSala.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
@@ -272,7 +273,7 @@ public class TelaEditarSala extends javax.swing.JPanel {
             jfldValIngresso.setText(String.valueOf(busca.getValorIngresso()));
             jcbTipoSala.setSelectedItem(busca.getTipoSala().getTipo());
         } catch (CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
+            FrameInicio.mostrarPopUp(ex.getMessage(), true);
         }
     }
     private void jbtEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseClicked
@@ -290,17 +291,15 @@ public class TelaEditarSala extends javax.swing.JPanel {
             FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
             FrameInicio.getFrame().revalidate();
         } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
+            FrameInicio.mostrarPopUp(ex.getMessage(), true);
         }
     }//GEN-LAST:event_jbtEditarMouseClicked
 
     private void jbtEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseEntered
-        jbtEditar.setBackground(new java.awt.Color(204, 0, 0));
-        jbtEditar.setForeground(new java.awt.Color(204, 204, 204));
+        jbtEditar.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtEditarMouseEntered
 
     private void jbtEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseExited
-        jbtEditar.setBackground(new java.awt.Color(227, 0, 0));
         jbtEditar.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtEditarMouseExited
 

@@ -15,6 +15,7 @@ import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.CapturarCapa;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -83,7 +84,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldRua.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldRua.setForeground(new java.awt.Color(102, 102, 102));
         fldRua.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 330, 250, 20));
+        add(fldRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 330, 280, 20));
 
         lblRua.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblRua.setForeground(new java.awt.Color(255, 255, 255));
@@ -94,7 +95,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldCidade.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldCidade.setForeground(new java.awt.Color(102, 102, 102));
         fldCidade.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 390, 250, 20));
+        add(fldCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 390, 280, 20));
 
         lblCidade.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblCidade.setForeground(new java.awt.Color(255, 255, 255));
@@ -105,7 +106,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldBairro.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldBairro.setForeground(new java.awt.Color(102, 102, 102));
         fldBairro.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 450, 250, 20));
+        add(fldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 450, 280, 20));
 
         lblBairro.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblBairro.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,18 +122,18 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldUF.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldUF.setForeground(new java.awt.Color(102, 102, 102));
         fldUF.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 510, 120, 20));
+        add(fldUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 510, 120, 20));
 
         lblUF.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblUF.setForeground(new java.awt.Color(255, 255, 255));
         lblUF.setText("UF");
-        add(lblUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, -1, -1));
+        add(lblUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 490, -1, -1));
 
         fldComplemento.setBackground(new java.awt.Color(204, 204, 204));
         fldComplemento.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldComplemento.setForeground(new java.awt.Color(102, 102, 102));
         fldComplemento.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, 250, 20));
+        add(fldComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, 280, 20));
 
         lblComplemento.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblComplemento.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,7 +144,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldPais.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldPais.setForeground(new java.awt.Color(102, 102, 102));
         fldPais.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 630, 250, 20));
+        add(fldPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 630, 280, 20));
 
         lblPais.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblPais.setForeground(new java.awt.Color(255, 255, 255));
@@ -163,12 +164,12 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         add(jcbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 250, 20));
 
         jbtEntrar.setBackground(new java.awt.Color(227, 0, 0));
-        jbtEntrar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtEntrar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtEntrar.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jbtEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
         jbtEntrar.setText("Cadastrar  Local");
-        jbtEntrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtEntrar.setBorder(null);
         jbtEntrar.setContentAreaFilled(false);
-        jbtEntrar.setOpaque(true);
+        jbtEntrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtEntrarMouseClicked(evt);
@@ -180,7 +181,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 jbtEntrarMouseExited(evt);
             }
         });
-        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 550, 170, 80));
+        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 610, 200, 40));
 
         lblCategoria.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblCategoria.setForeground(new java.awt.Color(255, 255, 255));
@@ -190,10 +191,11 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         jbtSelecionarImg.setBackground(new java.awt.Color(227, 0, 0));
         jbtSelecionarImg.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         jbtSelecionarImg.setForeground(new java.awt.Color(255, 255, 255));
+        jbtSelecionarImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
         jbtSelecionarImg.setText("Selecionar Capa");
-        jbtSelecionarImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtSelecionarImg.setBorder(null);
         jbtSelecionarImg.setContentAreaFilled(false);
-        jbtSelecionarImg.setOpaque(true);
+        jbtSelecionarImg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtSelecionarImg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtSelecionarImgMouseClicked(evt);
@@ -205,15 +207,21 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 jbtSelecionarImgMouseExited(evt);
             }
         });
-        add(jbtSelecionarImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 430, 110, 30));
+        jbtSelecionarImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtSelecionarImgActionPerformed(evt);
+            }
+        });
+        add(jbtSelecionarImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 200, -1));
 
         jbtLocalizarCEP.setBackground(new java.awt.Color(227, 0, 0));
         jbtLocalizarCEP.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         jbtLocalizarCEP.setForeground(new java.awt.Color(255, 255, 255));
+        jbtLocalizarCEP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoLupa (2).png"))); // NOI18N
         jbtLocalizarCEP.setText("Localizar CEP");
-        jbtLocalizarCEP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtLocalizarCEP.setBorder(null);
         jbtLocalizarCEP.setContentAreaFilled(false);
-        jbtLocalizarCEP.setOpaque(true);
+        jbtLocalizarCEP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtLocalizarCEP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtLocalizarCEPMouseClicked(evt);
@@ -225,7 +233,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 jbtLocalizarCEPMouseExited(evt);
             }
         });
-        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 260, 100, 30));
+        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 260, 160, 30));
 
         lblLinhaCadLocal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Local", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         add(lblLinhaCadLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, 310, 460));
@@ -248,7 +256,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         add(lblCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
 
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoNome.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoColorida.png"))); // NOI18N
         add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 210, 190));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cine.png"))); // NOI18N
@@ -256,7 +264,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 180));
 
         lblLinhaEnd.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Endereço", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-        add(lblLinhaEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 320, 460));
+        add(lblLinhaEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 330, 460));
 
         lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cineCad.png"))); // NOI18N
         add(lblBackCine, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
@@ -276,32 +284,26 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         try {
 
             admC.cadastrar(adm.getNome(), adm.getEmail(), adm.getSenha(), adm.getLocalAdministrado());
-            try {
-                Admin cadastrado = admC.buscar(adm);
-                if (captura.getImagemSelecionada() != null) {
-                    adm.getLocalAdministrado().inserirCapaESalvar(captura.getImagemSelecionada());
-                }
-                FrameInicio.mostrarPopUp("Admin e local Cadastrados");
-                FrameInicio.getFrame().setContentPane(new TelaInicio());
-                FrameInicio.getFrame().revalidate();
-            } catch (CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+            Admin cadastrado = admC.buscar(adm);
+            if (captura.getImagemSelecionada() != null) {
+                adm.getLocalAdministrado().inserirCapaESalvar(captura.getImagemSelecionada());
             }
-        } catch (DadosRepetidosException | DadosInvalidosException | SenhaInvalidaException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
+            FrameInicio.mostrarPopUp("Admin e local Cadastrados", false);
+            FrameInicio.getFrame().setContentPane(new TelaInicio());
+            FrameInicio.getFrame().revalidate();
+        } catch (DadosRepetidosException | DadosInvalidosException | SenhaInvalidaException | CadastroInexistenteException ex) {
+            FrameInicio.mostrarPopUp(ex.getMessage(), true);
         } catch (IOException ex) {
             Logger.getLogger(TelaCadastrarLocal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbtEntrarMouseClicked
 
     private void jbtEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseEntered
-        jbtEntrar.setBackground(new java.awt.Color(204, 0, 0));
-        jbtEntrar.setForeground(new java.awt.Color(204, 204, 204));
+        jbtEntrar.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtEntrarMouseEntered
 
     private void jbtEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseExited
-        jbtEntrar.setBackground(new java.awt.Color(227, 0, 0));
-        jbtEntrar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtEntrar.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtEntrarMouseExited
 
     private void jbtLocalizarCEPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseClicked
@@ -315,18 +317,17 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 fldCidade.setText(endereco.get("Cidade"));
                 fldUF.setText(endereco.get("UF"));
             } catch (DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(), true);
             }
-
         }
     }//GEN-LAST:event_jbtLocalizarCEPMouseClicked
 
     private void jbtLocalizarCEPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseEntered
-        // TODO add your handling code here:
+         jbtLocalizarCEP.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtLocalizarCEPMouseEntered
 
     private void jbtLocalizarCEPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseExited
-        // TODO add your handling code here:
+         jbtLocalizarCEP.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
     private void jbtSelecionarImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarImgMouseClicked
@@ -335,12 +336,16 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtSelecionarImgMouseClicked
 
     private void jbtSelecionarImgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarImgMouseEntered
-        // TODO add your handling code here:
+        jbtEntrar.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtSelecionarImgMouseEntered
 
     private void jbtSelecionarImgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarImgMouseExited
-        // TODO add your handling code here:
+         jbtEntrar.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtSelecionarImgMouseExited
+
+    private void jbtSelecionarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelecionarImgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtSelecionarImgActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

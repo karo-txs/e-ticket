@@ -11,6 +11,7 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.viewAuxiliares.Notas;
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import java.util.HashMap;
@@ -83,7 +84,7 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         fldComplemento = new javax.swing.JTextField();
         lblComplemento = new javax.swing.JLabel();
         lblPais = new javax.swing.JLabel();
-        jbtAlterarContato = new javax.swing.JButton();
+        jbtAlterarEnd = new javax.swing.JButton();
         fldPais = new javax.swing.JTextField();
         lblLinhaEnd = new javax.swing.JLabel();
         jlbBanner = new javax.swing.JLabel();
@@ -324,10 +325,11 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         jbtLocalizarCEP.setBackground(new java.awt.Color(227, 0, 0));
         jbtLocalizarCEP.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         jbtLocalizarCEP.setForeground(new java.awt.Color(255, 255, 255));
+        jbtLocalizarCEP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoLupa (2).png"))); // NOI18N
         jbtLocalizarCEP.setText("Localizar CEP");
-        jbtLocalizarCEP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtLocalizarCEP.setBorder(null);
         jbtLocalizarCEP.setContentAreaFilled(false);
-        jbtLocalizarCEP.setOpaque(true);
+        jbtLocalizarCEP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtLocalizarCEP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtLocalizarCEPMouseClicked(evt);
@@ -339,7 +341,7 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
                 jbtLocalizarCEPMouseExited(evt);
             }
         });
-        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 350, 100, 30));
+        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 350, 150, 30));
 
         fldRua.setBackground(new java.awt.Color(204, 204, 204));
         fldRua.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
@@ -410,29 +412,31 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         lblPais.setText("País");
         add(lblPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 490, -1, -1));
 
-        jbtAlterarContato.setBackground(new java.awt.Color(255, 255, 255));
-        jbtAlterarContato.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
-        jbtAlterarContato.setText("Editar");
-        jbtAlterarContato.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jbtAlterarContato.setContentAreaFilled(false);
-        jbtAlterarContato.setOpaque(true);
-        jbtAlterarContato.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbtAlterarEnd.setBackground(new java.awt.Color(255, 255, 255));
+        jbtAlterarEnd.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jbtAlterarEnd.setForeground(new java.awt.Color(255, 255, 255));
+        jbtAlterarEnd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
+        jbtAlterarEnd.setText("Editar");
+        jbtAlterarEnd.setBorder(null);
+        jbtAlterarEnd.setContentAreaFilled(false);
+        jbtAlterarEnd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtAlterarEnd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtAlterarContatoMouseClicked(evt);
+                jbtAlterarEndMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtAlterarContatoMouseEntered(evt);
+                jbtAlterarEndMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtAlterarContatoMouseExited(evt);
+                jbtAlterarEndMouseExited(evt);
             }
         });
-        jbtAlterarContato.addActionListener(new java.awt.event.ActionListener() {
+        jbtAlterarEnd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAlterarContatoActionPerformed(evt);
+                jbtAlterarEndActionPerformed(evt);
             }
         });
-        add(jbtAlterarContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 560, 110, 30));
+        add(jbtAlterarEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 550, 200, 40));
 
         fldPais.setBackground(new java.awt.Color(204, 204, 204));
         fldPais.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
@@ -588,23 +592,23 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
                 fldCidade.setText(endereco.get("Cidade"));
                 fldUF.setText(endereco.get("UF"));
             } catch (DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             }
 
         }
     }//GEN-LAST:event_jbtLocalizarCEPMouseClicked
 
     private void jbtLocalizarCEPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseEntered
-        // TODO add your handling code here:
+         jbtLocalizarCEP.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtLocalizarCEPMouseEntered
 
     private void jbtLocalizarCEPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseExited
-        // TODO add your handling code here:
+       jbtLocalizarCEP.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
-    private void jbtAlterarContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseClicked
+    private void jbtAlterarEndMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseClicked
 
-        if (jbtAlterarContato.getText().equalsIgnoreCase("Salvar")) {
+        if (jbtAlterarEnd.getText().equalsIgnoreCase("Salvar")) {
             try {
                 Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                         fldRua.getText(), fldNum.getText(), fldComplemento.getText());
@@ -612,25 +616,25 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
                     local.atualizarEnd(novoEnd);
                 }
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             }
 
         }
         trocarNome();
         trocarEditable();
-    }//GEN-LAST:event_jbtAlterarContatoMouseClicked
+    }//GEN-LAST:event_jbtAlterarEndMouseClicked
 
-    private void jbtAlterarContatoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAlterarContatoMouseEntered
+    private void jbtAlterarEndMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseEntered
+        jbtAlterarEnd.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_jbtAlterarEndMouseEntered
 
-    private void jbtAlterarContatoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAlterarContatoMouseExited
+    private void jbtAlterarEndMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseExited
+         jbtAlterarEnd.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_jbtAlterarEndMouseExited
 
-    private void jbtAlterarContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarContatoActionPerformed
+    private void jbtAlterarEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarEndActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAlterarContatoActionPerformed
+    }//GEN-LAST:event_jbtAlterarEndActionPerformed
 
     private void jbtAlterarBannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseClicked
         JFileChooser arquivo = new JFileChooser();
@@ -677,7 +681,7 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }
 
     private void trocarNome() {
-        jbtAlterarContato.setText(jbtAlterarContato.getText().equalsIgnoreCase("Editar") ? "Salvar" : "Editar");
+        jbtAlterarEnd.setText(jbtAlterarEnd.getText().equalsIgnoreCase("Editar") ? "Salvar" : "Editar");
     }
 
     private void trocarEditable() {
@@ -720,7 +724,7 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     private javax.swing.JTextField fldUF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbtAlterarBanner;
-    private javax.swing.JButton jbtAlterarContato;
+    private javax.swing.JButton jbtAlterarEnd;
     private javax.swing.JButton jbtLocalizarCEP;
     private javax.swing.JLabel jlbBanner;
     private javax.swing.JPanel jpnEsquerda;

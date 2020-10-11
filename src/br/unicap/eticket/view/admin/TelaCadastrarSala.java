@@ -58,7 +58,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
         lblCadastrarSala.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         lblCadastrarSala.setForeground(new java.awt.Color(255, 255, 255));
         lblCadastrarSala.setText("Cadastrar Sala");
-        add(lblCadastrarSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, 300, 50));
+        add(lblCadastrarSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, 300, 50));
 
         lblNomeSala.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblNomeSala.setForeground(new java.awt.Color(255, 255, 255));
@@ -111,12 +111,12 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
 
         jbtCadastrar.setBackground(new java.awt.Color(227, 0, 0));
         jbtCadastrar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
         jbtCadastrar.setText("Cadastrar");
-        jbtCadastrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtCadastrar.setBorder(null);
         jbtCadastrar.setContentAreaFilled(false);
         jbtCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtCadastrar.setOpaque(true);
+        jbtCadastrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtCadastrarMouseClicked(evt);
@@ -128,7 +128,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
                 jbtCadastrarMouseExited(evt);
             }
         });
-        add(jbtCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 580, 120, 70));
+        add(jbtCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 580, 200, 70));
 
         jcbTipoSala.setBackground(new java.awt.Color(204, 204, 204));
         jcbTipoSala.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
@@ -275,7 +275,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
                 FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
             }
         } catch (DadosInvalidosException | DadosRepetidosException | CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
+            FrameInicio.mostrarPopUp(ex.getMessage(), true);
         }
 
         FrameInicio.getFrame().revalidate();
@@ -283,13 +283,11 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtCadastrarMouseClicked
 
     private void jbtCadastrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadastrarMouseEntered
-        jbtCadastrar.setBackground(new java.awt.Color(204, 0, 0));
-        jbtCadastrar.setForeground(new java.awt.Color(204, 204, 204));
+        jbtCadastrar.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtCadastrarMouseEntered
 
     private void jbtCadastrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadastrarMouseExited
-        jbtCadastrar.setBackground(new java.awt.Color(227, 0, 0));
-        jbtCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtCadastrar.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtCadastrarMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked

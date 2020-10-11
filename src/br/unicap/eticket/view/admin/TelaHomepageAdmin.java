@@ -31,11 +31,13 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
 
         selecionarBotao(lblEmCartaz);
         lblEntretenimentoMsg.setVisible(false);
+        jpnScroll.setVisible(true);
         EntretenimentoControl entC = new EntretenimentoControl();
         List<Entretenimento> entretenimento = entC.entreterimentosEmCartaz(local);
 
         if (entretenimento.isEmpty()) {
             lblEntretenimentoMsg.setVisible(true);
+            jpnScroll.setVisible(false);
         } else {
             mostrarEntreterimentos(entretenimento);
         }

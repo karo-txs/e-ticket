@@ -8,6 +8,7 @@ import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import java.awt.Color;
 import javax.swing.JLabel;
 
 public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
@@ -262,11 +263,13 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
         add(lblDeslogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 650, 150, 40));
 
         jbtEditar.setBackground(new java.awt.Color(255, 255, 255));
-        jbtEditar.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
+        jbtEditar.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jbtEditar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
         jbtEditar.setText("Editar");
-        jbtEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtEditar.setBorder(null);
         jbtEditar.setContentAreaFilled(false);
-        jbtEditar.setOpaque(true);
+        jbtEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtEditarMouseClicked(evt);
@@ -283,7 +286,7 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
                 jbtEditarActionPerformed(evt);
             }
         });
-        add(jbtEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 660, 110, 30));
+        add(jbtEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 650, 190, 40));
 
         lblBordaEsquerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/BordaEsquerda.png"))); // NOI18N
         lblBordaEsquerda.setText("jLabel3");
@@ -401,14 +404,10 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
                     adm.atualizarEmail(fldEmail.getText());
                 }
                 cc.atualizar(novo); //retornar obj
-                FrameInicio.mostrarPopUp("Atualizado Com Sucesso!");
+                FrameInicio.mostrarPopUp("Atualizado Com Sucesso!",false);
                 this.adm = cc.buscar(adm);
-            } catch (CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
-            } catch (AtualizacaoMalSucedidaException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
-            } catch (DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage());
+            } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException | DadosInvalidosException ex) {
+                FrameInicio.mostrarPopUp(ex.getMessage(),true);
             }
         }
         trocarNome();
@@ -416,11 +415,11 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtEditarMouseClicked
 
     private void jbtEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseEntered
-        // TODO add your handling code here:
+       jbtEditar.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtEditarMouseEntered
 
     private void jbtEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseExited
-        // TODO add your handling code here:
+        jbtEditar.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtEditarMouseExited
 
     private void jbtEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditarActionPerformed

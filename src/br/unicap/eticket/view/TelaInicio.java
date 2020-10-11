@@ -44,7 +44,7 @@ public class TelaInicio extends javax.swing.JPanel {
         add(lblBemVindo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 490, 90));
 
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoNome.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoColorida.png"))); // NOI18N
         add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 210, 190));
 
         fldLogin.setBackground(new java.awt.Color(204, 204, 204));
@@ -58,14 +58,14 @@ public class TelaInicio extends javax.swing.JPanel {
         fldSenha.setForeground(new java.awt.Color(102, 102, 102));
         add(fldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 410, 40));
 
-        jbtEntrar.setBackground(new java.awt.Color(227, 0, 0));
+        jbtEntrar.setBackground(new java.awt.Color(0, 0, 153));
         jbtEntrar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtEntrar.setForeground(new java.awt.Color(255, 255, 255));
+        jbtEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
         jbtEntrar.setText("Entrar");
-        jbtEntrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtEntrar.setBorder(null);
         jbtEntrar.setContentAreaFilled(false);
         jbtEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtEntrar.setOpaque(true);
+        jbtEntrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbtEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jbtEntrarMouseClicked(evt);
@@ -77,7 +77,7 @@ public class TelaInicio extends javax.swing.JPanel {
                 jbtEntrarMouseExited(evt);
             }
         });
-        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 400, 180, 60));
+        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 400, 200, 60));
 
         lblLinha.setBackground(new java.awt.Color(153, 153, 153));
         lblLinha.setOpaque(true);
@@ -156,19 +156,17 @@ public class TelaInicio extends javax.swing.JPanel {
             
             FrameInicio.getFrame().revalidate();
         } catch (DadosInvalidosException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage());
+            FrameInicio.mostrarPopUp(ex.getMessage(),true);
         }
 
     }//GEN-LAST:event_jbtEntrarMouseClicked
 
     private void jbtEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseEntered
-        jbtEntrar.setBackground(new Color(204, 0, 0));
-        jbtEntrar.setForeground(new Color(204, 204, 204));
+        jbtEntrar.setForeground(new Color(191,30,30));
     }//GEN-LAST:event_jbtEntrarMouseEntered
 
     private void jbtEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseExited
-        jbtEntrar.setBackground(new Color(227, 0, 0));
-        jbtEntrar.setForeground(new Color(255, 255, 255));
+        jbtEntrar.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtEntrarMouseExited
 
     private void lblProprietarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProprietarioMouseEntered

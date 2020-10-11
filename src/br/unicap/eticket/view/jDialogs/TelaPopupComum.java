@@ -1,11 +1,18 @@
 package br.unicap.eticket.view.jDialogs;
 
-public class TelaPopupErros extends javax.swing.JDialog {
+public class TelaPopupComum extends javax.swing.JDialog {
     
-    public TelaPopupErros(java.awt.Frame parent, boolean modal, String frase) {
+    public TelaPopupComum(java.awt.Frame parent, boolean modal, String frase,boolean isErro) {
         super(parent, modal);
         initComponents();
         lblMensagem.setText("<html><center>" + frase);
+        if(isErro){
+            Exclamacao.setVisible(true);
+            ok.setVisible(false);
+        }else{
+            Exclamacao.setVisible(false);
+            ok.setVisible(true);
+        }
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
     }
     
@@ -14,6 +21,7 @@ public class TelaPopupErros extends javax.swing.JDialog {
     private void initComponents() {
 
         jbtFinalizar = new javax.swing.JButton();
+        ok = new javax.swing.JLabel();
         Exclamacao = new javax.swing.JLabel();
         lblMensagem = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
@@ -41,6 +49,9 @@ public class TelaPopupErros extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 50, 40));
+
+        ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/IconeV.png"))); // NOI18N
+        getContentPane().add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 40, 40));
 
         Exclamacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/Exclamacao.png"))); // NOI18N
         getContentPane().add(Exclamacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 40, 40));
@@ -79,5 +90,6 @@ public class TelaPopupErros extends javax.swing.JDialog {
     private javax.swing.JButton jbtFinalizar;
     private javax.swing.JLabel lblFundo;
     private javax.swing.JLabel lblMensagem;
+    private javax.swing.JLabel ok;
     // End of variables declaration//GEN-END:variables
 }

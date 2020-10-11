@@ -91,18 +91,13 @@ public class TelaPopupQRCode extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtOkMouseClicked
 
     private void jbtOkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtOkMouseEntered
-        jbtOk.setBackground(new java.awt.Color(204, 0, 0));
-        jbtOk.setForeground(new java.awt.Color(204, 204, 204));
+        jbtOk.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtOkMouseEntered
 
     private void jbtOkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtOkMouseExited
-        jbtOk.setBackground(new java.awt.Color(204, 0, 0));
-        jbtOk.setForeground(new java.awt.Color(255, 255, 255));
+        jbtOk.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtOkMouseExited
 
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
