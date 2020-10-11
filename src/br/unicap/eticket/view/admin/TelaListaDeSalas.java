@@ -286,20 +286,22 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAdicionarSalaMouseExited
 
     private void jbtRemoverSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Remover?");
-        if (telaConf.getConfirmarAcao()) {
-            String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
-            SalaControl salaC = new SalaControl();
-            try {
-                salaC.remover(salaC.buscar(new Sala(this.local, valSelecionado[0])));
-                Thread.sleep(1L);
-                FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
-                FrameInicio.getFrame().revalidate();
+        if (lstSalas.getSelectedIndex() != -1) {
+            TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Remover?");
+            if (telaConf.getConfirmarAcao()) {
+                String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
+                SalaControl salaC = new SalaControl();
+                try {
+                    salaC.remover(salaC.buscar(new Sala(this.local, valSelecionado[0])));
+                    Thread.sleep(1L);
+                    FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
+                    FrameInicio.getFrame().revalidate();
 
-            } catch (CadastroInexistenteException | InterruptedException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                } catch (CadastroInexistenteException | InterruptedException ex) {
+                    FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                }
+                this.jbtAdicionarSala.setEnabled(true);
             }
-            this.jbtAdicionarSala.setEnabled(true);
         }
     }//GEN-LAST:event_jbtRemoverSalaMouseClicked
 

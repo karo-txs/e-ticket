@@ -34,7 +34,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
             i++;
         }
 
-        lstSalas.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
+        lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
     }
 
     @SuppressWarnings("unchecked")
@@ -42,11 +42,11 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jbtAdicionarSala = new javax.swing.JButton();
-        jbtRemoverSala = new javax.swing.JButton();
-        jbtEditarSala = new javax.swing.JButton();
+        jbtAdicionarSessao = new javax.swing.JButton();
+        jbtRemoverSessao = new javax.swing.JButton();
+        jbtEditarSessao = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstSalas = new javax.swing.JList<>();
+        lstSessoes = new javax.swing.JList<String>();
         lblLogo = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         lblLinhinha = new javax.swing.JLabel();
@@ -68,78 +68,78 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
         jLabel1.setText("Lista de Sessões");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 1070, 50));
 
-        jbtAdicionarSala.setBackground(new java.awt.Color(255, 0, 0));
-        jbtAdicionarSala.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtAdicionarSala.setForeground(new java.awt.Color(255, 255, 255));
-        jbtAdicionarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Adiciona.png"))); // NOI18N
-        jbtAdicionarSala.setBorder(null);
-        jbtAdicionarSala.setContentAreaFilled(false);
-        jbtAdicionarSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtAdicionarSala.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbtAdicionarSessao.setBackground(new java.awt.Color(255, 0, 0));
+        jbtAdicionarSessao.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jbtAdicionarSessao.setForeground(new java.awt.Color(255, 255, 255));
+        jbtAdicionarSessao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Adiciona.png"))); // NOI18N
+        jbtAdicionarSessao.setBorder(null);
+        jbtAdicionarSessao.setContentAreaFilled(false);
+        jbtAdicionarSessao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtAdicionarSessao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtAdicionarSalaMouseClicked(evt);
+                jbtAdicionarSessaoMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtAdicionarSalaMouseEntered(evt);
+                jbtAdicionarSessaoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtAdicionarSalaMouseExited(evt);
+                jbtAdicionarSessaoMouseExited(evt);
             }
         });
-        add(jbtAdicionarSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 510, 50, 50));
+        add(jbtAdicionarSessao, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 510, 50, 50));
 
-        jbtRemoverSala.setBackground(new java.awt.Color(255, 0, 0));
-        jbtRemoverSala.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtRemoverSala.setForeground(new java.awt.Color(255, 255, 255));
-        jbtRemoverSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Remove.png"))); // NOI18N
-        jbtRemoverSala.setBorder(null);
-        jbtRemoverSala.setContentAreaFilled(false);
-        jbtRemoverSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtRemoverSala.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtRemoverSala.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbtRemoverSessao.setBackground(new java.awt.Color(255, 0, 0));
+        jbtRemoverSessao.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jbtRemoverSessao.setForeground(new java.awt.Color(255, 255, 255));
+        jbtRemoverSessao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Remove.png"))); // NOI18N
+        jbtRemoverSessao.setBorder(null);
+        jbtRemoverSessao.setContentAreaFilled(false);
+        jbtRemoverSessao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtRemoverSessao.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtRemoverSessao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtRemoverSalaMouseClicked(evt);
+                jbtRemoverSessaoMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtRemoverSalaMouseEntered(evt);
+                jbtRemoverSessaoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtRemoverSalaMouseExited(evt);
+                jbtRemoverSessaoMouseExited(evt);
             }
         });
-        add(jbtRemoverSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 510, 50, 50));
+        add(jbtRemoverSessao, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 510, 50, 50));
 
-        jbtEditarSala.setBackground(new java.awt.Color(255, 0, 0));
-        jbtEditarSala.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtEditarSala.setForeground(new java.awt.Color(255, 255, 255));
-        jbtEditarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Editar.png"))); // NOI18N
-        jbtEditarSala.setBorder(null);
-        jbtEditarSala.setContentAreaFilled(false);
-        jbtEditarSala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtEditarSala.addMouseListener(new java.awt.event.MouseAdapter() {
+        jbtEditarSessao.setBackground(new java.awt.Color(255, 0, 0));
+        jbtEditarSessao.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jbtEditarSessao.setForeground(new java.awt.Color(255, 255, 255));
+        jbtEditarSessao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Editar.png"))); // NOI18N
+        jbtEditarSessao.setBorder(null);
+        jbtEditarSessao.setContentAreaFilled(false);
+        jbtEditarSessao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtEditarSessao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtEditarSalaMouseClicked(evt);
+                jbtEditarSessaoMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtEditarSalaMouseEntered(evt);
+                jbtEditarSessaoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtEditarSalaMouseExited(evt);
+                jbtEditarSessaoMouseExited(evt);
             }
         });
-        add(jbtEditarSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 510, 50, 50));
+        add(jbtEditarSessao, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 510, 50, 50));
 
-        lstSalas.setBackground(new java.awt.Color(21, 17, 17));
-        lstSalas.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        lstSalas.setForeground(new java.awt.Color(255, 255, 255));
-        lstSalas.setModel(new javax.swing.AbstractListModel<String>() {
+        lstSessoes.setBackground(new java.awt.Color(21, 17, 17));
+        lstSessoes.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        lstSessoes.setForeground(new java.awt.Color(255, 255, 255));
+        lstSessoes.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "SALA3D | Sala-2 | 400 Assentos | R$14.50", "BISTRÔ | Sala-2 | 400 Assentos | R$14.50", "IMAX | Sala-2 | 400 Assentos | R$14.50", "SALA3D | Sala-2 | 400 Assentos | R$14.50", "BISTRÔ | Sala-2 | 400 Assentos | R$14.50", "IMAX | Sala-2 | 400 Assentos | R$14.50", "SALA3D | Sala-2 | 400 Assentos | R$14.50", "BISTRÔ | Sala-2 | 400 Assentos | R$14.50", "IMAX | Sala-2 | 400 Assentos | R$14.50" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
-        lstSalas.setFixedCellHeight(60);
-        lstSalas.setSelectionBackground(new java.awt.Color(153, 153, 153));
-        jScrollPane1.setViewportView(lstSalas);
+        lstSessoes.setFixedCellHeight(60);
+        lstSessoes.setSelectionBackground(new java.awt.Color(153, 153, 153));
+        jScrollPane1.setViewportView(lstSessoes);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 870, 340));
 
@@ -266,67 +266,70 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtAdicionarSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAdicionarSalaMouseClicked
+    private void jbtAdicionarSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAdicionarSessaoMouseClicked
         FrameInicio.getFrame().setContentPane(new TelaCadastrarSessao(local));
         FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_jbtAdicionarSalaMouseClicked
+    }//GEN-LAST:event_jbtAdicionarSessaoMouseClicked
 
-    private void jbtAdicionarSalaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAdicionarSalaMouseEntered
-        jbtAdicionarSala.setBackground(new java.awt.Color(204, 0, 0));
-        jbtAdicionarSala.setForeground(new java.awt.Color(204, 204, 204));
-    }//GEN-LAST:event_jbtAdicionarSalaMouseEntered
+    private void jbtAdicionarSessaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAdicionarSessaoMouseEntered
+        jbtAdicionarSessao.setBackground(new java.awt.Color(204, 0, 0));
+        jbtAdicionarSessao.setForeground(new java.awt.Color(204, 204, 204));
+    }//GEN-LAST:event_jbtAdicionarSessaoMouseEntered
 
-    private void jbtAdicionarSalaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAdicionarSalaMouseExited
-        jbtAdicionarSala.setBackground(new java.awt.Color(227, 0, 0));
-        jbtAdicionarSala.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_jbtAdicionarSalaMouseExited
+    private void jbtAdicionarSessaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAdicionarSessaoMouseExited
+        jbtAdicionarSessao.setBackground(new java.awt.Color(227, 0, 0));
+        jbtAdicionarSessao.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_jbtAdicionarSessaoMouseExited
 
-    private void jbtRemoverSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Remover?");
-        if (telaConf.getConfirmarAcao()) {
-            String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
-            Sessao selecionada = sessoesAux[lstSalas.getSelectedIndex()];
+    private void jbtRemoverSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSessaoMouseClicked
+        if (lstSessoes.getSelectedIndex() != -1) {
+            TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Remover?");
+            if (telaConf.getConfirmarAcao()) {
+                Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
 
-            SessaoControl sessaoC = new SessaoControl();
-            try {
-                sessaoC.remover(sessaoC.buscar(selecionada));
-                Thread.sleep(1L);
-                FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
-                FrameInicio.getFrame().revalidate();
-            } catch (CadastroInexistenteException | InterruptedException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                SessaoControl sessaoC = new SessaoControl();
+                try {
+                    sessaoC.remover(sessaoC.buscar(selecionada));
+                    Thread.sleep(1L);
+                    FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
+                    FrameInicio.getFrame().revalidate();
+                } catch (CadastroInexistenteException | InterruptedException ex) {
+                    FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                }
             }
         }
-    }//GEN-LAST:event_jbtRemoverSalaMouseClicked
+    }//GEN-LAST:event_jbtRemoverSessaoMouseClicked
 
-    private void jbtRemoverSalaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseEntered
-        jbtAdicionarSala.setBackground(new java.awt.Color(204, 0, 0));
-        jbtAdicionarSala.setForeground(new java.awt.Color(204, 204, 204));
-    }//GEN-LAST:event_jbtRemoverSalaMouseEntered
+    private void jbtRemoverSessaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSessaoMouseEntered
+        jbtAdicionarSessao.setBackground(new java.awt.Color(204, 0, 0));
+        jbtAdicionarSessao.setForeground(new java.awt.Color(204, 204, 204));
+    }//GEN-LAST:event_jbtRemoverSessaoMouseEntered
 
-    private void jbtRemoverSalaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseExited
-        jbtAdicionarSala.setBackground(new java.awt.Color(227, 0, 0));
-        jbtAdicionarSala.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_jbtRemoverSalaMouseExited
+    private void jbtRemoverSessaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSessaoMouseExited
+        jbtAdicionarSessao.setBackground(new java.awt.Color(227, 0, 0));
+        jbtAdicionarSessao.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_jbtRemoverSessaoMouseExited
 
-    private void jbtEditarSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSalaMouseClicked
+    private void jbtEditarSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSessaoMouseClicked
         //String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
-        Sessao selecionada = sessoesAux[lstSalas.getSelectedIndex()];
-        System.out.println(selecionada);
-        System.out.println("Local ID"+selecionada.getSala().getLocal().getId());
-        FrameInicio.getFrame().setContentPane(new TelaEditarSessao(local, selecionada));
-        FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_jbtEditarSalaMouseClicked
+        if (lstSessoes.getSelectedIndex() != -1) {
+            Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
+            System.out.println(selecionada);
+            System.out.println("Local ID" + selecionada.getSala().getLocal().getId());
+            FrameInicio.getFrame().setContentPane(new TelaEditarSessao(local, selecionada));
+            FrameInicio.getFrame().revalidate();
+        }
+    }//GEN-LAST:event_jbtEditarSessaoMouseClicked
 
-    private void jbtEditarSalaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSalaMouseEntered
-        jbtAdicionarSala.setBackground(new java.awt.Color(204, 0, 0));
-        jbtAdicionarSala.setForeground(new java.awt.Color(204, 204, 204));
-    }//GEN-LAST:event_jbtEditarSalaMouseEntered
+    private void jbtEditarSessaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSessaoMouseEntered
+        jbtAdicionarSessao.setBackground(new java.awt.Color(204, 0, 0));
+        jbtAdicionarSessao.setForeground(new java.awt.Color(204, 204, 204));
+    }//GEN-LAST:event_jbtEditarSessaoMouseEntered
 
-    private void jbtEditarSalaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSalaMouseExited
-        jbtAdicionarSala.setBackground(new java.awt.Color(227, 0, 0));
-        jbtAdicionarSala.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_jbtEditarSalaMouseExited
+    private void jbtEditarSessaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSessaoMouseExited
+        jbtAdicionarSessao.setBackground(new java.awt.Color(227, 0, 0));
+        jbtAdicionarSessao.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_jbtEditarSessaoMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
 
@@ -419,15 +422,15 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     private void apagarBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(255, 255, 255));
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbtAdicionarSala;
-    private javax.swing.JButton jbtEditarSala;
-    private javax.swing.JButton jbtRemoverSala;
+    private javax.swing.JButton jbtAdicionarSessao;
+    private javax.swing.JButton jbtEditarSessao;
+    private javax.swing.JButton jbtRemoverSessao;
     private javax.swing.JLabel lblBordaEsquerda;
     private javax.swing.JLabel lblControleOrcamento;
     private javax.swing.JLabel lblDeslogar;
@@ -438,6 +441,6 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     private javax.swing.JLabel lblSalas;
     private javax.swing.JLabel lblSessoes;
     private javax.swing.JLabel lblUsername;
-    private javax.swing.JList<String> lstSalas;
+    private javax.swing.JList<String> lstSessoes;
     // End of variables declaration//GEN-END:variables
 }

@@ -96,7 +96,7 @@ public class TelaPopupSenhaInvalida extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Senha Incorreta!");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 360, 40));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 360, 40));
         getContentPane().add(lblCondicao7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 30, 30));
         getContentPane().add(lblCondicao6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 30, 30));
         getContentPane().add(lblCondicao4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 30, 30));
@@ -174,7 +174,7 @@ public class TelaPopupSenhaInvalida extends javax.swing.JDialog {
         });
         getContentPane().add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 40, 40));
 
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/FundoSenhaInv.png"))); // NOI18N
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundos/FundoPopupSenhaInvalida.png"))); // NOI18N
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 450, 520));
 
         pack();

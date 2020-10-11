@@ -45,10 +45,10 @@ public class TelaPopupNickname extends javax.swing.JDialog {
         getContentPane().add(lblCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 180, 30));
 
         lblMensagem.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        lblMensagem.setForeground(new java.awt.Color(255, 255, 255));
+        lblMensagem.setForeground(new java.awt.Color(181, 0, 0));
         lblMensagem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMensagem.setText("<html><center>Crie seu NickName!");
-        getContentPane().add(lblMensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 270, 60));
+        getContentPane().add(lblMensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 270, 60));
 
         jbtFinalizar.setBackground(new java.awt.Color(227, 0, 0));
         jbtFinalizar.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
@@ -71,7 +71,7 @@ public class TelaPopupNickname extends javax.swing.JDialog {
         getContentPane().add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 60, 40));
 
         lblFundo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/FundoPopupDuasCores.png"))); // NOI18N
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundos/FundoDuasCores.png"))); // NOI18N
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 210));
 
         pack();

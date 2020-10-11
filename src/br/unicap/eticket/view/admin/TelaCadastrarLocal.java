@@ -52,7 +52,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldPais = new javax.swing.JTextField();
         lblPais = new javax.swing.JLabel();
         fldNomeDoLocal = new javax.swing.JTextField();
-        jcbCategoria = new javax.swing.JComboBox<>();
+        jcbCategoria = new javax.swing.JComboBox<String>();
         jbtEntrar = new javax.swing.JButton();
         lblCategoria = new javax.swing.JLabel();
         jbtSelecionarImg = new javax.swing.JButton();
@@ -61,8 +61,6 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldNum = new javax.swing.JTextField();
         fldCEP = new javax.swing.JTextField();
         lblCEP = new javax.swing.JLabel();
-        lblLogo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         lblLinhaEnd = new javax.swing.JLabel();
         lblBackCine = new javax.swing.JLabel();
 
@@ -78,90 +76,90 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         lblNome.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblNome.setForeground(new java.awt.Color(255, 255, 255));
         lblNome.setText("Nome do Local");
-        add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 120, 30));
+        add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 120, 30));
 
         fldRua.setBackground(new java.awt.Color(204, 204, 204));
         fldRua.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldRua.setForeground(new java.awt.Color(102, 102, 102));
         fldRua.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 330, 280, 20));
+        add(fldRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 310, 280, 20));
 
         lblRua.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblRua.setForeground(new java.awt.Color(255, 255, 255));
         lblRua.setText("Rua");
-        add(lblRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 310, -1, -1));
+        add(lblRua, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 290, -1, -1));
 
         fldCidade.setBackground(new java.awt.Color(204, 204, 204));
         fldCidade.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldCidade.setForeground(new java.awt.Color(102, 102, 102));
         fldCidade.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 390, 280, 20));
+        add(fldCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 370, 280, 20));
 
         lblCidade.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblCidade.setForeground(new java.awt.Color(255, 255, 255));
         lblCidade.setText("Cidade");
-        add(lblCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 370, -1, -1));
+        add(lblCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 350, -1, -1));
 
         fldBairro.setBackground(new java.awt.Color(204, 204, 204));
         fldBairro.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldBairro.setForeground(new java.awt.Color(102, 102, 102));
         fldBairro.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 450, 280, 20));
+        add(fldBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 430, 280, 20));
 
         lblBairro.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblBairro.setForeground(new java.awt.Color(255, 255, 255));
         lblBairro.setText("Bairro");
-        add(lblBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 430, -1, -1));
+        add(lblBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 410, -1, -1));
 
         lblNum.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblNum.setForeground(new java.awt.Color(255, 255, 255));
         lblNum.setText("Nº");
-        add(lblNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, -1, -1));
+        add(lblNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 470, -1, -1));
 
         fldUF.setBackground(new java.awt.Color(204, 204, 204));
         fldUF.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldUF.setForeground(new java.awt.Color(102, 102, 102));
         fldUF.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 510, 120, 20));
+        add(fldUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 490, 120, 20));
 
         lblUF.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblUF.setForeground(new java.awt.Color(255, 255, 255));
         lblUF.setText("UF");
-        add(lblUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 490, -1, -1));
+        add(lblUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 470, -1, -1));
 
         fldComplemento.setBackground(new java.awt.Color(204, 204, 204));
         fldComplemento.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldComplemento.setForeground(new java.awt.Color(102, 102, 102));
         fldComplemento.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, 280, 20));
+        add(fldComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 550, 280, 20));
 
         lblComplemento.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblComplemento.setForeground(new java.awt.Color(255, 255, 255));
         lblComplemento.setText("Complemento");
-        add(lblComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 550, -1, -1));
+        add(lblComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 530, -1, -1));
 
         fldPais.setBackground(new java.awt.Color(204, 204, 204));
         fldPais.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldPais.setForeground(new java.awt.Color(102, 102, 102));
         fldPais.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 630, 280, 20));
+        add(fldPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 610, 280, 20));
 
         lblPais.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblPais.setForeground(new java.awt.Color(255, 255, 255));
         lblPais.setText("País");
-        add(lblPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 610, -1, -1));
+        add(lblPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 590, -1, -1));
 
         fldNomeDoLocal.setBackground(new java.awt.Color(204, 204, 204));
         fldNomeDoLocal.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldNomeDoLocal.setForeground(new java.awt.Color(102, 102, 102));
         fldNomeDoLocal.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldNomeDoLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 250, 20));
+        add(fldNomeDoLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 250, 20));
 
         jcbCategoria.setBackground(new java.awt.Color(240, 240, 240));
         jcbCategoria.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         jcbCategoria.setForeground(new java.awt.Color(102, 102, 102));
-        jcbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-   Selecione  -", "Cinema", "Teatro" }));
-        add(jcbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 250, 20));
+        jcbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-   Selecione  -", "Cinema", "Teatro" }));
+        add(jcbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 360, 250, 20));
 
         jbtEntrar.setBackground(new java.awt.Color(227, 0, 0));
         jbtEntrar.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
@@ -181,12 +179,12 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 jbtEntrarMouseExited(evt);
             }
         });
-        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 610, 200, 40));
+        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 590, 200, 40));
 
         lblCategoria.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblCategoria.setForeground(new java.awt.Color(255, 255, 255));
         lblCategoria.setText("Categoria");
-        add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, 80, 20));
+        add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 80, 20));
 
         jbtSelecionarImg.setBackground(new java.awt.Color(227, 0, 0));
         jbtSelecionarImg.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
@@ -212,7 +210,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 jbtSelecionarImgActionPerformed(evt);
             }
         });
-        add(jbtSelecionarImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 200, -1));
+        add(jbtSelecionarImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 200, -1));
 
         jbtLocalizarCEP.setBackground(new java.awt.Color(227, 0, 0));
         jbtLocalizarCEP.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
@@ -233,40 +231,32 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 jbtLocalizarCEPMouseExited(evt);
             }
         });
-        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 260, 160, 30));
+        add(jbtLocalizarCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 240, 160, 30));
 
         lblLinhaCadLocal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Local", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-        add(lblLinhaCadLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, 310, 460));
+        add(lblLinhaCadLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 310, 460));
 
         fldNum.setBackground(new java.awt.Color(204, 204, 204));
         fldNum.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldNum.setForeground(new java.awt.Color(102, 102, 102));
         fldNum.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 510, 120, 20));
+        add(fldNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, 120, 20));
 
         fldCEP.setBackground(new java.awt.Color(204, 204, 204));
         fldCEP.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldCEP.setForeground(new java.awt.Color(102, 102, 102));
         fldCEP.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 270, 140, 20));
+        add(fldCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, 140, 20));
 
         lblCEP.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblCEP.setForeground(new java.awt.Color(255, 255, 255));
         lblCEP.setText("Digite Seu CEP");
-        add(lblCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
-
-        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoColorida.png"))); // NOI18N
-        add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 210, 190));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cine.png"))); // NOI18N
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 180));
+        add(lblCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 230, -1, -1));
 
         lblLinhaEnd.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Endereço", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-        add(lblLinhaEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 330, 460));
+        add(lblLinhaEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 190, 330, 460));
 
-        lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cineCad.png"))); // NOI18N
+        lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/telas/TelaCadastro.png"))); // NOI18N
         add(lblBackCine, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -336,11 +326,11 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtSelecionarImgMouseClicked
 
     private void jbtSelecionarImgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarImgMouseEntered
-        jbtEntrar.setForeground(new Color(0,0,0));
+        jbtSelecionarImg.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtSelecionarImgMouseEntered
 
     private void jbtSelecionarImgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarImgMouseExited
-         jbtEntrar.setForeground(new Color(255,255,255));
+         jbtSelecionarImg.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtSelecionarImgMouseExited
 
     private void jbtSelecionarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelecionarImgActionPerformed
@@ -358,7 +348,6 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
     private javax.swing.JTextField fldPais;
     private javax.swing.JTextField fldRua;
     private javax.swing.JTextField fldUF;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbtEntrar;
     private javax.swing.JButton jbtLocalizarCEP;
     private javax.swing.JButton jbtSelecionarImg;
@@ -372,7 +361,6 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
     private javax.swing.JLabel lblEntrar;
     private javax.swing.JLabel lblLinhaCadLocal;
     private javax.swing.JLabel lblLinhaEnd;
-    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNum;
     private javax.swing.JLabel lblPais;
