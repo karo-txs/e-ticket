@@ -2,7 +2,6 @@ package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.control.usuarios.ClienteControl;
 import br.unicap.eticket.control.validacoes.Conversor;
-import br.unicap.eticket.control.validacoes.ValidaDados;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -22,8 +21,9 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         initComponents();
         this.cliente = cliente;
         this.initDados(cliente);
-        if(cliente.getNickName()!=null)
-        this.lblUsername.setText("@"+cliente.getNickName());
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -400,7 +400,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
                 fldCidade.setText(endereco.get("Cidade"));
                 fldUF.setText(endereco.get("UF"));
             } catch (DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                FrameInicio.mostrarPopUp(ex.getMessage(), true);
             }
 
         }
@@ -486,11 +486,10 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
 
         if (jbtAlterarPerfil.getText().equalsIgnoreCase("Salvar")) {
             ClienteControl cc = new ClienteControl();
-            //Se endereço for nulo....
+
             Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                     fldRua.getText(), fldNum.getText(), fldComplemento.getText());
 
-            //COLOCAR NICK
             Cliente novo = new Cliente(fldNome.getText(), fldNome.getText(), fldEmail.getText(), cliente.getSenha(), Integer.parseInt(fldIdade.getText()),
                     fldCPF.getText(), fldTelefone.getText(), novoEnd);
 
@@ -498,13 +497,16 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
                 if (fldEmail.getText() != null && !fldEmail.getText().equalsIgnoreCase(cliente.getEmail())) {
                     cliente.atualizarEmail(fldEmail.getText());
                 }
+                if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.cliente.getSenha())) {
+                    novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));
+                }
                 cc.atualizar(novo);
                 this.cliente = cc.buscar(cliente);
                 this.initDados(cliente);
-                FrameInicio.mostrarPopUp("Atualizado Com Sucesso!",false);
+                FrameInicio.mostrarPopUp("Atualizado Com Sucesso!", false);
 
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                FrameInicio.mostrarPopUp(ex.getMessage(), true);
             }
 
         }
@@ -513,11 +515,11 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarPerfilMouseClicked
 
     private void jbtAlterarPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseEntered
-        jbtAlterarPerfil.setForeground(new java.awt.Color(0,0,0));
+        jbtAlterarPerfil.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtAlterarPerfilMouseEntered
 
     private void jbtAlterarPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseExited
-        jbtAlterarPerfil.setForeground(new java.awt.Color(255,255,255));
+        jbtAlterarPerfil.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtAlterarPerfilMouseExited
 
     private void jbtAlterarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilActionPerformed
@@ -525,11 +527,11 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarPerfilActionPerformed
 
     private void jbtLocalizarCEPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseEntered
-        jbtLocalizarCEP.setForeground(new java.awt.Color(0,0,0));
+        jbtLocalizarCEP.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtLocalizarCEPMouseEntered
 
     private void jbtLocalizarCEPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseExited
-       jbtLocalizarCEP.setForeground(new java.awt.Color(255,255,255));
+        jbtLocalizarCEP.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
     private void setFieldsEditable(boolean b) {

@@ -394,8 +394,7 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
 
         if (jbtEditar.getText().equalsIgnoreCase("Salvar")) {
             AdminControl cc = new AdminControl();
-            //tirar mascara de cpf 
-
+           
             Admin novo = new Admin(fldNome.getText(), fldEmail.getText(), adm.getSenha(), Integer.parseInt(fldIdade.getText()),
                     fldCPF.getText(), jfldTelefone.getText(), this.adm.getLocalAdministrado());
 
@@ -403,7 +402,10 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
                 if (fldEmail.getText() != null && !fldEmail.getText().equalsIgnoreCase(adm.getEmail())) {
                     adm.atualizarEmail(fldEmail.getText());
                 }
-                cc.atualizar(novo); //retornar obj
+                if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.adm.getSenha())) {
+                    novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));
+                }
+                cc.atualizar(novo);
                 FrameInicio.mostrarPopUp("Atualizado Com Sucesso!",false);
                 this.adm = cc.buscar(adm);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException | DadosInvalidosException ex) {
