@@ -8,6 +8,7 @@ import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.excecoes.SenhaInvalidaException;
+import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.usuarios.Cliente;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -92,7 +93,7 @@ public class ClienteControl extends UsuarioControl implements BaseControl<Client
     public void atualizar(Cliente novo) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
 
         Cliente busca = this.buscar(novo);
-        if (novo.getNome()!=null && !novo.getNome().equals("") && !novo.getNome().equals(busca.getNome())) {
+        if (novo.getNome() != null && !novo.getNome().equals("") && !novo.getNome().equals(busca.getNome())) {
             if (ValidaDados.validaNome(novo.getNome())) {
                 busca.setNome(novo.getNome());
             } else {
@@ -100,7 +101,7 @@ public class ClienteControl extends UsuarioControl implements BaseControl<Client
             }
         }
 
-        if (novo.getNickName()!=null && !novo.getNickName().equals("") && !novo.getNome().equals(busca.getNome())) {
+        if (novo.getNickName() != null && !novo.getNickName().equals("") && !novo.getNome().equals(busca.getNome())) {
             if (ValidaDados.validaNickName(novo.getNickName())) {
                 busca.setNickName(novo.getNickName());
             } else {
@@ -116,7 +117,7 @@ public class ClienteControl extends UsuarioControl implements BaseControl<Client
             }
         }
 
-        if (novo.getTelefone()!=null && !novo.getTelefone().equals("") && !novo.getTelefone().equals(busca.getTelefone())) {
+        if (novo.getTelefone() != null && !novo.getTelefone().equals("") && !novo.getTelefone().equals(busca.getTelefone())) {
             System.out.println(novo.getTelefone());
             if (ValidaDados.validaTelefone(novo.getTelefone())) {
                 busca.setTelefone(novo.getTelefone());
@@ -124,15 +125,19 @@ public class ClienteControl extends UsuarioControl implements BaseControl<Client
                 throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Telefone"));
             }
         }
-        if (novo.getCpf()!=null && !novo.getCpf().equals("") && !busca.getCpf().equals(novo.getCpf())) {
+        if (novo.getCpf() != null && !novo.getCpf().equals("") && !busca.getCpf().equals(novo.getCpf())) {
             if (ValidaDados.validaCpf(novo.getCpf())) {
                 busca.setCpf(novo.getCpf());
             } else {
                 throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Cpf"));
             }
         }
-
-        if (novo.getEndereco() != null && !busca.getEndereco().equals(novo.getEndereco())) {
+        Endereco end = novo.getEndereco();
+        if (end.getCep().equals("") || end.getUf().equals("") || end.getCidade().equals("") || end.getBairro().equals("")
+                || end.getLogradouro().equals("") || end.getNum().equals("")) {
+            end = null;
+        }
+        if (end != null && !busca.getEndereco().equals(novo.getEndereco())) {
             if (ValidaDados.validaEndereco(novo.getEndereco())) {
                 busca.setEndereco(novo.getEndereco());
             } else {
@@ -140,7 +145,7 @@ public class ClienteControl extends UsuarioControl implements BaseControl<Client
             }
         }
 
-        if (novo.getSenha()!=null && !novo.getSenha().equals("") && !busca.getSenha().equals(novo.getSenha())) {
+        if (novo.getSenha() != null && !novo.getSenha().equals("") && !busca.getSenha().equals(novo.getSenha())) {
             try {
                 if (ValidaDados.validaSenha(novo.getSenha())) {
                     busca.setSenha(novo.getSenha());

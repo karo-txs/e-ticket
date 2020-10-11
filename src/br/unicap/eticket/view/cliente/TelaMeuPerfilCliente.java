@@ -486,10 +486,10 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
 
         if (jbtAlterarPerfil.getText().equalsIgnoreCase("Salvar")) {
             ClienteControl cc = new ClienteControl();
-
-            Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
-                    fldRua.getText(), fldNum.getText(), fldComplemento.getText());
-
+            Endereco novoEnd;
+                novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
+                        fldRua.getText(), fldNum.getText(), fldComplemento.getText());
+            
             Cliente novo = new Cliente(fldNome.getText(), fldNome.getText(), fldEmail.getText(), cliente.getSenha(), Integer.parseInt(fldIdade.getText()),
                     fldCPF.getText(), fldTelefone.getText(), novoEnd);
 
@@ -534,23 +534,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         jbtLocalizarCEP.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
-    private void setFieldsEditable(boolean b) {
-        fldNome.setEditable(b);
-        fldIdade.setEditable(b);
-        fldCPF.setEditable(b);
-        fldEmail.setEditable(b);
-        fldTelefone.setEditable(b);
-        fldBairro.setEditable(b);
-        fldCEP.setEditable(b);
-        fldCidade.setEditable(b);
-        fldComplemento.setEditable(b);
-        fldNum.setEditable(b);
-        fldPais.setEditable(b);
-        fldRua.setEditable(b);
-        fldUF.setEditable(b);
-        fldSenhaAntiga.setEditable(b);
-        fldSenhaNova.setEditable(b);
-    }
+    
 
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
