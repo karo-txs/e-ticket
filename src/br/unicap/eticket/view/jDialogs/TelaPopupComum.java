@@ -48,7 +48,7 @@ public class TelaPopupComum extends javax.swing.JDialog {
                 jbtFinalizarMouseExited(evt);
             }
         });
-        getContentPane().add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 50, 40));
+        getContentPane().add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 50, 40));
 
         ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/IconeV.png"))); // NOI18N
         getContentPane().add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 40, 40));
@@ -59,10 +59,10 @@ public class TelaPopupComum extends javax.swing.JDialog {
         lblMensagem.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
         lblMensagem.setForeground(new java.awt.Color(255, 255, 255));
         lblMensagem.setText("<html><center>Login inválido!");
-        getContentPane().add(lblMensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 220, 40));
+        getContentPane().add(lblMensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 220, 40));
 
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundoPopupComum.png"))); // NOI18N
-        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 330, 130));
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundos/FundoPopupComumPequeno.png"))); // NOI18N
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 350, 150));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

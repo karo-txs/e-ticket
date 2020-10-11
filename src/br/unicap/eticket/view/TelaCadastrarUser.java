@@ -38,7 +38,6 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
         fldEmail = new javax.swing.JTextField();
         fldSenha = new javax.swing.JPasswordField();
         fldSenhaConf = new javax.swing.JPasswordField();
-        lblLogo = new javax.swing.JLabel();
         lblBackCine = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -113,11 +112,7 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
         fldSenhaConf.setForeground(new java.awt.Color(102, 102, 102));
         add(fldSenhaConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 510, 350, 40));
 
-        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoColorida.png"))); // NOI18N
-        add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 210, 190));
-
-        lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cine2.png"))); // NOI18N
+        lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/telas/TelaInicial.png"))); // NOI18N
         add(lblBackCine, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 770));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -179,7 +174,6 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
     private javax.swing.JLabel lblBackCine;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEntrar;
-    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblSenhaC;

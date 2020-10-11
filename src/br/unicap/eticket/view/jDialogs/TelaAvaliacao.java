@@ -66,7 +66,7 @@ public class TelaAvaliacao extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblCarinhasLocal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/Carinhas.png"))); // NOI18N
-        getContentPane().add(lblCarinhasLocal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 200, 50));
+        getContentPane().add(lblCarinhasLocal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, 200, 50));
 
         lblCarinhasLocal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/Carinhas.png"))); // NOI18N
         getContentPane().add(lblCarinhasLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 200, 50));
@@ -88,7 +88,7 @@ public class TelaAvaliacao extends javax.swing.JDialog {
                 jbtAvaliarMouseExited(evt);
             }
         });
-        getContentPane().add(jbtAvaliar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, 200, 40));
+        getContentPane().add(jbtAvaliar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 540, 200, 40));
 
         lblEntretenimento.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblEntretenimento.setForeground(new java.awt.Color(255, 255, 255));
@@ -110,23 +110,23 @@ public class TelaAvaliacao extends javax.swing.JDialog {
 
         buttonGroup2.add(jrb11);
         jrb11.setOpaque(false);
-        getContentPane().add(jrb11, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 310, -1, -1));
+        getContentPane().add(jrb11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, -1, -1));
 
         buttonGroup2.add(jrb12);
         jrb12.setOpaque(false);
-        getContentPane().add(jrb12, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 310, -1, -1));
+        getContentPane().add(jrb12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, -1, -1));
 
         buttonGroup2.add(jrb13);
         jrb13.setOpaque(false);
-        getContentPane().add(jrb13, new org.netbeans.lib.awtextra.AbsoluteConstraints(364, 310, -1, -1));
+        getContentPane().add(jrb13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, -1, -1));
 
         buttonGroup2.add(jrb14);
         jrb14.setOpaque(false);
-        getContentPane().add(jrb14, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 310, -1, -1));
+        getContentPane().add(jrb14, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, -1, -1));
 
         buttonGroup2.add(jrb15);
         jrb15.setOpaque(false);
-        getContentPane().add(jrb15, new org.netbeans.lib.awtextra.AbsoluteConstraints(442, 310, -1, -1));
+        getContentPane().add(jrb15, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 360, -1, -1));
 
         buttonGroup1.add(jrb1);
         jrb1.setOpaque(false);
@@ -149,8 +149,8 @@ public class TelaAvaliacao extends javax.swing.JDialog {
         getContentPane().add(jrb5, new org.netbeans.lib.awtextra.AbsoluteConstraints(442, 100, -1, -1));
 
         lblFundo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/FundoPopupAvaliacao.png"))); // NOI18N
-        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 550));
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundos/FundoAvaliacao.png"))); // NOI18N
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

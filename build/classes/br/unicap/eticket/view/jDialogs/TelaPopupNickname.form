@@ -63,14 +63,14 @@
           <Font name="Impact" size="24" style="0"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+          <Color blue="0" green="0" red="b5" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Crie seu NickName!"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="140" y="10" width="270" height="60"/>
+          <AbsoluteConstraints x="150" y="10" width="270" height="60"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -111,7 +111,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagensRework/FundoPopupDuasCores.png"/>
+          <Image iconType="3" name="/imagensRework/fundos/FundoDuasCores.png"/>
         </Property>
       </Properties>
       <Constraints>

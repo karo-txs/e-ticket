@@ -20,7 +20,6 @@ public class TelaInicio extends javax.swing.JPanel {
     private void initComponents() {
 
         lblBemVindo = new javax.swing.JLabel();
-        lblLogo = new javax.swing.JLabel();
         fldLogin = new javax.swing.JTextField();
         fldSenha = new javax.swing.JPasswordField();
         jbtEntrar = new javax.swing.JButton();
@@ -40,27 +39,23 @@ public class TelaInicio extends javax.swing.JPanel {
         lblBemVindo.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         lblBemVindo.setForeground(new java.awt.Color(255, 255, 255));
         lblBemVindo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBemVindo.setText("Bem-vindo!");
-        add(lblBemVindo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 490, 90));
-
-        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/e-ticketLogoColorida.png"))); // NOI18N
-        add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 210, 190));
+        lblBemVindo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/LogoComNome.png"))); // NOI18N
+        add(lblBemVindo, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 160, 140));
 
         fldLogin.setBackground(new java.awt.Color(204, 204, 204));
         fldLogin.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
         fldLogin.setForeground(new java.awt.Color(102, 102, 102));
         fldLogin.setBorder(null);
-        add(fldLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 410, 40));
+        add(fldLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, 410, 40));
 
         fldSenha.setBackground(new java.awt.Color(204, 204, 204));
         fldSenha.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         fldSenha.setForeground(new java.awt.Color(102, 102, 102));
-        add(fldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 410, 40));
+        add(fldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 340, 410, 40));
 
         jbtEntrar.setBackground(new java.awt.Color(0, 0, 153));
         jbtEntrar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
+        jbtEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoVermelho.png"))); // NOI18N
         jbtEntrar.setText("Entrar");
         jbtEntrar.setBorder(null);
         jbtEntrar.setContentAreaFilled(false);
@@ -77,11 +72,12 @@ public class TelaInicio extends javax.swing.JPanel {
                 jbtEntrarMouseExited(evt);
             }
         });
-        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 400, 200, 60));
+        add(jbtEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, 260, 60));
 
         lblLinha.setBackground(new java.awt.Color(153, 153, 153));
-        lblLinha.setOpaque(true);
-        add(lblLinha, new org.netbeans.lib.awtextra.AbsoluteConstraints(457, 500, 450, 1));
+        lblLinha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLinha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/linhaVermelha.png"))); // NOI18N
+        add(lblLinha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 490, 420, -1));
 
         lblCriarConta.setFont(new java.awt.Font("Segoe UI Symbol", 0, 14)); // NOI18N
         lblCriarConta.setForeground(new java.awt.Color(204, 204, 204));
@@ -98,7 +94,7 @@ public class TelaInicio extends javax.swing.JPanel {
                 lblCriarContaMouseExited(evt);
             }
         });
-        add(lblCriarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 520, -1, -1));
+        add(lblCriarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 530, -1, -1));
 
         lblProprietario.setFont(new java.awt.Font("Segoe UI Symbol", 0, 14)); // NOI18N
         lblProprietario.setForeground(new java.awt.Color(204, 204, 204));
@@ -115,7 +111,7 @@ public class TelaInicio extends javax.swing.JPanel {
                 lblProprietarioMouseExited(evt);
             }
         });
-        add(lblProprietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, -1, -1));
+        add(lblProprietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 560, -1, -1));
 
         lblRodape.setFont(new java.awt.Font("Segoe UI Symbol", 0, 10)); // NOI18N
         lblRodape.setForeground(new java.awt.Color(204, 204, 204));
@@ -126,14 +122,14 @@ public class TelaInicio extends javax.swing.JPanel {
         lblDigSenha.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblDigSenha.setForeground(new java.awt.Color(255, 255, 255));
         lblDigSenha.setText("Digite sua senha");
-        add(lblDigSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 130, 30));
+        add(lblDigSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 130, 30));
 
         lblDigEmail.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         lblDigEmail.setForeground(new java.awt.Color(255, 255, 255));
         lblDigEmail.setText("Digite seu email");
-        add(lblDigEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 130, 30));
+        add(lblDigEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 130, 30));
 
-        lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cine2.png"))); // NOI18N
+        lblBackCine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/telas/TelaInicial.png"))); // NOI18N
         add(lblBackCine, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -162,11 +158,11 @@ public class TelaInicio extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtEntrarMouseClicked
 
     private void jbtEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseEntered
-        jbtEntrar.setForeground(new Color(191,30,30));
+        jbtEntrar.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_jbtEntrarMouseEntered
 
     private void jbtEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseExited
-        jbtEntrar.setForeground(new Color(0,0,0));
+        jbtEntrar.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_jbtEntrarMouseExited
 
     private void lblProprietarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProprietarioMouseEntered
@@ -207,7 +203,6 @@ public class TelaInicio extends javax.swing.JPanel {
     private javax.swing.JLabel lblDigEmail;
     private javax.swing.JLabel lblDigSenha;
     private javax.swing.JLabel lblLinha;
-    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblProprietario;
     private javax.swing.JLabel lblRodape;
     // End of variables declaration//GEN-END:variables

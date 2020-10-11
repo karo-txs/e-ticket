@@ -69,7 +69,7 @@ public class TelaPopupQRCode extends javax.swing.JDialog {
         getContentPane().add(jbtOk, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, 40));
 
         jLabel2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(188, 0, 0));
         jLabel2.setText("<html><Center> Sua Reserva foi concluída com sucesso!");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 410, 60));
 
@@ -78,7 +78,7 @@ public class TelaPopupQRCode extends javax.swing.JDialog {
         jLabel1.setText("<html> <Center>Utilize este QR Code para identificação no local.");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 240, 60));
 
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/FundoPopupGrande.png"))); // NOI18N
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundos/FundoPopupComumGrande.png"))); // NOI18N
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 560, 250));
 
         pack();

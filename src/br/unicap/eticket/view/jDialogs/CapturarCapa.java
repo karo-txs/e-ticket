@@ -91,11 +91,11 @@ public class CapturarCapa extends javax.swing.JDialog {
         getContentPane().add(jlbImagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 213, 145));
 
         jLabel1.setFont(new java.awt.Font("Impact", 0, 27)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(188, 0, 0));
         jLabel1.setText("<html><center>Escolha a Capa");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 140, -1));
 
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/FundoPopupQuadrado.png"))); // NOI18N
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundos/FundoPopupQuadrado.png"))); // NOI18N
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 340));
 
         setBounds(0, 0, 543, 336);

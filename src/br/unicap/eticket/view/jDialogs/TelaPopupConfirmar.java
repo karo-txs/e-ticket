@@ -32,7 +32,7 @@ public class TelaPopupConfirmar extends javax.swing.JDialog {
         lblConfirmar.setForeground(new java.awt.Color(255, 255, 255));
         lblConfirmar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblConfirmar.setText("<html><center>Confirmar Ação?");
-        getContentPane().add(lblConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 270, 60));
+        getContentPane().add(lblConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 300, 60));
 
         jbtSim.setBackground(new java.awt.Color(227, 0, 0));
         jbtSim.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
@@ -52,7 +52,7 @@ public class TelaPopupConfirmar extends javax.swing.JDialog {
                 jbtSimMouseExited(evt);
             }
         });
-        getContentPane().add(jbtSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, 40));
+        getContentPane().add(jbtSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, 40));
 
         jbtNao.setBackground(new java.awt.Color(227, 0, 0));
         jbtNao.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
@@ -72,10 +72,10 @@ public class TelaPopupConfirmar extends javax.swing.JDialog {
                 jbtNaoMouseExited(evt);
             }
         });
-        getContentPane().add(jbtNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 40, 40));
+        getContentPane().add(jbtNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 40, 40));
 
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundoPopupComum.png"))); // NOI18N
-        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 330, 130));
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundos/FundoPopupComumPequeno.png"))); // NOI18N
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 350, 130));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
