@@ -174,54 +174,59 @@ public class TelaAvaliacao extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtAvaliarMouseExited
 
     private void jbtAvaliarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAvaliarMouseClicked
-       /* TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Concluir a sua avalião? Ao concuir não poderá repetir esse processo!");
+        /* TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Concluir a sua avalião? Ao concuir não poderá repetir esse processo!");
         if (telaConf.getConfirmarAcao()) {*/
-            int nota = 0;
-            if (jrb1.isSelected()) {
-                nota = 1;
-            } else if (jrb2.isSelected()) {
-                nota = 2;
-            } else if (jrb3.isSelected()) {
-                nota = 3;
-            } else if (jrb4.isSelected()) {
-                nota = 4;
-            } else if (jrb5.isSelected()) {
-                nota = 5;
-            }
-            if (buttonGroup1.isSelected(null)) {
-                //sem nota
-            } else {
-                cliente.darNota(reserva.getSessao().getLocal(), nota);
-            }
+        int nota = 0;
+        if (jrb1.isSelected()) {
+            nota = 1;
+        } else if (jrb2.isSelected()) {
+            nota = 2;
+        } else if (jrb3.isSelected()) {
+            nota = 3;
+        } else if (jrb4.isSelected()) {
+            nota = 4;
+        } else if (jrb5.isSelected()) {
+            nota = 5;
+        }
+        if (buttonGroup1.isSelected(null)) {
+            //sem nota
+        } else {
+            cliente.darNota(reserva.getSessao().getLocal(), nota);
+        }
 
-            nota = 0;
-            if (jrb11.isSelected()) {
-                nota = 1;
-            } else if (jrb12.isSelected()) {
-                nota = 2;
-            } else if (jrb13.isSelected()) {
-                nota = 3;
-            } else if (jrb14.isSelected()) {
-                nota = 4;
-            } else if (jrb15.isSelected()) {
-                nota = 5;
-            }
-            if (buttonGroup2.isSelected(null)) {
-                //sem nota
-            } else {
-                cliente.darNota(reserva.getSessao().getEntretenimento(), nota);
-            }
-            
-            try {
-                reserva.finalizarReserva();
-                this.avaliacaoFeita = true;
-                this.dispose();
-                
-            } catch (CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
-            } 
-            
-       /* } else {
+        nota = 0;
+        if (jrb11.isSelected()) {
+            nota = 1;
+        } else if (jrb12.isSelected()) {
+            nota = 2;
+        } else if (jrb13.isSelected()) {
+            nota = 3;
+        } else if (jrb14.isSelected()) {
+            nota = 4;
+        } else if (jrb15.isSelected()) {
+            nota = 5;
+        }
+        if (buttonGroup2.isSelected(null)) {
+            //sem nota
+        } else {
+            cliente.darNota(reserva.getSessao().getEntretenimento(), nota);
+        }
+
+        try {
+            reserva.finalizarReserva();
+            FrameInicio.mostrarPopUp("Avaliação concluída!", false);
+            Thread.sleep(1L);
+            FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
+            FrameInicio.getFrame().revalidate();
+            this.dispose();
+
+        } catch (CadastroInexistenteException ex) {
+            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TelaAvaliacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        /* } else {
             FrameInicio.mostrarPopUp("Avaliação cancelada!");
             this.dispose();
         }*/

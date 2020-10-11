@@ -1,6 +1,7 @@
 package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.control.auxiliares.ReservaControl;
+import br.unicap.eticket.control.usuarios.ClienteControl;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.usuarios.Cliente;
@@ -27,8 +28,14 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
         }
     }
 
-    private void initReservas(Cliente cliente) {
+    private void initReservas(Cliente cliente)  {
         String[] dados;
+        ClienteControl clienteC = new ClienteControl();
+        try {
+            cliente = clienteC.buscar(cliente);
+        } catch (CadastroInexistenteException ex) {
+           FrameInicio.mostrarPopUp(ex.getMessage(), true);
+        }
         List<Reserva> reservas = cliente.getReservas();
         dados = new String[reservas.size()];
         int i = 0;
@@ -229,7 +236,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
                     FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
                     FrameInicio.getFrame().revalidate();
                 } catch (CadastroInexistenteException ex) {
-                    FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                    FrameInicio.mostrarPopUp(ex.getMessage(), true);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(TelaListaDeReservas.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -299,31 +306,19 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
             TelaAvaliacao tela = new TelaAvaliacao(idReservas[lstReservas.getSelectedIndex()], cliente);
             tela.setLocationRelativeTo(null);
             tela.setVisible(true);
-            if (tela.getAvaliacaoFeita()) {
-                try {
-                    Thread.sleep(1L);
-                    this.initReservas(cliente);
-                    FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
-                    FrameInicio.getFrame().revalidate();
-                    FrameInicio.mostrarPopUp("Avaliação concluída!",false);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(TelaListaDeReservas.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
         } else {
-            FrameInicio.mostrarPopUp("Avaliação não disponível!",true);
+            FrameInicio.mostrarPopUp("Avaliação não disponível!", true);
         }
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseClicked
 
     private void jbtFazerAvaliacaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFazerAvaliacaoMouseEntered
-        
-        jbtFazerAvaliacao.setForeground(new java.awt.Color(191,30,30));
+
+        jbtFazerAvaliacao.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseEntered
 
     private void jbtFazerAvaliacaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFazerAvaliacaoMouseExited
-        
-        jbtFazerAvaliacao.setForeground(new java.awt.Color(0,0,0));
+
+        jbtFazerAvaliacao.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseExited
 
     private void acenderBotao(JLabel lbl) {
