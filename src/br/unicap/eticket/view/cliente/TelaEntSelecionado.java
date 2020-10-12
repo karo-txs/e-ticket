@@ -526,7 +526,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         Calendar data = Calendar.getInstance();
         data.set(Calendar.YEAR, Integer.parseInt(dataAux[2]));
         data.set(Calendar.MONTH, Integer.parseInt(dataAux[1]) - 1);
-        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]) - 1);
+        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]));
 
         try {
             this.initSessoes(data);
@@ -704,7 +704,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         Calendar data = Calendar.getInstance();
         data.set(Calendar.YEAR, Integer.parseInt(dataAux[2]));
         data.set(Calendar.MONTH, Integer.parseInt(dataAux[1]) - 1);
-        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]) - 1);
+        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]));
         data.set(Calendar.HOUR_OF_DAY, 0);
         data.set(Calendar.MINUTE, 0);
         data.set(Calendar.SECOND, 0);
