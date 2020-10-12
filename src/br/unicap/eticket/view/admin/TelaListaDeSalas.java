@@ -1,8 +1,10 @@
 package br.unicap.eticket.view.admin;
 
 import br.unicap.eticket.control.auxiliares.SalaControl;
+import br.unicap.eticket.control.locais.LocalControl;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
+import br.unicap.eticket.model.locais.Teatro;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
@@ -292,7 +294,8 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
                 String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
                 SalaControl salaC = new SalaControl();
                 try {
-                    salaC.remover(salaC.buscar(new Sala(this.local, valSelecionado[0])));
+                    salaC.buscar(new Sala(this.local, valSelecionado[0])).desativarSala();
+                    //salaC.remover(salaC.buscar(new Sala(this.local, valSelecionado[0])));
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
                     FrameInicio.getFrame().revalidate();

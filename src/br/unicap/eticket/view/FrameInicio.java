@@ -75,7 +75,6 @@ public class FrameInicio extends JFrame {
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 frame.requestFocus();
-               
 
                 ClienteControl clienteC = new ClienteControl();
 

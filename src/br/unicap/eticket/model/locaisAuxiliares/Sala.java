@@ -53,6 +53,9 @@ public class Sala implements Serializable {
     private List<Assento> assentos;
 
     private int fileirasX, fileirasY;
+    
+    @Column
+    private boolean ativa;
 
     public Sala() {
     }
@@ -60,6 +63,7 @@ public class Sala implements Serializable {
     public Sala(String nome) {
         this.nome = nome;
         this.assentos = new ArrayList<>();
+        this.ativa=true;
     }
 
     public Sala(LocalGenerico local, String nome) {
@@ -139,6 +143,26 @@ public class Sala implements Serializable {
             salaD.atualizarAtomico(busca);
         }
     }
+    
+    /**
+     * Desativa uma sala e as suas sessoes
+     *
+     * @throws CadastroInexistenteException
+     */
+    public void desativarSala() throws CadastroInexistenteException {
+        SalaControl sc = new SalaControl();
+        SessaoControl sessaoC = new SessaoControl();
+        SalaDAO sd = new SalaDAO();
+        Sala busca = this.getId() == null ? sc.buscar(this) : this;
+
+        busca.setAtiva(false);
+        sd.atualizarAtomico(busca);
+        List<Sessao> sessoes = sessaoC.sessoesDaSala(busca);
+        for(Sessao s: sessoes){
+            s.desativarSessao();
+        }
+    }
+
 
     /**
      * Reserva um assento
@@ -297,6 +321,14 @@ public class Sala implements Serializable {
         this.fileirasY = fileirasY;
     }
 
+    public boolean isAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

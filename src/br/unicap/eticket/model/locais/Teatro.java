@@ -7,6 +7,7 @@ import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Admin;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -65,7 +66,14 @@ public class Teatro extends LocalGenerico {
         TeatroDAO td = new TeatroDAO();
         SalaDAO salaD = new SalaDAO();
         Teatro busca = this.getId() == null ? td.buscarTeatro(this) : this;
-        return salaD.consultar("salasDoLocal", "id", busca.getId());
+        List<Sala> salas =  salaD.consultar("salasDoLocal", "id", busca.getId());
+        List<Sala> result = new LinkedList<>();
+        for(Sala s: salas){
+            if(s.isAtiva()){
+                result.add(s);
+            }
+        }
+        return result;
     }
 
     public void setSala(Sala s) {
@@ -77,6 +85,14 @@ public class Teatro extends LocalGenerico {
         TeatroDAO td = new TeatroDAO();
         SessaoDAO sessaoD = new SessaoDAO();
         Teatro busca = this.getId() == null ? td.buscarTeatro(this) : this;
-        return sessaoD.consultar("sessoesDoLocal", "id", busca.getId());
+        List<Sessao> sessoes = sessaoD.consultar("sessoesDoLocal", "id", busca.getId());
+        List<Sessao> result = new LinkedList<>();
+        for(Sessao s: sessoes){
+            if(s.isAtiva()){
+                result.add(s);
+            }
+        }
+        
+        return result;
     }
 }

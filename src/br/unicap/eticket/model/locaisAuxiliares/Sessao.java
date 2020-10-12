@@ -148,6 +148,10 @@ public class Sessao implements Serializable {
      * @throws CadastroInexistenteException
      */
     public void desativarSessao() throws CadastroInexistenteException {
+        /* Falta: Verificar se a sessão possui reservas que ainda nao foram utilizadas.
+           se sim: impedir que o admin desative a sessao ou ele tera que restituir os valores das reservas ja pagas
+           se nao: desativamento normal
+        */
         SessaoControl sc = new SessaoControl();
         SessaoDAO sd = new SessaoDAO();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
@@ -167,11 +171,7 @@ public class Sessao implements Serializable {
     public boolean permitirAvaliacao() throws CadastroInexistenteException {
         SessaoControl sc = new SessaoControl();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
-        if (!busca.isAtiva()) {
-            return true;
-        } else {
-            return false;
-        }
+        return !busca.isAtiva();
     }
 
     //Gets e Sets

@@ -60,9 +60,11 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         this.idSessoes = new Long[sessoes.size()];
         int i = 0;
         for (Sessao s : sessoes) {
-            dados[i] = s.getSala().getTipoSala().toString() + " | " + s.getSala().getNome() + " | "
-                    + df.format(s.getDataInicial().getTime());
-            idSessoes[i] = s.getId();
+            if (s.isAtiva()) {
+                dados[i] = s.getSala().getTipoSala().toString() + " | " + s.getSala().getNome() + " | "
+                        + df.format(s.getDataInicial().getTime());
+                idSessoes[i] = s.getId();
+            }
             i++;
         }
 
@@ -524,7 +526,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         Calendar data = Calendar.getInstance();
         data.set(Calendar.YEAR, Integer.parseInt(dataAux[2]));
         data.set(Calendar.MONTH, Integer.parseInt(dataAux[1]) - 1);
-        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]));
+        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]) - 1);
 
         try {
             this.initSessoes(data);
@@ -702,7 +704,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         Calendar data = Calendar.getInstance();
         data.set(Calendar.YEAR, Integer.parseInt(dataAux[2]));
         data.set(Calendar.MONTH, Integer.parseInt(dataAux[1]) - 1);
-        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]));
+        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]) - 1);
         data.set(Calendar.HOUR_OF_DAY, 0);
         data.set(Calendar.MINUTE, 0);
         data.set(Calendar.SECOND, 0);

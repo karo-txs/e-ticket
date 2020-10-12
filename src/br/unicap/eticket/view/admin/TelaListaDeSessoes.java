@@ -283,13 +283,14 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
 
     private void jbtRemoverSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSessaoMouseClicked
         if (lstSessoes.getSelectedIndex() != -1) {
-            TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Remover?");
+            TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Desativar?");
             if (telaConf.getConfirmarAcao()) {
                 Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
 
                 SessaoControl sessaoC = new SessaoControl();
                 try {
-                    sessaoC.remover(sessaoC.buscar(selecionada));
+                    sessaoC.buscar(selecionada).desativarSessao();
+                    //sessaoC.remover(sessaoC.buscar(selecionada));
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
                     FrameInicio.getFrame().revalidate();
