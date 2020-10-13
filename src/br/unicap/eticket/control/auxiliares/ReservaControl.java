@@ -6,6 +6,7 @@ import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.dao.SalaDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
+import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 
 public class ReservaControl implements BaseControl<Reserva> {
 
@@ -33,12 +34,11 @@ public class ReservaControl implements BaseControl<Reserva> {
      */
     @Override
     public Reserva buscar(Reserva reserva) throws CadastroInexistenteException {
-        SalaDAO sc = new SalaDAO();
-        if (reserva.getSessao().getId() == null) {
-            reserva.getSessao().setNome(sc.buscarSala(reserva.getSessao().getSala().getNome()).getNome()
-                    + ":" + reserva.getSessao().getNome());
-        }
-        Reserva busca = dao.buscarReserva(reserva);
+        
+        SessaoControl sessaoC = new SessaoControl();
+        Sessao buscaS = reserva.getId()==null ? sessaoC.buscar(reserva.getSessao()): reserva.getSessao();
+        
+        Reserva busca = dao.buscarReserva(new Reserva(buscaS,reserva.getAssento()));
         if (busca != null) {
             return busca;
         } else {

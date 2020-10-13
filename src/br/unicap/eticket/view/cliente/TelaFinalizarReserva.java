@@ -1,5 +1,6 @@
 package br.unicap.eticket.view.cliente;
 
+import br.unicap.eticket.control.usuarios.ClienteControl;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -336,7 +337,9 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         try {
             System.out.println(cliente);
             Reserva rFeita = cliente.fazerReserva(sessao, numCadeira);
-
+            ClienteControl cc = new ClienteControl();
+            cliente = cc.buscar(cliente);
+            
             TelaPopupQRCode ppQrCode = new TelaPopupQRCode(FrameInicio.getFrame(), true, rFeita.getQrCode(), cliente);
             ppQrCode.setLocationRelativeTo(null);
             ppQrCode.setVisible(true);
