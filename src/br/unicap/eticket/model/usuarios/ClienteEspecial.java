@@ -26,7 +26,7 @@ public class ClienteEspecial extends Cliente {
     @JoinTable(name = "cliente_fidelidades", joinColumns = @JoinColumn(name = "id"))
     @MapKeyColumn(name = "Local")
     @Column(name = "TierCliente")
-    private Map<LocalGenerico, TierCliente> fidelidades = new HashMap<>();
+    private Map<LocalGenerico, TierCliente> fidelidades = new LinkedHashMap<>();;
 
     public ClienteEspecial() {
     }
@@ -76,7 +76,6 @@ public class ClienteEspecial extends Cliente {
 
     public void criarFidelidade(LocalGenerico local) throws CadastroInexistenteException {
         LocalControl localC = new LocalControl();
-        this.fidelidades = new LinkedHashMap<>();
         LocalGenerico busca = local.getId() == null ? localC.buscar(local) : local;
         this.fidelidades.put(busca, TierCliente.TIER3);
     }
