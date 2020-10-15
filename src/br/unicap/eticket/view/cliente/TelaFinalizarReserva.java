@@ -8,10 +8,15 @@ import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
+import br.unicap.eticket.model.usuarios.ClienteEspecial;
+import br.unicap.eticket.model.usuarios.TierCliente;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.view.jDialogs.TelaPopupPagarReserva;
 import br.unicap.eticket.view.jDialogs.TelaPopupQRCode;
+import br.unicap.eticket.view.jDialogs.TelaPopupSubiuTier;
 import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,8 +40,26 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         this.numCadeira = numCadeira;
         initReserva();
         initLocal();
+        this.initCliente();
+    }
+
+    private void initCliente() {
+         this.lblTier.setVisible(false);
         if (cliente.getNickName() != null) {
             this.lblUsername.setText("@" + cliente.getNickName());
+        }
+
+        if (cliente.isEspecial()) {
+            ClienteEspecial clienteE = (ClienteEspecial) cliente;
+            if (clienteE.getDesconto(reserva.getSessao().getLocal()) != 0) {
+                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+                String caminho = clienteE.getTierImg(this.reserva.getSessao().getLocal());
+                if (caminho != null) {
+                     this.lblTier.setVisible(true);
+                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
+                }
+            }
         }
     }
 
@@ -45,6 +68,8 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     private void initComponents() {
 
         jbtFinalizar = new javax.swing.JButton();
+        lblDesconto = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         lblPreco = new javax.swing.JLabel();
         lblLocalCapa = new javax.swing.JLabel();
         lblFilmeCapa = new javax.swing.JLabel();
@@ -57,8 +82,11 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         lblLocalNome = new javax.swing.JLabel();
         lblEndLocaBairroCidadeUF = new javax.swing.JLabel();
         lblEndRuaENum = new javax.swing.JLabel();
+        lblTier = new javax.swing.JLabel();
         lblAsse = new javax.swing.JLabel();
         lblDat = new javax.swing.JLabel();
+        lblTot = new javax.swing.JLabel();
+        lblDes = new javax.swing.JLabel();
         lblPre = new javax.swing.JLabel();
         lblHor = new javax.swing.JLabel();
         lblHoraMin = new javax.swing.JLabel();
@@ -101,10 +129,20 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         });
         add(jbtFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 550, 180, 40));
 
-        lblPreco.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblDesconto.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
+        lblDesconto.setForeground(new java.awt.Color(255, 255, 255));
+        lblDesconto.setText("10%");
+        add(lblDesconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 510, 60, 30));
+
+        lblTotal.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotal.setText("R$10,00");
+        add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 540, 80, 30));
+
+        lblPreco.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
         lblPreco.setForeground(new java.awt.Color(255, 255, 255));
         lblPreco.setText("R$13,50");
-        add(lblPreco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 510, 80, 30));
+        add(lblPreco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 490, 80, 30));
 
         lblLocalCapa.setOpaque(true);
         lblLocalCapa.setPreferredSize(new java.awt.Dimension(145, 213));
@@ -114,10 +152,10 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         lblFilmeCapa.setPreferredSize(new java.awt.Dimension(145, 213));
         add(lblFilmeCapa, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 260, -1, -1));
 
-        lblAssento.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblAssento.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
         lblAssento.setForeground(new java.awt.Color(255, 255, 255));
         lblAssento.setText("A1");
-        add(lblAssento, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 480, 70, 30));
+        add(lblAssento, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 470, 70, 30));
 
         lblNomeSala.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblNomeSala.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,6 +169,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
 
         lblNomeFilme.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblNomeFilme.setForeground(new java.awt.Color(255, 255, 255));
+        lblNomeFilme.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNomeFilme.setText("Nome do filme");
         add(lblNomeFilme, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 230, 240, 30));
 
@@ -159,20 +198,38 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         lblEndRuaENum.setText("Rua e num");
         add(lblEndRuaENum, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 410, 250, 20));
 
-        lblAsse.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/Tier3.png"))); // NOI18N
+        lblTier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTierMouseClicked(evt);
+            }
+        });
+        add(lblTier, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 60, 40));
+
+        lblAsse.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
         lblAsse.setForeground(new java.awt.Color(255, 255, 255));
         lblAsse.setText("Assento:");
-        add(lblAsse, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 480, 80, 30));
+        add(lblAsse, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 470, 80, 30));
 
         lblDat.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblDat.setForeground(new java.awt.Color(255, 255, 255));
         lblDat.setText("Data:");
         add(lblDat, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 60, 30));
 
-        lblPre.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        lblTot.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
+        lblTot.setForeground(new java.awt.Color(255, 255, 255));
+        lblTot.setText("Total:");
+        add(lblTot, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 540, 40, 30));
+
+        lblDes.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
+        lblDes.setForeground(new java.awt.Color(255, 255, 255));
+        lblDes.setText("Desconto:");
+        add(lblDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 510, 70, 30));
+
+        lblPre.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
         lblPre.setForeground(new java.awt.Color(255, 255, 255));
         lblPre.setText("Valor Do Ingresso:");
-        add(lblPre, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 510, 160, 30));
+        add(lblPre, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 490, 160, 30));
 
         lblHor.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblHor.setForeground(new java.awt.Color(255, 255, 255));
@@ -318,6 +375,21 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         lblHoraMin.setText(df.format(this.sessao.getDataInicial().getTime()));
         lblDataCompleta.setText(dfDia.format(this.sessao.getDataInicial().getTime()));
         lblAssento.setText(numCadeira);
+
+        double total = this.sessao.getSala().getValorIngresso();
+        double desconto = 0;
+
+        if (cliente.isEspecial()) {
+            ClienteEspecial clienteE = (ClienteEspecial) cliente;
+            if (clienteE.getDesconto(reserva.getSessao().getLocal()) != 0) {
+                desconto = clienteE.getDesconto(reserva.getSessao().getLocal());
+                total = this.sessao.getSala().getValorIngresso() - (reserva.getValorIngresso()
+                        * clienteE.getDesconto(reserva.getSessao().getLocal()));
+            }
+        }
+        lblDesconto.setText(String.format("%.2f%%", desconto));
+        lblTotal.setText(String.format("R$ %.2f", total));
+
         Image im = new ImageIcon(this.sessao.getEntretenimento().getCapa()).getImage();
         Icon ic = new ImageIcon(im);
         lblFilmeCapa.setIcon(ic);
@@ -334,19 +406,53 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }
 
     private void jbtFinalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseClicked
+         ClienteControl clienteC = new ClienteControl();
         try {
-            System.out.println(cliente);
             Reserva rFeita = cliente.fazerReserva(sessao, numCadeira);
-            ClienteControl cc = new ClienteControl();
-            cliente = cc.buscar(cliente);
             
-            TelaPopupQRCode ppQrCode = new TelaPopupQRCode(FrameInicio.getFrame(), true, rFeita.getQrCode(), cliente);
-            ppQrCode.setLocationRelativeTo(null);
-            ppQrCode.setVisible(true);
+            TelaPopupPagarReserva ppPagar = new TelaPopupPagarReserva(FrameInicio.getFrame(), true, cliente,this.reserva);
+            ppPagar.setLocationRelativeTo(null);
+            ppPagar.setVisible(true);
+            boolean nivelSubiu = false;
+            cliente = ppPagar.getCliente();
+            if (ppPagar.getConfirmarAcao()) {
+                double val;
+                if (cliente.isEspecial()) {
+                    ClienteEspecial clienteE = (ClienteEspecial) cliente;
+                    TierCliente tierAtual = clienteE.getTier(this.reserva.getSessao().getLocal());
+                    val = cliente.pagarReserva(rFeita);
 
+                    cliente = (ClienteEspecial) clienteC.buscar(cliente);
+                    clienteE = (ClienteEspecial) cliente;
+
+                    if (tierAtual != clienteE.getTier(this.reserva.getSessao().getLocal())) {
+                        nivelSubiu = true;
+                    }
+                } else {
+                    val = cliente.pagarReserva(rFeita);
+                    Cliente buscaC = clienteC.buscar(cliente);
+                    if(buscaC.isEspecial()){
+                        nivelSubiu = true;
+                    }
+                }
+                ClienteControl cc = new ClienteControl();
+                cliente = cc.buscar(cliente);
+                
+                if(nivelSubiu){
+                    JDialogsControl.mostrarPopUp(new TelaPopupSubiuTier(FrameInicio.getFrame(), true, (ClienteEspecial) cliente, 
+                                this.reserva.getSessao().getLocal()));
+                }
+                
+                TelaPopupQRCode ppQrCode = new TelaPopupQRCode(FrameInicio.getFrame(), true, rFeita.getQrCode(), cliente);
+                ppQrCode.setLocationRelativeTo(null);
+                ppQrCode.setVisible(true);
+            } else {
+                JDialogsControl.mostrarPopUp("Operação Cancelada!", true);
+                cliente.cancelarReserva(rFeita);
+            }
         } catch (CadastroInexistenteException | DadosRepetidosException | DadosInvalidosException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(), true);
-        }
+            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
+        } 
     }//GEN-LAST:event_jbtFinalizarMouseClicked
 
     private void jbtFinalizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseEntered
@@ -416,7 +522,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -430,6 +536,10 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     private void lblDeslogarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseExited
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
+
+    private void lblTierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTierMouseClicked
 
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
@@ -450,6 +560,8 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     private javax.swing.JLabel lblBordaEsquerda;
     private javax.swing.JLabel lblDat;
     private javax.swing.JLabel lblDataCompleta;
+    private javax.swing.JLabel lblDes;
+    private javax.swing.JLabel lblDesconto;
     private javax.swing.JLabel lblDeslogar;
     private javax.swing.JLabel lblEndLocaBairroCidadeUF;
     private javax.swing.JLabel lblEndRuaENum;
@@ -471,6 +583,9 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     private javax.swing.JLabel lblPreco;
     private javax.swing.JLabel lblSala;
     private javax.swing.JLabel lblSes1;
+    private javax.swing.JLabel lblTier;
+    private javax.swing.JLabel lblTot;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
 }

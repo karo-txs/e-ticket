@@ -11,6 +11,7 @@ import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.Calendar;
 import java.util.List;
@@ -80,7 +81,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
             jcbEntretenimento.setSelectedItem(busca.getEntretenimento().getNome());
 
         } catch (CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         }
     }
 
@@ -392,7 +393,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
             FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
             FrameInicio.getFrame().revalidate();
         } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         }
     }//GEN-LAST:event_jbtEditarSessaoMouseClicked
 
@@ -473,7 +474,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_lblPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();

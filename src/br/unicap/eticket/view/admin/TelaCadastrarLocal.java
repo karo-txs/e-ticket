@@ -2,7 +2,6 @@ package br.unicap.eticket.view.admin;
 
 import br.unicap.eticket.control.usuarios.AdminControl;
 import br.unicap.eticket.control.validacoes.Conversor;
-import br.unicap.eticket.control.validacoes.ValidaDados;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -15,6 +14,7 @@ import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.CapturarCapa;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.HashMap;
@@ -278,11 +278,11 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
             if (captura.getImagemSelecionada() != null) {
                 adm.getLocalAdministrado().inserirCapaESalvar(captura.getImagemSelecionada());
             }
-            FrameInicio.mostrarPopUp("Admin e local Cadastrados", false);
+            JDialogsControl.mostrarPopUp("Admin e local Cadastrados", false);
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
         } catch (DadosRepetidosException | DadosInvalidosException | SenhaInvalidaException | CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         } catch (IOException ex) {
             Logger.getLogger(TelaCadastrarLocal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -307,7 +307,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
                 fldCidade.setText(endereco.get("Cidade"));
                 fldUF.setText(endereco.get("UF"));
             } catch (DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
         }
     }//GEN-LAST:event_jbtLocalizarCEPMouseClicked

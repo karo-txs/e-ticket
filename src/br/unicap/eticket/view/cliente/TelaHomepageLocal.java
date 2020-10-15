@@ -5,9 +5,12 @@ import br.unicap.eticket.control.auxiliares.EntretenimentoControl;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
 import br.unicap.eticket.model.usuarios.Cliente;
+import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.view.jDialogs.TelaPopupMissoes;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -26,21 +29,9 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
         initComponents();
         this.local = local;
         this.cliente = cliente;
-        lblEntretenimentoMsg.setVisible(false);
-        jpnScroll.setVisible(true);
-        EntretenimentoControl entC = new EntretenimentoControl();
-        List<Entretenimento> entretenimento = entC.entreterimentosEmCartaz(local);
 
-        if (entretenimento.isEmpty()) {
-            lblEntretenimentoMsg.setVisible(true);
-            jpnScroll.setVisible(false);
-        } else {
-            mostrarEntreterimentos(entretenimento);
-        }
-
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
+        this.initEntretenimentos();
+        this.initCliente();
         this.initLocal();
         // jpnScroll.setBackground(new java.awt.Color(0, 0, 0, 0));
         //jpnScrollInterno.setBackground(new java.awt.Color(0, 0, 0, 0));
@@ -57,14 +48,49 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
         jlbBanner.setIcon(ic);
     }
 
+    private void initCliente() {
+        this.lblTier.setVisible(false);
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
+
+        if (cliente.isEspecial()) {
+            ClienteEspecial clienteE = (ClienteEspecial) cliente;
+            if (clienteE.getDesconto(local) != 0) {
+                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+                String caminho = clienteE.getTierImg(local);
+                if (caminho != null) {
+                    this.lblTier.setVisible(true);
+                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
+                }
+            }
+        }
+    }
+
+    private void initEntretenimentos() {
+        lblEntretenimentoMsg.setVisible(false);
+        jpnScroll.setVisible(true);
+        EntretenimentoControl entC = new EntretenimentoControl();
+        List<Entretenimento> entretenimento = entC.entreterimentosEmCartaz(local);
+
+        if (entretenimento.isEmpty()) {
+            lblEntretenimentoMsg.setVisible(true);
+            jpnScroll.setVisible(false);
+        } else {
+            mostrarEntreterimentos(entretenimento);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lblEstrelas = new javax.swing.JLabel();
+        lblUsername = new javax.swing.JLabel();
+        lblTier = new javax.swing.JLabel();
         lblEntretenimentoMsg = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
-        lblUsername = new javax.swing.JLabel();
         lblLinhinha = new javax.swing.JLabel();
         lblNomeDoLocal = new javax.swing.JLabel();
         lblCaixaTitulo = new javax.swing.JLabel();
@@ -73,6 +99,7 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
         lblEmCartaz = new javax.swing.JLabel();
         lblLojinha = new javax.swing.JLabel();
         lblContato = new javax.swing.JLabel();
+        lblMissoes = new javax.swing.JLabel();
         lblEndereco = new javax.swing.JLabel();
         lblCategoriasBar = new javax.swing.JLabel();
         jpnScroll = new javax.swing.JScrollPane();
@@ -94,6 +121,20 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
         lblEstrelas.setForeground(new java.awt.Color(153, 153, 153));
         add(lblEstrelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, 170, 30));
 
+        lblUsername.setFont(new java.awt.Font("DialogInput", 1, 24)); // NOI18N
+        lblUsername.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsername.setText("@Cliente");
+        lblUsername.setToolTipText("");
+        add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 140, 40));
+
+        lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/Tier3.png"))); // NOI18N
+        lblTier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTierMouseClicked(evt);
+            }
+        });
+        add(lblTier, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 60, 40));
+
         lblEntretenimentoMsg.setFont(new java.awt.Font("Segoe UI Symbol", 2, 18)); // NOI18N
         lblEntretenimentoMsg.setForeground(new java.awt.Color(255, 255, 255));
         lblEntretenimentoMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -102,12 +143,6 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/logoSemNome.png"))); // NOI18N
         add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 110, 110));
-
-        lblUsername.setFont(new java.awt.Font("DialogInput", 1, 24)); // NOI18N
-        lblUsername.setForeground(new java.awt.Color(255, 255, 255));
-        lblUsername.setText("@Admin");
-        lblUsername.setToolTipText("");
-        add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 140, 40));
 
         lblLinhinha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/linhinha.png"))); // NOI18N
         add(lblLinhinha, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 150, 360, 20));
@@ -195,6 +230,14 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
             }
         });
         add(lblContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 200, 90, 40));
+
+        lblMissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/IconeMissao.png"))); // NOI18N
+        lblMissoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMissoesMouseClicked(evt);
+            }
+        });
+        add(lblMissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 60, 40));
 
         lblEndereco.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
         lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
@@ -415,7 +458,7 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -429,6 +472,16 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
     private void lblDeslogarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseExited
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
+
+    private void lblMissoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMissoesMouseClicked
+        TelaPopupMissoes missoes = new TelaPopupMissoes(FrameInicio.getFrame(), true);
+        missoes.setLocationRelativeTo(null);
+        missoes.setVisible(true);
+    }//GEN-LAST:event_lblMissoesMouseClicked
+
+    private void lblTierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTierMouseClicked
 
     private void mostrarEntreterimentos(List<Entretenimento> entretenimento) {
 
@@ -503,8 +556,10 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
     private javax.swing.JLabel lblLojinha;
     private javax.swing.JLabel lblMeuPerfil;
     private javax.swing.JLabel lblMinhasReservas;
+    private javax.swing.JLabel lblMissoes;
     private javax.swing.JLabel lblNomeDoLocal;
     private javax.swing.JLabel lblSobre;
+    private javax.swing.JLabel lblTier;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
 }

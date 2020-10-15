@@ -1,11 +1,6 @@
 package br.unicap.eticket.view;
 
 import br.unicap.eticket.control.usuarios.ClienteControl;
-import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
-import br.unicap.eticket.view.jDialogs.TelaPopupComum;
-import br.unicap.eticket.view.jDialogs.TelaPopupNickname;
-import br.unicap.eticket.view.jDialogs.TelaPopupSenhaInvalida;
 import br.unicap.eticket.viewAuxiliares.ClockSessao;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -88,32 +83,6 @@ public class FrameInicio extends JFrame {
     public static JFrame getFrame() {
         return frame;
     }
-
-    public static void mostrarPopUp(String msg,boolean isErro) {
-        TelaPopupComum telaErro = new TelaPopupComum(FrameInicio.getFrame(), true, msg,isErro);
-        telaErro.setLocationRelativeTo(null);
-        telaErro.setVisible(true);
-    }
-
-    public static TelaPopupConfirmar mostrarConfirmacao(String msg) {
-        TelaPopupConfirmar telaConf = new TelaPopupConfirmar(FrameInicio.getFrame(), true, msg);
-        telaConf.setLocationRelativeTo(null);
-        telaConf.setVisible(true);
-        return telaConf;
-    }
-    public static TelaPopupNickname mostrarNick(Cliente c) {
-        TelaPopupNickname telaConf = new TelaPopupNickname(FrameInicio.getFrame(), true, c);
-        telaConf.setLocationRelativeTo(null);
-        telaConf.setVisible(true);
-        return telaConf;
-    }
-    
-    public static void MostrarSenhaInvalida(String erros){
-        TelaPopupSenhaInvalida telaErro = new TelaPopupSenhaInvalida (FrameInicio.getFrame(), true, erros);
-        telaErro.setLocationRelativeTo(null);
-        telaErro.setVisible(true);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

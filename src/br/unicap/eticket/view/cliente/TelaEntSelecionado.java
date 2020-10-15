@@ -7,8 +7,10 @@ import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
+import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Image;
@@ -41,8 +43,25 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         initEntretenimento();
         initSessoes(Calendar.getInstance());
         initDatas();
+        this.initCliente();
+    }
+     private void initCliente() {
+         this.lblTier.setVisible(false);
         if (cliente.getNickName() != null) {
             this.lblUsername.setText("@" + cliente.getNickName());
+        }
+
+        if (cliente.isEspecial()) {
+            ClienteEspecial clienteE = (ClienteEspecial) cliente;
+            if (clienteE.getDesconto(local) != 0) {
+                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+                String caminho = clienteE.getTierImg(local);
+                if (caminho != null) {
+                     this.lblTier.setVisible(true);
+                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
+                }
+            }
         }
     }
 
@@ -109,6 +128,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTier = new javax.swing.JLabel();
         lblFilmeCapa = new javax.swing.JLabel();
         lblFilmeTitulo = new javax.swing.JLabel();
         lblFilmeDescricao = new javax.swing.JLabel();
@@ -130,7 +150,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         jbtDia5 = new javax.swing.JButton();
         jbtDia6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstSessoes = new javax.swing.JList<>();
+        lstSessoes = new javax.swing.JList<String>();
         jLabel1 = new javax.swing.JLabel();
         lblHomepage = new javax.swing.JLabel();
         lblMinhasReservas = new javax.swing.JLabel();
@@ -147,6 +167,14 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(1366, 768));
         setPreferredSize(new java.awt.Dimension(1366, 768));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/Tier3.png"))); // NOI18N
+        lblTier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTierMouseClicked(evt);
+            }
+        });
+        add(lblTier, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 60, 40));
 
         lblFilmeCapa.setOpaque(true);
         lblFilmeCapa.setPreferredSize(new java.awt.Dimension(145, 213));
@@ -391,10 +419,10 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         lstSessoes.setBackground(new java.awt.Color(21, 17, 17));
         lstSessoes.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         lstSessoes.setForeground(new java.awt.Color(255, 255, 255));
-        lstSessoes.setModel(new javax.swing.AbstractListModel<String>() {
+        lstSessoes.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "IMAX | Sala-2 | 14:00", "IMAX | Sala-2 | 14:00", "IMAX | Sala-2 | 14:00", "IMAX | Sala-2 | 14:00", "SALA3D | Sala-21 | 14:00", "" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         lstSessoes.setFixedCellHeight(50);
         lstSessoes.setName(""); // NOI18N
@@ -519,8 +547,8 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
 
     private void jbtHojeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtHojeMouseClicked
         diaSelecionado(jbtHoje);
-        String[] dias = jbtHoje.getText().split(" ");
-        String dia = dias[1] + "/" + Calendar.getInstance().get(Calendar.YEAR);
+        String[] d = jbtHoje.getText().split(" ");
+        String dia = d[1] + "/" + Calendar.getInstance().get(Calendar.YEAR);
         String[] dataAux = dia.split("/");
 
         Calendar data = Calendar.getInstance();
@@ -667,7 +695,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -681,6 +709,10 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     private void lblDeslogarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseExited
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
+
+    private void lblTierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTierMouseClicked
 
     private void diaSelecionado(JButton jbt) {
         jbtHoje.setBackground(new java.awt.Color(102, 102, 102));
@@ -697,8 +729,8 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
 
     public void listarSessoes(JButton jbt) {
         diaSelecionado(jbt);
-        String[] dias = jbt.getText().split(" ");
-        String dia = dias[1] + "/" + Calendar.getInstance().get(Calendar.YEAR);
+        String[] d = jbt.getText().split(" ");
+        String dia = d[1] + "/" + Calendar.getInstance().get(Calendar.YEAR);
         String[] dataAux = dia.split("/");
 
         Calendar data = Calendar.getInstance();
@@ -755,6 +787,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     private javax.swing.JLabel lblNomeDiretor;
     private javax.swing.JLabel lblSessoes;
     private javax.swing.JLabel lblSinopse;
+    private javax.swing.JLabel lblTier;
     private javax.swing.JLabel lblTracoVert;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JList<String> lstSessoes;

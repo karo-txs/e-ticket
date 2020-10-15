@@ -10,6 +10,7 @@ import br.unicap.eticket.excecoes.SenhaInvalidaException;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.Usuario;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupNickname;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -128,7 +129,7 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
                     clienteC.cadastrar(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
                     Cliente c = new Cliente(fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
                     Cliente busca = clienteC.buscar(c);
-                    TelaPopupNickname telaConf = FrameInicio.mostrarNick(busca);
+                    TelaPopupNickname telaConf = JDialogsControl.mostrarNick(busca);
                     if (telaConf.getConfirmarAcao()) {
                         FrameInicio.getFrame().setContentPane(new TelaInicio());
                         FrameInicio.getFrame().revalidate();
@@ -140,15 +141,15 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
                     FrameInicio.getFrame().revalidate();
                 }
             } catch (DadosInvalidosException | DadosRepetidosException | CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             } catch (SenhaInvalidaException ex) {
-                FrameInicio.MostrarSenhaInvalida(ex.getMessage());
+                JDialogsControl.mostrarSenhaInvalida(ex.getMessage());
             } catch (IOException ex) {
                 Logger.getLogger(TelaCadastrarUser.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } else {
-            FrameInicio.mostrarPopUp("Senhas não conferem!", true);
+            JDialogsControl.mostrarPopUp("Senhas não conferem!", true);
         }
     }//GEN-LAST:event_jbtCriarContaMouseClicked
 

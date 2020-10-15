@@ -10,6 +10,7 @@ import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.Calendar;
 import java.util.List;
@@ -348,7 +349,7 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
         Calendar dataInicial = Calendar.getInstance();
 
         if (jcbDia.getSelectedIndex() == 0 || jcbMes.getSelectedIndex() == 0 || jcbAno.getSelectedIndex() == 0) {
-            FrameInicio.mostrarPopUp("Data inicial inválida!", true);
+            JDialogsControl.mostrarPopUp("Data inicial inválida!", true);
         } else {
             dataInicial.set(Calendar.YEAR, Integer.parseInt(String.valueOf(jcbAno.getSelectedItem())));
             dataInicial.set(Calendar.MONTH, Integer.parseInt(String.valueOf(jcbMes.getSelectedIndex() - 1)));
@@ -365,7 +366,7 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
                 sessaoC.cadastrar(this.local, new Sala(this.local, String.valueOf(jcbSalas.getSelectedItem())), fldNomeSessao.getText(),
                         dataInicial, ent);
             } catch (DadosRepetidosException | CadastroInexistenteException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
 
             FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
@@ -451,7 +452,7 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_lblPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();

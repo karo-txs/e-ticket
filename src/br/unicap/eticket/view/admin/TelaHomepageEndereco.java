@@ -9,6 +9,7 @@ import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
@@ -470,7 +471,7 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         this.trocarEditable();
     }
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -592,7 +593,7 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
                 fldCidade.setText(endereco.get("Cidade"));
                 fldUF.setText(endereco.get("UF"));
             } catch (DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(),true);
             }
 
         }
@@ -616,7 +617,7 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
                     local.atualizarEnd(novoEnd);
                 }
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(),true);
             }
 
         }

@@ -1,15 +1,14 @@
-
 package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
+import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
-import br.unicap.eticket.view.admin.TelaListaDeSalas;
-import br.unicap.eticket.view.admin.TelaListaDeSessoes;
-import br.unicap.eticket.view.admin.TelaMeuPerfilAdmin;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.view.jDialogs.TelaPopupMissoes;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Image;
 import javax.swing.Icon;
@@ -17,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
+
     private Cliente cliente;
     private LocalGenerico local;
 
@@ -26,10 +26,10 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         this.cliente = cliente;
         selecionarBotao(lblEndereco);
         this.initEndereco(local);
-        if(cliente.getNickName()!=null)
-        this.lblUsername.setText("@"+cliente.getNickName());
+        this.initCliente();
         this.initLocal();
     }
+
     private void initLocal() {
         lblNomeDoLocal.setText(local.getNome());
         lblEstrelas.setText("");
@@ -40,6 +40,27 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         Icon ic = new ImageIcon(im);
         jlbBanner.setIcon(ic);
     }
+
+    private void initCliente() {
+        this.lblTier.setVisible(false);
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
+
+        if (cliente.isEspecial()) {
+            ClienteEspecial clienteE = (ClienteEspecial) cliente;
+            if (clienteE.getDesconto(local) != 0) {
+                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+                String caminho = clienteE.getTierImg(local);
+                if (caminho != null) {
+                    this.lblTier.setVisible(true);
+                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
+                }
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,6 +73,7 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         lblHomepage1 = new javax.swing.JLabel();
         lblMinhasReservas = new javax.swing.JLabel();
         lblMeuPerfil = new javax.swing.JLabel();
+        lblTier = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
         lblEndereco = new javax.swing.JLabel();
@@ -62,6 +84,7 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         lblEstrelas = new javax.swing.JLabel();
         lblNomeDoLocal = new javax.swing.JLabel();
         lblCaixaTitulo = new javax.swing.JLabel();
+        lblMissoes = new javax.swing.JLabel();
         lblCategoriasBar = new javax.swing.JLabel();
         lblCEP = new javax.swing.JLabel();
         fldCEP = new javax.swing.JTextField();
@@ -165,9 +188,17 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         });
         jpnEsquerda.add(lblMeuPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 110, 40));
 
+        lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/Tier3.png"))); // NOI18N
+        lblTier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTierMouseClicked(evt);
+            }
+        });
+        jpnEsquerda.add(lblTier, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 60, 40));
+
         lblUsername.setFont(new java.awt.Font("DialogInput", 1, 24)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
-        lblUsername.setText("@Admin");
+        lblUsername.setText("@Cliente");
         lblUsername.setToolTipText("");
         jpnEsquerda.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 140, 40));
 
@@ -245,6 +276,14 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         lblCaixaTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCaixaTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/caixaTitulo.png"))); // NOI18N
         add(lblCaixaTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 1080, 90));
+
+        lblMissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/IconeMissao.png"))); // NOI18N
+        lblMissoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMissoesMouseClicked(evt);
+            }
+        });
+        add(lblMissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 60, 40));
 
         lblCategoriasBar.setBackground(new java.awt.Color(0, 0, 0));
         lblCategoriasBar.setForeground(new java.awt.Color(102, 102, 102));
@@ -363,7 +402,7 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         this.trocarEditable();
     }
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -380,13 +419,13 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
 
     private void lblEmCartazMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseClicked
         selecionarBotao(lblEmCartaz);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageLocal(local,cliente));
+        FrameInicio.getFrame().setContentPane(new TelaHomepageLocal(local, cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblEmCartazMouseClicked
 
     private void lblSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSobreMouseClicked
         selecionarBotao(lblSobre);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageLocalSobre(local,cliente));
+        FrameInicio.getFrame().setContentPane(new TelaHomepageLocalSobre(local, cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSobreMouseClicked
 
@@ -396,13 +435,13 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
 
     private void lblContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContatoMouseClicked
         selecionarBotao(lblContato);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageLocalContato(local,cliente));
+        FrameInicio.getFrame().setContentPane(new TelaHomepageLocalContato(local, cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblContatoMouseClicked
 
     private void lblEnderecoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEnderecoMouseClicked
         selecionarBotao(lblEndereco);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageLocalEndereco(local,cliente));
+        FrameInicio.getFrame().setContentPane(new TelaHomepageLocalEndereco(local, cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblEnderecoMouseClicked
 
@@ -446,6 +485,16 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         apagarBotao(lblMeuPerfil);
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
+    private void lblMissoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMissoesMouseClicked
+        TelaPopupMissoes missoes = new TelaPopupMissoes(FrameInicio.getFrame(), true);
+        missoes.setLocationRelativeTo(null);
+        missoes.setVisible(true);
+    }//GEN-LAST:event_lblMissoesMouseClicked
+
+    private void lblTierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTierMouseClicked
+
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -462,6 +511,7 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
         lblSobre.setForeground(new java.awt.Color(255, 255, 255));
         lbl.setForeground(new java.awt.Color(51, 102, 255));
     }
+
     private void trocarEditable() {
         fldBairro.setEditable(!fldBairro.isEditable());
         fldCEP.setEditable(!fldCEP.isEditable());
@@ -506,11 +556,13 @@ public class TelaHomepageLocalEndereco extends javax.swing.JPanel {
     private javax.swing.JLabel lblLojinha;
     private javax.swing.JLabel lblMeuPerfil;
     private javax.swing.JLabel lblMinhasReservas;
+    private javax.swing.JLabel lblMissoes;
     private javax.swing.JLabel lblNomeDoLocal;
     private javax.swing.JLabel lblNum;
     private javax.swing.JLabel lblPais;
     private javax.swing.JLabel lblRua;
     private javax.swing.JLabel lblSobre;
+    private javax.swing.JLabel lblTier;
     private javax.swing.JLabel lblUF;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables

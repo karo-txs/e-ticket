@@ -7,6 +7,7 @@ import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -375,7 +376,7 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomePageMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -406,10 +407,10 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
                     novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));
                 }
                 cc.atualizar(novo);
-                FrameInicio.mostrarPopUp("Atualizado Com Sucesso!",false);
+                JDialogsControl.mostrarPopUp("Atualizado Com Sucesso!",false);
                 this.adm = cc.buscar(adm);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException | DadosInvalidosException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(),true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(),true);
             }
         }
         trocarNome();

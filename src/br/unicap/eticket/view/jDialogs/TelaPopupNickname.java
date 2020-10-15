@@ -87,7 +87,7 @@ public class TelaPopupNickname extends javax.swing.JDialog {
             this.confirmarAcao = true;
             this.dispose();
         } catch (DadosInvalidosException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(),true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(),true);
         }
         
     }//GEN-LAST:event_jbtFinalizarMouseClicked

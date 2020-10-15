@@ -2,9 +2,12 @@ package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
+import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.view.jDialogs.TelaPopupMissoes;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Image;
 import javax.swing.Icon;
@@ -22,12 +25,10 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
         this.cliente = cliente;
         selecionarBotao(lblSobre);
         initSobre();
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
+        this.initCliente();
         this.initLocal();
     }
-    
+
     private void initLocal() {
         lblNomeDoLocal.setText(local.getNome());
         lblEstrelas.setText("");
@@ -37,6 +38,26 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
         Image im = new ImageIcon(local.getBanner()).getImage();
         Icon ic = new ImageIcon(im);
         jlbBanner.setIcon(ic);
+    }
+
+    private void initCliente() {
+        this.lblTier.setVisible(false);
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
+
+        if (cliente.isEspecial()) {
+            ClienteEspecial clienteE = (ClienteEspecial) cliente;
+            if (clienteE.getDesconto(local) != 0) {
+                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+                String caminho = clienteE.getTierImg(local);
+                if (caminho != null) {
+                    this.lblTier.setVisible(true);
+                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
+                }
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -52,7 +73,9 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
         lblMinhasReservas = new javax.swing.JLabel();
         lblHomepage = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
+        lblTier = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
+        lblMissoes = new javax.swing.JLabel();
         lblEndereco = new javax.swing.JLabel();
         lblContato = new javax.swing.JLabel();
         lblLojinha = new javax.swing.JLabel();
@@ -152,15 +175,31 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
 
         lblUsername.setFont(new java.awt.Font("DialogInput", 1, 24)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
-        lblUsername.setText("@Admin");
+        lblUsername.setText("@Cliente");
         lblUsername.setToolTipText("");
         jpnEsquerda.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 140, 40));
+
+        lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/Tier3.png"))); // NOI18N
+        lblTier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTierMouseClicked(evt);
+            }
+        });
+        jpnEsquerda.add(lblTier, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 60, 40));
 
         lblBordaEsquerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/BordaEsquerda.png"))); // NOI18N
         lblBordaEsquerda.setText("jLabel3");
         jpnEsquerda.add(lblBordaEsquerda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 770));
 
         add(jpnEsquerda, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 0, 290, 770));
+
+        lblMissoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/IconeMissao.png"))); // NOI18N
+        lblMissoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMissoesMouseClicked(evt);
+            }
+        });
+        add(lblMissoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 60, 40));
 
         lblEndereco.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
         lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
@@ -293,7 +332,7 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
 
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -416,9 +455,20 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
         apagarBotao(lblHomepage);
     }//GEN-LAST:event_lblHomepageMouseExited
 
+    private void lblMissoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMissoesMouseClicked
+        TelaPopupMissoes missoes = new TelaPopupMissoes(FrameInicio.getFrame(), true);
+        missoes.setLocationRelativeTo(null);
+        missoes.setVisible(true);
+    }//GEN-LAST:event_lblMissoesMouseClicked
+
+    private void lblTierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTierMouseClicked
+
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
+
     private void apagarBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(255, 255, 255));
     }
@@ -453,8 +503,10 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
     private javax.swing.JLabel lblLojinha;
     private javax.swing.JLabel lblMeuPerfil;
     private javax.swing.JLabel lblMinhasReservas;
+    private javax.swing.JLabel lblMissoes;
     private javax.swing.JLabel lblNomeDoLocal;
     private javax.swing.JLabel lblSobre;
+    private javax.swing.JLabel lblTier;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JTextArea txtSobre;
     // End of variables declaration//GEN-END:variables

@@ -7,6 +7,7 @@ import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
@@ -430,12 +431,12 @@ public class TelaHomepageContato extends javax.swing.JPanel {
             fldFacebook.setText(atual.getRedeSocial_facebook());
             fldInstagram.setText(atual.getRedeSocial_instragam());
         } catch (CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         }
     }
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -604,7 +605,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(TelaHomepageContato.class.getName()).log(Level.SEVERE, null, ex);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-                FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
             
         }

@@ -11,6 +11,7 @@ import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.TiposDeSala;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import javax.swing.JLabel;
 
@@ -275,7 +276,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
                 FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
             }
         } catch (DadosInvalidosException | DadosRepetidosException | CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         }
 
         FrameInicio.getFrame().revalidate();
@@ -291,7 +292,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtCadastrarMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();

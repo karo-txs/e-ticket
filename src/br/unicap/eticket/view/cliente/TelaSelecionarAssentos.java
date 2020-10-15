@@ -4,8 +4,10 @@ import br.unicap.eticket.viewAuxiliares.MatrizCadeiras;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
+import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.awt.GridLayout;
 import java.util.HashMap;
@@ -24,8 +26,27 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
         this.cliente = cliente;
         this.ocupacao = sessao.ocupacaoDeAssentosDaSessao();
         this.gerarAssentos(sessao.getSala().getFileirasX(), sessao.getSala().getFileirasY());
-        if(cliente.getNickName()!=null)
-        this.lblUsername.setText("@"+cliente.getNickName());
+        this.initCliente();
+    }
+
+    private void initCliente() {
+        this.lblTier1.setVisible(false);
+        if (cliente.getNickName() != null) {
+            this.lblUsername.setText("@" + cliente.getNickName());
+        }
+
+        if (cliente.isEspecial()) {
+            ClienteEspecial clienteE = (ClienteEspecial) cliente;
+            if (clienteE.getDesconto(sessao.getLocal()) != 0) {
+                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+                String caminho = clienteE.getTierImg(sessao.getLocal());
+                if (caminho != null) {
+                    this.lblTier1.setVisible(true);
+                    lblTier1.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
+                }
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -35,6 +56,7 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
         jbtSelecionarAssento = new javax.swing.JButton();
         jpnAssentos = new javax.swing.JPanel();
         lblFilmeTitulo = new javax.swing.JLabel();
+        lblTier1 = new javax.swing.JLabel();
         lblTela = new javax.swing.JLabel();
         jpnHorz = new javax.swing.JPanel();
         jpnVert = new javax.swing.JPanel();
@@ -83,6 +105,14 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
         lblFilmeTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFilmeTitulo.setText("Selecionar assento");
         add(lblFilmeTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 1000, 50));
+
+        lblTier1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/icones/Tier3.png"))); // NOI18N
+        lblTier1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTier1MouseClicked(evt);
+            }
+        });
+        add(lblTier1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 60, 40));
 
         lblTela.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         lblTela.setForeground(new java.awt.Color(21, 17, 17));
@@ -238,13 +268,13 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtSelecionarAssentoMouseClicked
 
     private void jbtSelecionarAssentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseEntered
-        
-        jbtSelecionarAssento.setForeground(new java.awt.Color(191,30,30));
+
+        jbtSelecionarAssento.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtSelecionarAssentoMouseEntered
 
     private void jbtSelecionarAssentoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseExited
-        
-        jbtSelecionarAssento.setForeground(new java.awt.Color(0,0,0));
+
+        jbtSelecionarAssento.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtSelecionarAssentoMouseExited
 
     private void lblHomepageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomepageMouseClicked
@@ -288,7 +318,7 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -302,6 +332,10 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     private void lblDeslogarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseExited
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
+
+    private void lblTier1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTier1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTier1MouseClicked
 
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
@@ -326,6 +360,8 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     private javax.swing.JLabel lblMeuPerfil;
     private javax.swing.JLabel lblMinhasReservas;
     private javax.swing.JLabel lblTela;
+    private javax.swing.JLabel lblTier;
+    private javax.swing.JLabel lblTier1;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel lblVerHorz;
     // End of variables declaration//GEN-END:variables

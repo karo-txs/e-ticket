@@ -7,6 +7,7 @@ import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaAvaliacao;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.List;
@@ -34,7 +35,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
         try {
             cliente = clienteC.buscar(cliente);
         } catch (CadastroInexistenteException ex) {
-           FrameInicio.mostrarPopUp(ex.getMessage(), true);
+           JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         }
         List<Reserva> reservas = cliente.getReservas();
         dados = new String[reservas.size()];
@@ -228,7 +229,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
         if (valSelecionado != -1) {
             Long idSelecionado = this.idReservas[valSelecionado];
             Reserva reserva = reservaC.buscaPorId(idSelecionado);
-            TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Confirmar Exclusão?");
+            TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Confirmar Exclusão?");
             if (telaConf.getConfirmarAcao()) {
                 try {
                     cliente.cancelarReserva(reserva);
@@ -236,7 +237,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
                     FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
                     FrameInicio.getFrame().revalidate();
                 } catch (CadastroInexistenteException ex) {
-                    FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                    JDialogsControl.mostrarPopUp(ex.getMessage(), true);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(TelaListaDeReservas.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -245,7 +246,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtRemoverSalaMouseClicked
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();
@@ -307,7 +308,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
             tela.setLocationRelativeTo(null);
             tela.setVisible(true);
         } else {
-            FrameInicio.mostrarPopUp("Avaliação não disponível!", true);
+            JDialogsControl.mostrarPopUp("Avaliação não disponível!", true);
         }
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseClicked
 

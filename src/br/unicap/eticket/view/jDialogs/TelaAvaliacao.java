@@ -214,14 +214,14 @@ public class TelaAvaliacao extends javax.swing.JDialog {
 
         try {
             reserva.finalizarReserva();
-            FrameInicio.mostrarPopUp("Avaliação concluída!", false);
+            JDialogsControl.mostrarPopUp("Avaliação concluída!", false);
             Thread.sleep(1L);
             FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
             FrameInicio.getFrame().revalidate();
             this.dispose();
 
         } catch (CadastroInexistenteException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(), true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         } catch (InterruptedException ex) {
             Logger.getLogger(TelaAvaliacao.class.getName()).log(Level.SEVERE, null, ex);
         }

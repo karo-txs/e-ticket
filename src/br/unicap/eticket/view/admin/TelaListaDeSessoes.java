@@ -6,6 +6,7 @@ import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.List;
 import javax.swing.JLabel;
@@ -283,7 +284,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
 
     private void jbtRemoverSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSessaoMouseClicked
         if (lstSessoes.getSelectedIndex() != -1) {
-            TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Desativar?");
+            TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja Desativar?");
             if (telaConf.getConfirmarAcao()) {
                 Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
 
@@ -295,7 +296,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
                     FrameInicio.getFrame().revalidate();
                 } catch (CadastroInexistenteException | InterruptedException ex) {
-                    FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                    JDialogsControl.mostrarPopUp(ex.getMessage(), true);
                 }
             }
         }
@@ -401,7 +402,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     }//GEN-LAST:event_lblPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();

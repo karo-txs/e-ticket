@@ -7,6 +7,7 @@ import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.Usuario;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import java.awt.Color;
 
 public class TelaInicio extends javax.swing.JPanel {
@@ -152,7 +153,7 @@ public class TelaInicio extends javax.swing.JPanel {
             
             FrameInicio.getFrame().revalidate();
         } catch (DadosInvalidosException ex) {
-            FrameInicio.mostrarPopUp(ex.getMessage(),true);
+            JDialogsControl.mostrarPopUp(ex.getMessage(),true);
         }
 
     }//GEN-LAST:event_jbtEntrarMouseClicked

@@ -1,13 +1,12 @@
 package br.unicap.eticket.view.admin;
 
 import br.unicap.eticket.control.auxiliares.SalaControl;
-import br.unicap.eticket.control.locais.LocalControl;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locais.Teatro;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
+import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.List;
 import javax.swing.JLabel;
@@ -289,7 +288,7 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
 
     private void jbtRemoverSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseClicked
         if (lstSalas.getSelectedIndex() != -1) {
-            TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja Remover?");
+            TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja Remover?");
             if (telaConf.getConfirmarAcao()) {
                 String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
                 SalaControl salaC = new SalaControl();
@@ -301,7 +300,7 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
                     FrameInicio.getFrame().revalidate();
 
                 } catch (CadastroInexistenteException | InterruptedException ex) {
-                    FrameInicio.mostrarPopUp(ex.getMessage(), true);
+                    JDialogsControl.mostrarPopUp(ex.getMessage(), true);
                 }
                 this.jbtAdicionarSala.setEnabled(true);
             }
@@ -407,7 +406,7 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
     }//GEN-LAST:event_lblPerfilMouseExited
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
-        TelaPopupConfirmar telaConf = FrameInicio.mostrarConfirmacao("Deseja sair?");
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();

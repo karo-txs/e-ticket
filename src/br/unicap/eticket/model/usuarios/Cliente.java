@@ -7,6 +7,7 @@ import br.unicap.eticket.control.validacoes.ValidaDados;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
+import br.unicap.eticket.excecoes.DadosFinanceirosInvalidosException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.locaisAuxiliares.Assento;
@@ -16,17 +17,26 @@ import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.usuarios.financeiro.DadosFinanceirosCliente;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "clientes")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "cliente_tipo", discriminatorType = DiscriminatorType.INTEGER)
 public class Cliente extends Usuario {
 
     @Column
@@ -37,10 +47,9 @@ public class Cliente extends Usuario {
     @OneToMany
     private List<Reserva> reservas;
 
-    /*
-     @Embedded
-     private DadosFinanceirosCliente dadosFinanceiros;
-     */
+    @Embedded
+    private DadosFinanceirosCliente dadosFinanceiros = new DadosFinanceirosCliente();;
+
     public Cliente() {
     }
 
@@ -86,17 +95,100 @@ public class Cliente extends Usuario {
         ent.receberNota(nota);
     }
 
-    //PAGAR RESERVA
-    /*
-     public void pagarReserva(Reserva reserva){
-     if(dadosFinanceiros.verificar()){//dados financeiros corretos
-     System.out.println("Reserva Paga!");
-     }else{
-     this.cancelarReserva(reserva);
-     System.out.println("Reserva não feita!");
-     }
-     }
+    /**
+     * Preenche os dados financeiros deo cliente e salva
+     *
+     * @param numero
+     * @param nomeNoCartao
+     * @param dataExpiracao
+     * @param codigoSeguranca
+     * @throws DadosFinanceirosInvalidosException
+     * @throws CadastroInexistenteException
      */
+    public void preencherDadosFinanceiros(String numero, String nomeNoCartao, Calendar dataExpiracao, int codigoSeguranca) throws DadosFinanceirosInvalidosException, CadastroInexistenteException {
+        ClienteControl clienteC = new ClienteControl();
+        ClienteDAO clienteD = new ClienteDAO();
+        String validade = ValidaDados.validaDadosFinanceirosCredito(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
+
+        if (validade.equals("VALIDO")) {
+            clienteD.abrirTransacao();
+            Cliente busca = clienteC.buscar(this);
+            busca.dadosFinanceiros.cadastrarCartao(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
+            clienteD.atualizar(busca);
+            clienteD.fecharTransacao();
+        } else {
+            throw new DadosFinanceirosInvalidosException(validade);
+        }
+    }
+
+    /**
+     * Faz o pagamento da reserva, retornando o valor total. Se o cliente passar
+     * de 5 reservas no mesmo local ele se tranforma em um cliente especial, que
+     * possui níveis de desconto.
+     *
+     * @param reserva
+     * @return double
+     * @throws CadastroInexistenteException
+     */
+    public double pagarReserva(Reserva reserva) throws CadastroInexistenteException {
+        ClienteControl clienteC = new ClienteControl();
+        ReservaControl reservaC = new ReservaControl();
+        Cliente busca = this.getId() == null ? clienteC.buscar(this) : this;
+        Reserva buscaR = reservaC.buscar(reserva);
+
+        busca.trasformarEmClienteEspecial(buscaR.getSessao().getLocal());
+        return buscaR.getValorIngresso();
+    }
+
+    /**
+     * Retorna a quantidade de reservas feitas pelo cliente por local
+     * especificado
+     *
+     * @param local
+     * @return qtdeTickets
+     */
+    public int qtdeTickets(LocalGenerico local) {
+        int qtdeReservas = 0;
+        for (Reserva r : this.getReservas()) {
+            LocalGenerico buscaLocal = r.getSessao().getLocal();
+            if (buscaLocal.equals(local)) {
+                qtdeReservas++;
+            }
+        }
+        return qtdeReservas;
+    }
+
+    /**
+     * Se o cliente utrapassou 5 tickets em um mesmo local, ele se tranforma em
+     * um cliente especial. O qual possibilita o alcance de novos descontos no
+     * estabelecimento
+     *
+     * @param local
+     */
+    private void trasformarEmClienteEspecial(LocalGenerico local) throws CadastroInexistenteException {
+        if (this.qtdeTickets(local) == TierCliente.TIER3.getQtdeTickets()) {
+            ClienteDAO clienteD = new ClienteDAO();
+            ClienteControl clienteC = new ClienteControl();
+
+            ClienteEspecial e = new ClienteEspecial(this.getNome(), this.nickName, this.getEmail(),
+                    this.getSenha(), this.getIdade(), this.getCpf(), this.getTelefone(), this.getEndereco());
+            e.setDadosFinanceiros(this.getDadosFinanceiros());
+            e.criarFidelidade(local);
+
+            clienteD.abrirTransacao();
+            clienteD.removerDetached(this);
+            clienteD.fecharTransacao();
+
+            clienteD.incluirAtomico(e);
+
+            ClienteEspecial buscaE = (ClienteEspecial) clienteC.buscar(e);
+            for (Reserva r : this.reservas) {
+                buscaE.getReservas().add(r);
+            }
+            clienteD.atualizarAtomico(buscaE);
+        }
+    }
+
     //GRUPO
     public void fazerReservaGrupo(Sessao s, Grupo g, String... params) {
 
@@ -213,6 +305,18 @@ public class Cliente extends Usuario {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public boolean isEspecial() {
+        return false;
+    }
+
+    public DadosFinanceirosCliente getDadosFinanceiros() {
+        return dadosFinanceiros;
+    }
+
+    public void setDadosFinanceiros(DadosFinanceirosCliente dadosFinanceiros) {
+        this.dadosFinanceiros = dadosFinanceiros;
     }
 
 }

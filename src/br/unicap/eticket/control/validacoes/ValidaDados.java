@@ -5,6 +5,7 @@ import br.com.caelum.stella.validation.CPFValidator;
 import br.unicap.eticket.excecoes.SenhaInvalidaException;
 import br.unicap.eticket.model.auxiliares.Endereco;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +29,30 @@ public class ValidaDados {
      */
     public static boolean validaNickName(String nick){
         return nick.length()<=10 && !Character.isDigit(nick.charAt(0));
+    }
+    
+    /**
+     * Valida dados financeiros de um cartao de credito
+     * @param numero
+     * @param nomeNoCartao
+     * @param dataExpiracao
+     * @param codigoSeguranca
+     * @return String
+     */
+    public static String validaDadosFinanceirosCredito(String numero, String nomeNoCartao, Calendar dataExpiracao, int codigoSeguranca) {
+        String dadoIncorreto = "VALIDO";
+        if (!validaNumero(numero) || numero.length() != 16) {
+            dadoIncorreto = "Número";
+        } else {
+            if (!validaNome(nomeNoCartao)) {
+                dadoIncorreto = "NomeNoCartao";
+            } else {
+                if (!validaNumero(String.valueOf(codigoSeguranca)) || String.valueOf(codigoSeguranca).length()!=3) {
+                    dadoIncorreto = "Codigo de Segurança";
+                }
+            }
+        }
+        return dadoIncorreto;
     }
 
     /**
@@ -144,6 +169,16 @@ public class ValidaDados {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+    
+    /**
+     * Valida se a string so contem numeros
+     *
+     * @param num
+     * @return boolean
+     */
+    public static boolean validaNumero(String num) {
+        return num.matches("^\\d+$");
     }
 
     /**
