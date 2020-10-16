@@ -160,8 +160,8 @@ public class SessaoControl implements BaseControl<Sessao> {
             throw new CadastroInexistenteException("Sessao");
         }
     }
-
-    /**
+    
+/**
      * Sessoes de um local por entretenimento e data, sendo elas ativas
      *
      * @param ent
@@ -175,19 +175,12 @@ public class SessaoControl implements BaseControl<Sessao> {
         List<Sessao> sessoes = dao.sessoesPorData(local, dataInicial, dataFinal);
         List<Sessao> result = new ArrayList<>();
         for (Sessao s : sessoes) {
-            if (s.getEntretenimento().getNome().equalsIgnoreCase(ent.getNome())) {
+            if (s.getEntretenimento().getNome().equalsIgnoreCase(ent.getNome()) && s.isAtiva()) {
                 result.add(s);
             }
         }
-        List<Sessao> ativas = new ArrayList<>();
-        for (Sessao s : sessoes) {
-            if (s.isAtiva()) {
-                ativas.add(s);
-            }
-        }
-        return ativas;
+        return result;
     }
-
     /**
      * Retorna a lista de sessões que ocorreram antes da data informada
      *
