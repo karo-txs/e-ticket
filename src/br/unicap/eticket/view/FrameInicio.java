@@ -2,6 +2,7 @@ package br.unicap.eticket.view;
 
 import br.unicap.eticket.control.usuarios.ClienteControl;
 import br.unicap.eticket.viewAuxiliares.ClockSessao;
+import java.util.TimeZone;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -12,7 +13,8 @@ public class FrameInicio extends JFrame {
 
     public FrameInicio() {
         initComponents();
-       // label = new ClockSessao();
+        label = new ClockSessao();
+        TimeZone.setDefault(TimeZone.getTimeZone("Etc/UTC"));
     }
 
     @SuppressWarnings("unchecked")
