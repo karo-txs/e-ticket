@@ -387,7 +387,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
                         * clienteE.getDesconto(reserva.getSessao().getLocal()));
             }
         }
-        lblDesconto.setText(String.format("%.2f%%", desconto));
+        lblDesconto.setText(String.format("%.2f%%", desconto*100));
         lblTotal.setText(String.format("R$ %.2f", total));
 
         Image im = new ImageIcon(this.sessao.getEntretenimento().getCapa()).getImage();

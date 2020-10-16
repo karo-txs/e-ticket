@@ -86,6 +86,7 @@ public class Sessao implements Serializable {
 
     /**
      * Atualização do nome da sessão (sua chave)
+     *
      * @param novoNome
      * @throws CadastroInexistenteException
      * @throws AtualizacaoMalSucedidaException
@@ -94,7 +95,7 @@ public class Sessao implements Serializable {
         SessaoDAO sd = new SessaoDAO();
         SessaoControl sc = new SessaoControl();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
-        String nomeSessao = busca.getLocal().getId()+"-"+busca.getSala().getNome() + ":" + novoNome;
+        String nomeSessao = busca.getLocal().getId() + "-" + busca.getSala().getNome() + ":" + novoNome;
         //Se uma sessao com mesmo nome não existe, logo é possivel modificar seu nome
         try {
             Sessao buscaNovoNome = sc.buscar(nomeSessao);
@@ -149,9 +150,9 @@ public class Sessao implements Serializable {
      */
     public void desativarSessao() throws CadastroInexistenteException {
         /* Falta: Verificar se a sessão possui reservas que ainda nao foram utilizadas.
-           se sim: impedir que o admin desative a sessao ou ele tera que restituir os valores das reservas ja pagas
-           se nao: desativamento normal
-        */
+         se sim: impedir que o admin desative a sessao ou ele tera que restituir os valores das reservas ja pagas
+         se nao: desativamento normal
+         */
         SessaoControl sc = new SessaoControl();
         SessaoDAO sd = new SessaoDAO();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
@@ -217,9 +218,7 @@ public class Sessao implements Serializable {
     }
 
     public Calendar getDataInicial() {
-        Calendar dateAux = (Calendar) this.dataInicial.clone();
-        dateAux.add(Calendar.HOUR, 3);
-        return dateAux;
+        return this.dataInicial;
     }
 
     public void setDataInicial(Calendar dataInicial) {
@@ -227,9 +226,7 @@ public class Sessao implements Serializable {
     }
 
     public Calendar getDataFinal() {
-        Calendar dateAux = (Calendar) this.dataFinal.clone();
-        dateAux.add(Calendar.HOUR, 3);
-        return dateAux;
+        return this.dataFinal;
     }
 
     public void setDataFinal(Calendar dataFinal) {

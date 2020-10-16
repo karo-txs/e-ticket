@@ -72,7 +72,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
             fldNome.setText(busca.getNome());
             Calendar data = busca.getDataInicial();
             jcbDia.setSelectedItem(String.valueOf(data.get(Calendar.DAY_OF_MONTH)));
-            jcbMes.setSelectedItem(String.valueOf(data.get(Calendar.MONTH) + 1));
+            jcbMes.setSelectedIndex(data.get(Calendar.MONTH)+ 1);
             jcbAno.setSelectedItem(String.valueOf(data.get(Calendar.YEAR)));
             jfldHora.setText(String.valueOf(data.get(Calendar.HOUR_OF_DAY)));
             jfldMinutos.setText(String.valueOf(data.get(Calendar.MINUTE)));

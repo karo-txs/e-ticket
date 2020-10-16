@@ -12,7 +12,7 @@ public class FrameInicio extends JFrame {
 
     public FrameInicio() {
         initComponents();
-        label = new ClockSessao();
+       // label = new ClockSessao();
     }
 
     @SuppressWarnings("unchecked")
