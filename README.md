@@ -1,7 +1,7 @@
-# <img src= "https://user-images.githubusercontent.com/58193125/95666608-a2595a80-0b31-11eb-88bb-8f280743082d.png" heigth="150" width = "100">e-ticket: Gerenciamento de Reservas e Entreterimentos
+# <img src= "https://user-images.githubusercontent.com/58193125/95666608-a2595a80-0b31-11eb-88bb-8f280743082d.png" heigth="150" width = "100">e-ticket: Gerenciamento de Reservas e Entretenimentos
 
 ## Resumo do Projeto:
-O e-ticket é um gerenciador de reservas e eventos facilitado. Nele os estabalecimentos controlam suas reservas e eventos e os clientes tem um local unificado para gerenciar suas diversões.
+O e-ticket é um gerenciador de reservas e entretenimentos facilitado. Nele os estabalecimentos controlam suas reservas e eventos e os clientes tem um local unificado para gerenciar suas diversões.
 
 ## Status: EM DESENVOLVIMENTO
 
