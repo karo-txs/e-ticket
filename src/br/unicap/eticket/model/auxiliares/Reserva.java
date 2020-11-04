@@ -52,14 +52,14 @@ public class Reserva implements Serializable, Comparable<Reserva> {
     public Reserva() {
     }
     
-    public Reserva(Sessao sessao, String assento) {
+    public Reserva(Sessao sessao, String assento) throws CadastroInexistenteException {
         this.sessao = sessao;
         this.assento = assento;
-        this.valorIngresso = sessao.getSala().getValorIngresso();
+        this.valorIngresso = sessao.getValorIngresso();
         this.avaliacaoDisp = true;
     }
     
-    public Reserva(Sessao sessao, String assento, byte[] codigo) {
+    public Reserva(Sessao sessao, String assento, byte[] codigo) throws CadastroInexistenteException {
         this(sessao, assento);
         this.qrCode = codigo;
     }

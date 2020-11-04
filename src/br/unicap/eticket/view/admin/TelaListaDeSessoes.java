@@ -47,7 +47,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
         jbtRemoverSessao = new javax.swing.JButton();
         jbtEditarSessao = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstSessoes = new javax.swing.JList<String>();
+        lstSessoes = new javax.swing.JList<>();
         lblLogo = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         lblLinhinha = new javax.swing.JLabel();
@@ -57,6 +57,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
         lblControleOrcamento = new javax.swing.JLabel();
         lblPerfil = new javax.swing.JLabel();
         lblDeslogar = new javax.swing.JLabel();
+        lblEventos = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -133,10 +134,10 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
         lstSessoes.setBackground(new java.awt.Color(21, 17, 17));
         lstSessoes.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         lstSessoes.setForeground(new java.awt.Color(255, 255, 255));
-        lstSessoes.setModel(new javax.swing.AbstractListModel() {
+        lstSessoes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "SALA3D | Sala-2 | 400 Assentos | R$14.50", "BISTRÔ | Sala-2 | 400 Assentos | R$14.50", "IMAX | Sala-2 | 400 Assentos | R$14.50", "SALA3D | Sala-2 | 400 Assentos | R$14.50", "BISTRÔ | Sala-2 | 400 Assentos | R$14.50", "IMAX | Sala-2 | 400 Assentos | R$14.50", "SALA3D | Sala-2 | 400 Assentos | R$14.50", "BISTRÔ | Sala-2 | 400 Assentos | R$14.50", "IMAX | Sala-2 | 400 Assentos | R$14.50" };
             public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         lstSessoes.setFixedCellHeight(60);
         lstSessoes.setSelectionBackground(new java.awt.Color(153, 153, 153));
@@ -257,6 +258,23 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
             }
         });
         add(lblDeslogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 650, 150, 40));
+
+        lblEventos.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        lblEventos.setForeground(new java.awt.Color(255, 255, 255));
+        lblEventos.setText("Eventos");
+        lblEventos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEventosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEventosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEventosMouseExited(evt);
+            }
+        });
+        add(lblEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 90, 40));
 
         lblBordaEsquerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/BordaEsquerda.png"))); // NOI18N
         lblBordaEsquerda.setText("jLabel3");
@@ -417,6 +435,19 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
 
+    private void lblEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseClicked
+        FrameInicio.getFrame().setContentPane(new TelaCriarEventos(this.local));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblEventosMouseClicked
+
+    private void lblEventosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseEntered
+
+    private void lblEventosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseExited
+
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -436,6 +467,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     private javax.swing.JLabel lblBordaEsquerda;
     private javax.swing.JLabel lblControleOrcamento;
     private javax.swing.JLabel lblDeslogar;
+    private javax.swing.JLabel lblEventos;
     private javax.swing.JLabel lblHomePage;
     private javax.swing.JLabel lblLinhinha;
     private javax.swing.JLabel lblLogo;

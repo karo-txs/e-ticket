@@ -44,7 +44,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }
 
     private void initCliente() {
-         this.lblTier.setVisible(false);
+        this.lblTier.setVisible(false);
         if (cliente.getNickName() != null) {
             this.lblUsername.setText("@" + cliente.getNickName());
         }
@@ -56,7 +56,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
 
                 String caminho = clienteE.getTierImg(this.reserva.getSessao().getLocal());
                 if (caminho != null) {
-                     this.lblTier.setVisible(true);
+                    this.lblTier.setVisible(true);
                     lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
                 }
             }
@@ -367,27 +367,35 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     private void initReserva() {
         DateFormat df = new SimpleDateFormat("HH:mm");
         DateFormat dfDia = new SimpleDateFormat("dd/MM/yyyy");
-        reserva = new Reserva(sessao, numCadeira);
-        lblNomeFilme.setText(this.sessao.getEntretenimento().getNome());
-        lblPreco.setText("R$" + String.valueOf(this.sessao.getSala().getValorIngresso()));
+
+        try {
+            lblPreco.setText("R$" + String.valueOf(this.sessao.getValorIngresso()));
+            reserva = new Reserva(sessao, numCadeira);
+            lblNomeFilme.setText(this.sessao.getEntretenimento().getNome());
+        } catch (CadastroInexistenteException ex) {
+             JDialogsControl.mostrarPopUp("Erro!", true);
+        }
         lblNomeSala.setText(this.sessao.getSala().getNome());
         lblAssento.setText(this.sessao.getNome());
         lblHoraMin.setText(df.format(this.sessao.getDataInicial().getTime()));
         lblDataCompleta.setText(dfDia.format(this.sessao.getDataInicial().getTime()));
         lblAssento.setText(numCadeira);
 
-        double total = this.sessao.getSala().getValorIngresso();
+        String tot = lblPreco.getText().substring(2);
+        double total = Double.parseDouble(tot);
         double desconto = 0;
 
         if (cliente.isEspecial()) {
             ClienteEspecial clienteE = (ClienteEspecial) cliente;
             if (clienteE.getDesconto(reserva.getSessao().getLocal()) != 0) {
                 desconto = clienteE.getDesconto(reserva.getSessao().getLocal());
-                total = this.sessao.getSala().getValorIngresso() - (reserva.getValorIngresso()
-                        * clienteE.getDesconto(reserva.getSessao().getLocal()));
+                if (!this.sessao.isEventoAtivado()) {
+                    total = this.sessao.getSala().getValorIngresso() - (reserva.getValorIngresso()
+                            * clienteE.getDesconto(reserva.getSessao().getLocal()));
+                }
             }
         }
-        lblDesconto.setText(String.format("%.2f%%", desconto*100));
+        lblDesconto.setText(String.format("%.2f%%", desconto * 100));
         lblTotal.setText(String.format("R$ %.2f", total));
 
         Image im = new ImageIcon(this.sessao.getEntretenimento().getCapa()).getImage();
@@ -406,11 +414,11 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }
 
     private void jbtFinalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseClicked
-         ClienteControl clienteC = new ClienteControl();
+        ClienteControl clienteC = new ClienteControl();
         try {
             Reserva rFeita = cliente.fazerReserva(sessao, numCadeira);
-            
-            TelaPopupPagarReserva ppPagar = new TelaPopupPagarReserva(FrameInicio.getFrame(), true, cliente,this.reserva);
+
+            TelaPopupPagarReserva ppPagar = new TelaPopupPagarReserva(FrameInicio.getFrame(), true, cliente, this.reserva);
             ppPagar.setLocationRelativeTo(null);
             ppPagar.setVisible(true);
             boolean nivelSubiu = false;
@@ -431,18 +439,18 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
                 } else {
                     val = cliente.pagarReserva(rFeita);
                     Cliente buscaC = clienteC.buscar(cliente);
-                    if(buscaC.isEspecial()){
+                    if (buscaC.isEspecial()) {
                         nivelSubiu = true;
                     }
                 }
                 ClienteControl cc = new ClienteControl();
                 cliente = cc.buscar(cliente);
-                
-                if(nivelSubiu){
-                    JDialogsControl.mostrarPopUp(new TelaPopupSubiuTier(FrameInicio.getFrame(), true, (ClienteEspecial) cliente, 
-                                this.reserva.getSessao().getLocal()));
+
+                if (nivelSubiu) {
+                    JDialogsControl.mostrarPopUp(new TelaPopupSubiuTier(FrameInicio.getFrame(), true, (ClienteEspecial) cliente,
+                            this.reserva.getSessao().getLocal()));
                 }
-                
+
                 TelaPopupQRCode ppQrCode = new TelaPopupQRCode(FrameInicio.getFrame(), true, rFeita.getQrCode(), cliente);
                 ppQrCode.setLocationRelativeTo(null);
                 ppQrCode.setVisible(true);
@@ -452,7 +460,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
             }
         } catch (CadastroInexistenteException | DadosRepetidosException | DadosInvalidosException ex) {
             JDialogsControl.mostrarPopUp(ex.getMessage(), true);
-        } 
+        }
     }//GEN-LAST:event_jbtFinalizarMouseClicked
 
     private void jbtFinalizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseEntered

@@ -92,16 +92,16 @@ public class TelaEditarSessao extends javax.swing.JPanel {
         lblCadastrarSala = new javax.swing.JLabel();
         lblNomeSala = new javax.swing.JLabel();
         lblQtdCadx = new javax.swing.JLabel();
-        jcbSalas = new javax.swing.JComboBox<String>();
+        jcbSalas = new javax.swing.JComboBox<>();
         lblTipoSala = new javax.swing.JLabel();
-        jcbDia = new javax.swing.JComboBox<String>();
-        jcbMes = new javax.swing.JComboBox<String>();
-        jcbAno = new javax.swing.JComboBox<String>();
+        jcbDia = new javax.swing.JComboBox<>();
+        jcbMes = new javax.swing.JComboBox<>();
+        jcbAno = new javax.swing.JComboBox<>();
         jfldHora = new javax.swing.JFormattedTextField();
         jfldMinutos = new javax.swing.JFormattedTextField();
         lblHora = new javax.swing.JLabel();
         lblHora1 = new javax.swing.JLabel();
-        jcbEntretenimento = new javax.swing.JComboBox<String>();
+        jcbEntretenimento = new javax.swing.JComboBox<>();
         jbtEditarSessao = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
@@ -114,6 +114,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
         lblSessoes = new javax.swing.JLabel();
         lblControleOrcamento = new javax.swing.JLabel();
         lblPerfil = new javax.swing.JLabel();
+        lblEventos = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -142,7 +143,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
         jcbSalas.setBackground(new java.awt.Color(204, 204, 204));
         jcbSalas.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
         jcbSalas.setForeground(new java.awt.Color(102, 102, 102));
-        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "- Selecione -" }));
+        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Selecione -" }));
         add(jcbSalas, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 490, 360, 40));
 
         lblTipoSala.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
@@ -153,19 +154,19 @@ public class TelaEditarSessao extends javax.swing.JPanel {
         jcbDia.setBackground(new java.awt.Color(204, 204, 204));
         jcbDia.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         jcbDia.setForeground(new java.awt.Color(102, 102, 102));
-        jcbDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-     Dia    -", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        jcbDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-     Dia    -", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         add(jcbDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, 120, 40));
 
         jcbMes.setBackground(new java.awt.Color(204, 204, 204));
         jcbMes.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         jcbMes.setForeground(new java.awt.Color(102, 102, 102));
-        jcbMes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-    Mês   -", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        jcbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-    Mês   -", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
         add(jcbMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 120, 40));
 
         jcbAno.setBackground(new java.awt.Color(204, 204, 204));
         jcbAno.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         jcbAno.setForeground(new java.awt.Color(102, 102, 102));
-        jcbAno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-    Ano   -", "2020", "2021", "2022" }));
+        jcbAno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-    Ano   -", "2020", "2021", "2022" }));
         add(jcbAno, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 120, 40));
 
         jfldHora.setBackground(new java.awt.Color(204, 204, 204));
@@ -206,7 +207,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
         jcbEntretenimento.setBackground(new java.awt.Color(204, 204, 204));
         jcbEntretenimento.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
         jcbEntretenimento.setForeground(new java.awt.Color(102, 102, 102));
-        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "- Selecione -" }));
+        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Selecione -" }));
         add(jcbEntretenimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 230, 360, 40));
 
         jbtEditarSessao.setBackground(new java.awt.Color(227, 0, 0));
@@ -355,6 +356,23 @@ public class TelaEditarSessao extends javax.swing.JPanel {
         });
         add(lblPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 150, 40));
 
+        lblEventos.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        lblEventos.setForeground(new java.awt.Color(255, 255, 255));
+        lblEventos.setText("Eventos");
+        lblEventos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEventosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEventosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEventosMouseExited(evt);
+            }
+        });
+        add(lblEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 90, 40));
+
         lblBordaEsquerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/BordaEsquerda.png"))); // NOI18N
         lblBordaEsquerda.setText("jLabel3");
         add(lblBordaEsquerda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 770));
@@ -489,6 +507,19 @@ public class TelaEditarSessao extends javax.swing.JPanel {
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
 
+    private void lblEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseClicked
+        FrameInicio.getFrame().setContentPane(new TelaCriarEventos(this.local));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblEventosMouseClicked
+
+    private void lblEventosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseEntered
+
+    private void lblEventosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseExited
+
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -513,6 +544,7 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     private javax.swing.JLabel lblCadastrarSala;
     private javax.swing.JLabel lblControleOrcamento;
     private javax.swing.JLabel lblDeslogar;
+    private javax.swing.JLabel lblEventos;
     private javax.swing.JLabel lblHomePage;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblHora1;

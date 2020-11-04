@@ -52,6 +52,7 @@ public class TelaEditarSala extends javax.swing.JPanel {
         lblDeslogar = new javax.swing.JLabel();
         fldNome = new javax.swing.JTextField();
         lblNome = new javax.swing.JLabel();
+        lblEventos = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -254,6 +255,23 @@ public class TelaEditarSala extends javax.swing.JPanel {
         lblNome.setText("Nome");
         add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, 50, 20));
 
+        lblEventos.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        lblEventos.setForeground(new java.awt.Color(255, 255, 255));
+        lblEventos.setText("Eventos");
+        lblEventos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEventosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEventosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEventosMouseExited(evt);
+            }
+        });
+        add(lblEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 90, 40));
+
         lblBordaEsquerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/BordaEsquerda.png"))); // NOI18N
         lblBordaEsquerda.setText("jLabel3");
         add(lblBordaEsquerda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 770));
@@ -388,6 +406,19 @@ public class TelaEditarSala extends javax.swing.JPanel {
         apagarBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseExited
 
+    private void lblEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseClicked
+        FrameInicio.getFrame().setContentPane(new TelaCriarEventos(this.local));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblEventosMouseClicked
+
+    private void lblEventosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseEntered
+
+    private void lblEventosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseExited
+
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -409,6 +440,7 @@ public class TelaEditarSala extends javax.swing.JPanel {
     private javax.swing.JLabel lblCadastrarSala;
     private javax.swing.JLabel lblControleOrcamento;
     private javax.swing.JLabel lblDeslogar;
+    private javax.swing.JLabel lblEventos;
     private javax.swing.JLabel lblHomePage;
     private javax.swing.JLabel lblLinhinha;
     private javax.swing.JLabel lblLogo;

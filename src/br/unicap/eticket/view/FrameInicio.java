@@ -13,7 +13,7 @@ public class FrameInicio extends JFrame {
 
     public FrameInicio() {
         initComponents();
-        label = new ClockSessao();
+        //label = new ClockSessao();
         TimeZone.setDefault(TimeZone.getTimeZone("Etc/UTC"));
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm    
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm    
                         http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
                  version="1.0">
 
@@ -9,10 +9,10 @@
         <query>
             select l from LocalGenerico l
             where l.endereco.uf      = :estado and
-                  l.endereco.cidade      = :cidade and
-                  l.endereco.bairro      = :bairro and
-                  l.endereco.logradouro  = :rua    and
-                  l.endereco.num         = :num    
+            l.endereco.cidade      = :cidade and
+            l.endereco.bairro      = :bairro and
+            l.endereco.logradouro  = :rua    and
+            l.endereco.num         = :num    
         </query>
     </named-query>    
     
@@ -22,14 +22,14 @@
         </query>
     </named-query>
     
-     <named-query name="todosTeatros">
+    <named-query name="todosTeatros">
         <query>
             select t from Teatro t
         </query>
     </named-query>
     
     <!---SALAS-->
-     <named-query name="salasDoLocal">
+    <named-query name="salasDoLocal">
         <query>
             select s from Sala s
             where s.local.id = :id
@@ -43,26 +43,26 @@
         </query>
     </named-query>
     
-     <!---SESSOES-->
-      <named-query name="sessaoPorNome">
+    <!---SESSOES-->
+    <named-query name="sessaoPorNome">
         <query>
             select s from Sessao s
             where s.nome = :nome
         </query>
     </named-query>
     
-     <named-query name="sessoesDoLocal">
+    <named-query name="sessoesDoLocal">
         <query>
             select s from Sessao s
             where s.local.id = :id
         </query>
     </named-query>
     
-     <named-query name="sessoesPorEntreterimentoELocal">
+    <named-query name="sessoesPorEntreterimentoELocal">
         <query>
             select s from Sessao s
             where s.entretenimento = :entreterimento and
-                  s.local.id = :id
+            s.local.id = :id
         </query>
     </named-query>
     
@@ -70,7 +70,7 @@
         <query>
             select s from Sessao s
             where s.local.id = :idLocal and
-                  s.data = :data
+            s.data = :data
         </query>
     </named-query>
     
@@ -78,6 +78,13 @@
         <query>
             select s from Sessao s
             where s.sala= :sala
+        </query>
+    </named-query>
+    
+    <named-query name="eventoPorSessao">
+        <query>
+            select e from Evento e
+            where e.sessao = :sessao
         </query>
     </named-query>
 

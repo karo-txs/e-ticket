@@ -60,6 +60,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
         lblLinhinha = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
+        lblEventos = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
         jbtAlterarBanner = new javax.swing.JButton();
         lblEndereco = new javax.swing.JLabel();
@@ -206,6 +207,23 @@ public class TelaHomepageContato extends javax.swing.JPanel {
         lblUsername.setText("@Admin");
         lblUsername.setToolTipText("");
         jpnEsquerda.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 140, 40));
+
+        lblEventos.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        lblEventos.setForeground(new java.awt.Color(255, 255, 255));
+        lblEventos.setText("Eventos");
+        lblEventos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEventosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEventosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEventosMouseExited(evt);
+            }
+        });
+        jpnEsquerda.add(lblEventos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 90, 40));
 
         lblBordaEsquerda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/BordaEsquerda.png"))); // NOI18N
         lblBordaEsquerda.setText("jLabel3");
@@ -651,6 +669,19 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     private void jbtAlterarBannerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtAlterarBannerMouseExited
+
+    private void lblEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseClicked
+        FrameInicio.getFrame().setContentPane(new TelaCriarEventos(this.adm.getLocalAdministrado()));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblEventosMouseClicked
+
+    private void lblEventosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseEntered
+
+    private void lblEventosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseExited
     
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
@@ -719,6 +750,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     private javax.swing.JLabel lblEmailEstabel;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblEstrelas;
+    private javax.swing.JLabel lblEventos;
     private javax.swing.JLabel lblHomePage;
     private javax.swing.JLabel lblLinhaDadP;
     private javax.swing.JLabel lblLinhinha;

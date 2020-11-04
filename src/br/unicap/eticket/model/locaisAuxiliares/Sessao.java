@@ -1,10 +1,12 @@
 package br.unicap.eticket.model.locaisAuxiliares;
 
+import br.unicap.eticket.control.auxiliares.EventoControl;
 import br.unicap.eticket.control.auxiliares.SessaoControl;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.dao.SessaoDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
+import br.unicap.eticket.model.auxiliares.Evento;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import java.io.Serializable;
@@ -62,6 +64,9 @@ public class Sessao implements Serializable {
 
     @Column
     private boolean ativa = true;
+
+    @Column
+    private boolean eventoAtivado = false;
 
     public Sessao() {
     }
@@ -175,7 +180,43 @@ public class Sessao implements Serializable {
         return !busca.isAtiva();
     }
 
+    public int getQtdAssentosOcupados() throws CadastroInexistenteException {
+        int qtde = 0;
+        for (Boolean b : this.ocupacaoDeAssentosDaSessao().values()) {
+            if (b) {
+                qtde++;
+            }
+        }
+        return qtde;
+    }
+
+    public void ativarEvento(boolean b) throws CadastroInexistenteException {
+        SessaoDAO sd = new SessaoDAO();
+        SessaoControl sc = new SessaoControl();
+        sd.abrirTransacao();
+
+        Sessao busca = sc.buscar(this);
+        busca.setEventoAtivado(b);
+
+        sd.atualizar(busca);
+        sd.fecharTransacao();
+    }
+
     //Gets e Sets
+    public double getValorIngresso() throws CadastroInexistenteException {
+        SessaoControl sc = new SessaoControl();
+        Sessao buscaS = this.getId() == null ? sc.buscar(this) : this;
+        EventoControl ec = new EventoControl();
+        Evento ev = ec.buscar(new Evento(buscaS));
+
+        if (buscaS.isEventoAtivado() && buscaS.getQtdAssentosOcupados() < ev.getTipoEvento().getQtd()) {
+            return 0;
+        } else {
+            buscaS.setEventoAtivado(false);
+            return buscaS.getSala().getValorIngresso();
+        }
+    }
+
     public String getNome() {
         if (this.nome.contains(":")) {
             String[] nome = this.nome.split(":");
@@ -247,6 +288,14 @@ public class Sessao implements Serializable {
 
     public void setAtiva(boolean ativa) {
         this.ativa = ativa;
+    }
+
+    public boolean isEventoAtivado() {
+        return eventoAtivado;
+    }
+
+    public void setEventoAtivado(boolean eventoAtivado) {
+        this.eventoAtivado = eventoAtivado;
     }
 
     @Override
