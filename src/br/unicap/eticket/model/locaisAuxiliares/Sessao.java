@@ -1,7 +1,8 @@
 package br.unicap.eticket.model.locaisAuxiliares;
 
-import br.unicap.eticket.control.auxiliares.EventoControl;
-import br.unicap.eticket.control.auxiliares.SessaoControl;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
+import br.unicap.eticket.controller.localAuxiliares.EventoController;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.dao.SessaoDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
@@ -98,7 +99,7 @@ public class Sessao implements Serializable {
      */
     public void atualizarNome(String novoNome) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
         SessaoDAO sd = new SessaoDAO();
-        SessaoControl sc = new SessaoControl();
+        SessaoController sc = new SessaoController();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
         String nomeSessao = busca.getLocal().getId() + "-" + busca.getSala().getNome() + ":" + novoNome;
         //Se uma sessao com mesmo nome não existe, logo é possivel modificar seu nome
@@ -119,7 +120,7 @@ public class Sessao implements Serializable {
      */
     public HashMap<String, Boolean> ocupacaoDeAssentosDaSessao() throws CadastroInexistenteException {
         ReservaDAO reservaD = new ReservaDAO();
-        SessaoControl sc = new SessaoControl();
+        SessaoController sc = new SessaoController();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
 
         Sala sala = busca.getSala();
@@ -158,7 +159,7 @@ public class Sessao implements Serializable {
          se sim: impedir que o admin desative a sessao ou ele tera que restituir os valores das reservas ja pagas
          se nao: desativamento normal
          */
-        SessaoControl sc = new SessaoControl();
+        SessaoController sc = new SessaoController();
         SessaoDAO sd = new SessaoDAO();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
 
@@ -175,7 +176,7 @@ public class Sessao implements Serializable {
      * @throws CadastroInexistenteException
      */
     public boolean permitirAvaliacao() throws CadastroInexistenteException {
-        SessaoControl sc = new SessaoControl();
+        SessaoController sc = new SessaoController();
         Sessao busca = this.getId() == null ? sc.buscar(this) : this;
         return !busca.isAtiva();
     }
@@ -192,7 +193,7 @@ public class Sessao implements Serializable {
 
     public void ativarEvento(boolean b) throws CadastroInexistenteException {
         SessaoDAO sd = new SessaoDAO();
-        SessaoControl sc = new SessaoControl();
+        SessaoController sc = new SessaoController();
         sd.abrirTransacao();
 
         Sessao busca = sc.buscar(this);
@@ -204,17 +205,19 @@ public class Sessao implements Serializable {
 
     //Gets e Sets
     public double getValorIngresso() throws CadastroInexistenteException {
-        SessaoControl sc = new SessaoControl();
+        SessaoController sc = new SessaoController();
         Sessao buscaS = this.getId() == null ? sc.buscar(this) : this;
-        EventoControl ec = new EventoControl();
-        Evento ev = ec.buscar(new Evento(buscaS));
+        EventoController ec = new EventoController();
 
-        if (buscaS.isEventoAtivado() && buscaS.getQtdAssentosOcupados() < ev.getTipoEvento().getQtd()) {
-            return 0;
-        } else {
-            buscaS.setEventoAtivado(false);
-            return buscaS.getSala().getValorIngresso();
+        if (buscaS.isEventoAtivado()) {
+            Evento ev = ec.buscar(new Evento(buscaS));
+            if (buscaS.getQtdAssentosOcupados() < ev.getTipoEvento().getQtd()) {
+                return 0;
+            } else {
+                buscaS.setEventoAtivado(false);
+            }
         }
+        return buscaS.getSala().getValorIngresso();
     }
 
     public String getNome() {

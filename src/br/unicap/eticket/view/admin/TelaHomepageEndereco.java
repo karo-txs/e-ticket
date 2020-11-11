@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.validacoes.Conversor;
+import br.unicap.eticket.controller.auxiliares.Conversor;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -11,6 +11,7 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
 import java.awt.Image;
@@ -34,15 +35,17 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         this.initEndereco(local);
         this.initLocal();
     }
-     private void initLocal() {
+
+    private void initLocal() {
         this.lblNomeDoLocal.setText(local.getNome());
         String caminho = Notas.qualCaminho(local.getNota()).getCaminho();
         lblEstrelas.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-        
+
         Image im = new ImageIcon(local.getBanner()).getImage();
         Icon ic = new ImageIcon(im);
         jlbBanner.setIcon(ic);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -531,7 +534,6 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_lblControleOrcamentoMouseExited
 
     private void lblSessoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSessoesMouseClicked
@@ -545,7 +547,6 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSessoesMouseExited
 
     private void lblSalasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSalasMouseClicked
@@ -559,7 +560,6 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSalasMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaHomepageEndereco(local.getAdmin()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblHomePageMouseClicked
@@ -604,25 +604,25 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         if (!fldCEP.getText().equals("")) {
             HashMap<String, String> endereco = null;
             try {
-                endereco = Conversor.coverterCepEmEndereco(fldCEP.getText());
+                endereco = Conversor.converterCepEmEndereco(fldCEP.getText());
                 fldPais.setText("Brasil");
                 fldRua.setText(endereco.get("Logradouro"));
                 fldBairro.setText(endereco.get("Bairro"));
                 fldCidade.setText(endereco.get("Cidade"));
                 fldUF.setText(endereco.get("UF"));
             } catch (DadosInvalidosException ex) {
-                JDialogsControl.mostrarPopUp(ex.getMessage(),true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
 
         }
     }//GEN-LAST:event_jbtLocalizarCEPMouseClicked
 
     private void jbtLocalizarCEPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseEntered
-         jbtLocalizarCEP.setForeground(new Color(0,0,0));
+        jbtLocalizarCEP.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jbtLocalizarCEPMouseEntered
 
     private void jbtLocalizarCEPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseExited
-       jbtLocalizarCEP.setForeground(new Color(255,255,255));
+        jbtLocalizarCEP.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
     private void jbtAlterarEndMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseClicked
@@ -632,10 +632,10 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
                 Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                         fldRua.getText(), fldNum.getText(), fldComplemento.getText());
                 if (!this.local.getEndereco().equals(novoEnd)) {
-                    local.atualizarEnd(novoEnd);
+                    local.atualizarEnd(novoEnd);//atualizarChave
                 }
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-                JDialogsControl.mostrarPopUp(ex.getMessage(),true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
 
         }
@@ -644,11 +644,11 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarEndMouseClicked
 
     private void jbtAlterarEndMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseEntered
-        jbtAlterarEnd.setForeground(new Color(0,0,0));
+        jbtAlterarEnd.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jbtAlterarEndMouseEntered
 
     private void jbtAlterarEndMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseExited
-         jbtAlterarEnd.setForeground(new Color(255,255,255));
+        jbtAlterarEnd.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jbtAlterarEndMouseExited
 
     private void jbtAlterarEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarEndActionPerformed
@@ -656,22 +656,8 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarEndActionPerformed
 
     private void jbtAlterarBannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseClicked
-        JFileChooser arquivo = new JFileChooser();
-        arquivo.setDialogTitle("Selecione uma Capa:");
-        arquivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int opc = arquivo.showOpenDialog(this);
-        if (opc == JFileChooser.APPROVE_OPTION) {
-            File file = new File("Caminho");
-            file = arquivo.getSelectedFile();
-            String fileName = file.getAbsolutePath();
-
-            ImageIcon img = new ImageIcon(arquivo.getSelectedFile().getPath());
-            jlbBanner.setIcon(new ImageIcon(img.getImage().getScaledInstance(
-                jlbBanner.getWidth(), jlbBanner.getHeight(), Image.SCALE_DEFAULT)));
-
-    String caminhoCompleto = this.caminhoCompleto(fileName);
-    adm.getLocalAdministrado().inserirBannerESalvar(caminhoCompleto);
-    }
+        String caminho = EntradaImagens.caminhoBanner(jlbBanner, this);
+        adm.getLocalAdministrado().inserirBannerESalvar(caminho);//chamar control
     }//GEN-LAST:event_jbtAlterarBannerMouseClicked
 
     private void jbtAlterarBannerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseEntered
@@ -727,22 +713,6 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         fldUF.setEditable(!fldUF.isEditable());
         jbtLocalizarCEP.setEnabled(!jbtLocalizarCEP.isEnabled());
     }
-     private String caminhoCompleto(String caminho) {
-        char[] chars = caminho.toCharArray();
-        String aux = "";
-
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] != '\\') {
-                aux = aux.concat(Character.toString(chars[i]));
-            } else {
-                aux = aux.concat(Character.toString(chars[i])).concat(Character.toString(chars[i]));
-            }
-        }
-
-        return aux;
-    }
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

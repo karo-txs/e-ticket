@@ -1,19 +1,20 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.EntretenimentoControl;
-import br.unicap.eticket.control.auxiliares.SessaoControl;
+import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
+import br.unicap.eticket.controller.localAuxiliares.SalaController;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.auxiliares.Conversor;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
-import br.unicap.eticket.model.locais.Cinema;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.locais.Auditorio;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
+import br.unicap.eticket.view.jDialogs.TelaPopupCadPalestra;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.Calendar;
-import java.util.List;
 import javax.swing.JLabel;
 
 public class TelaCadastrarSessao extends javax.swing.JPanel {
@@ -28,36 +29,19 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }
 
     private void initEntretenimentos() {
-        String[] ents = null;
-        EntretenimentoControl entC = new EntretenimentoControl();
-        List<Entretenimento> entreterimentos;
+        EntretenimentoController entC = new EntretenimentoController();
 
-        if (local instanceof Cinema) {
-            entreterimentos = entC.todosFilmes();
+        if (local instanceof Auditorio) {
+            jbtCadPalestra.setVisible(true);
         } else {
-            entreterimentos = entC.todasPecas();
+            jbtCadPalestra.setVisible(false);
         }
-
-        int tam = entreterimentos.size();
-
-        ents = new String[tam];
-        for (int i = 0; i < tam; i++) {
-            ents[i] = entreterimentos.get(i).getNome();
-        }
-
-        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(ents));
+        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(entC.todosEntretenimentosDoLocal(local)));
     }
 
     private void initSalas() {
-
-        List<Sala> s = local.getSalas();
-        String[] salas = new String[s.size()];
-        int i = 0;
-        for (Sala a : s) {
-            salas[i] = a.getNome();
-            i++;
-        }
-        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salas));
+        SalaController salaC = new SalaController();
+        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salaC.salasDoLocal(local,false)));
     }
 
     @SuppressWarnings("unchecked")
@@ -78,6 +62,7 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
         jfldMinutos = new javax.swing.JFormattedTextField();
         lblHora = new javax.swing.JLabel();
         lblHora1 = new javax.swing.JLabel();
+        jbtCadPalestra = new javax.swing.JButton();
         jcbEntretenimento = new javax.swing.JComboBox<>();
         jbtCadastrarSessao = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
@@ -189,6 +174,16 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
         lblHora1.setForeground(new java.awt.Color(255, 255, 255));
         lblHora1.setText("Minutos");
         add(lblHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 450, 100, 30));
+
+        jbtCadPalestra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/Adiciona.png"))); // NOI18N
+        jbtCadPalestra.setBorder(null);
+        jbtCadPalestra.setContentAreaFilled(false);
+        jbtCadPalestra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbtCadPalestraMouseClicked(evt);
+            }
+        });
+        add(jbtCadPalestra, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 270, 50, 50));
 
         jcbEntretenimento.setBackground(new java.awt.Color(204, 204, 204));
         jcbEntretenimento.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
@@ -362,27 +357,22 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_jfldHoraActionPerformed
 
     private void jbtCadastrarSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadastrarSessaoMouseClicked
-        EntretenimentoControl entC = new EntretenimentoControl();
-        SessaoControl sessaoC = new SessaoControl();
-        Calendar dataInicial = Calendar.getInstance();
+        EntretenimentoController entC = new EntretenimentoController();
+        SessaoController sessaoC = new SessaoController();
 
         if (jcbDia.getSelectedIndex() == 0 || jcbMes.getSelectedIndex() == 0 || jcbAno.getSelectedIndex() == 0) {
             JDialogsControl.mostrarPopUp("Data inicial inválida!", true);
         } else {
-            dataInicial.set(Calendar.YEAR, Integer.parseInt(String.valueOf(jcbAno.getSelectedItem())));
-            dataInicial.set(Calendar.MONTH, Integer.parseInt(String.valueOf(jcbMes.getSelectedIndex() - 1)));
-            dataInicial.set(Calendar.DAY_OF_MONTH, Integer.parseInt(String.valueOf(jcbDia.getSelectedIndex())));
-            dataInicial.set(Calendar.HOUR_OF_DAY, Integer.parseInt(jfldHora.getText()));
-            dataInicial.set(Calendar.MINUTE, Integer.parseInt(jfldMinutos.getText()));
-            dataInicial.set(Calendar.SECOND, 0);
-
-            String nomeEnt = String.valueOf(jcbEntretenimento.getSelectedItem());
+            Calendar dataInicial
+                    = Conversor.converterParaData(Integer.parseInt(String.valueOf(jcbAno.getSelectedItem())),
+                            jcbMes.getSelectedIndex(),
+                            jcbDia.getSelectedIndex(),
+                            Integer.parseInt(jfldHora.getText()),
+                            Integer.parseInt(jfldMinutos.getText()));
 
             try {
-                Entretenimento ent = entC.buscar(nomeEnt);
-
                 sessaoC.cadastrar(this.local, new Sala(this.local, String.valueOf(jcbSalas.getSelectedItem())), fldNomeSessao.getText(),
-                        dataInicial, ent);
+                        dataInicial, entC.buscar(String.valueOf(jcbEntretenimento.getSelectedItem())));
             } catch (DadosRepetidosException | CadastroInexistenteException ex) {
                 JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
@@ -416,7 +406,6 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomePageMouseExited
 
     private void lblSalasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSalasMouseClicked
@@ -430,7 +419,6 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSalasMouseExited
 
     private void lblSessoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSessoesMouseClicked
@@ -498,6 +486,29 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblEventosMouseExited
 
+    private void jbtCadPalestraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadPalestraMouseClicked
+        TelaPopupCadPalestra telaConf = new TelaPopupCadPalestra(this.local);
+        telaConf.setLocationRelativeTo(null);
+        telaConf.setVisible(true);
+        this.initEntretenimentos();
+//        
+//        CapturarCapa captura = new CapturarCapa();
+//        captura.setLocationRelativeTo(null);
+//        captura.setVisible(true);
+//        
+//        String img = captura.getImagemSelecionada();
+//        System.out.println("IMG"+img);
+//        if(img!=null){
+//            EntretenimentoController entC = new EntretenimentoController();
+//            try {
+//                entC.setImagem(telaConf.getPalestra(),img);
+//            } catch (CadastroInexistenteException ex) {
+//                System.out.println(ex.getMessage());
+//            }
+//        }
+//        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_jbtCadPalestraMouseClicked
+
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -510,6 +521,7 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fldNomeSessao;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jbtCadPalestra;
     private javax.swing.JButton jbtCadastrarSessao;
     private javax.swing.JComboBox<String> jcbAno;
     private javax.swing.JComboBox<String> jcbDia;

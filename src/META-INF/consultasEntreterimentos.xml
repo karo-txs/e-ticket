@@ -47,6 +47,13 @@
         </query>
     </named-query>
     
+    <named-query name="todasPalestras">
+        <query>
+            select p from Palestra p
+            where p.auditorio =:local
+        </query>
+    </named-query>
+    
     <!---PECAS-->
     <named-query name="pecasPorNome">
         <query>

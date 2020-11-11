@@ -1,6 +1,6 @@
 package br.unicap.eticket.dao;
 
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import java.util.List;
 
 public class EntreterimentoDAO extends BaseDAO<Entretenimento>{

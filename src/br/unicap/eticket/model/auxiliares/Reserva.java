@@ -1,6 +1,6 @@
 package br.unicap.eticket.model.auxiliares;
 
-import br.unicap.eticket.control.auxiliares.ReservaControl;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
@@ -112,7 +112,7 @@ public class Reserva implements Serializable, Comparable<Reserva> {
     }
     
     public void finalizarReserva() throws CadastroInexistenteException {
-        ReservaControl rc = new ReservaControl();
+        ReservaController rc = new ReservaController();
         Reserva busca = this.getId() == null ? rc.buscar(this) : this;
         busca.setAvaliacaoDisp(false);
         rc.atualizar(busca);

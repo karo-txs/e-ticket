@@ -1,5 +1,6 @@
 package br.unicap.eticket.view.cliente;
 
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.viewAuxiliares.MatrizCadeiras;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
@@ -263,6 +264,8 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
 
     }
     private void jbtSelecionarAssentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseClicked
+       
+        System.out.println("AQUI ESTA2"+this.sessao);
         FrameInicio.getFrame().setContentPane(new TelaFinalizarReserva(cliente, sessao, assentos.getAtual().getName()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_jbtSelecionarAssentoMouseClicked

@@ -1,8 +1,8 @@
 package br.unicap.eticket.view.cliente;
 
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
@@ -39,24 +39,15 @@ public class TelaHomepageLocalContato extends javax.swing.JPanel {
         Icon ic = new ImageIcon(im);
         jlbBanner.setIcon(ic);
     }
-    
+
     private void initCliente() {
-         this.lblTier.setVisible(false);
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
-
-        if (cliente.isEspecial()) {
-            ClienteEspecial clienteE = (ClienteEspecial) cliente;
-            if (clienteE.getDesconto(local) != 0) {
-                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
-
-                String caminho = clienteE.getTierImg(local);
-                if (caminho != null) {
-                     this.lblTier.setVisible(true);
-                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-                }
-            }
+        ClienteController cc = new ClienteController();
+        this.lblTier.setVisible(false);
+        this.lblUsername.setText("@" + cliente.getNickName());
+        String img = cc.retornaImagemTier(cliente, this.local);
+        if (img != null) {
+            lblTier.setVisible(true);
+            lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
         }
     }
 

@@ -1,9 +1,9 @@
 package br.unicap.eticket.testes;
 
 import br.unicap.eticket.model.auxiliares.Endereco;
-import br.unicap.eticket.control.financeiro.Orcamento;
-import br.unicap.eticket.control.locais.LocalControl;
-import br.unicap.eticket.control.usuarios.ClienteControl;
+import br.unicap.eticket.controller.financeiro.Orcamento;
+import br.unicap.eticket.controller.locais.LocalController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -11,7 +11,7 @@ import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.locais.Cinema;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Filme;
+import br.unicap.eticket.model.entretenimentos.Filme;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.locaisAuxiliares.TiposDeSala;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 public class TesteOrcamento {
     public static void main(String[] args) throws CadastroInexistenteException{
-        LocalControl tC = new LocalControl();
+        LocalController tC = new LocalController();
         
         //Considerando a existencia de:
         LocalDAO localC = new LocalDAO();
@@ -38,7 +38,7 @@ public class TesteOrcamento {
         data.set(Calendar.MONTH, 11);
         data.set(Calendar.DAY_OF_MONTH, 9);
         
-        ClienteControl cc = new ClienteControl();
+        ClienteController cc = new ClienteController();
         Cliente c = cc.buscar(new Cliente("kah@hotmail.com","ka"));
         try {
             c.fazerReserva(sessao1, "A3");

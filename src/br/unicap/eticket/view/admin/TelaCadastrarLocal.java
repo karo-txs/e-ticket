@@ -1,15 +1,12 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.usuarios.AdminControl;
-import br.unicap.eticket.control.validacoes.Conversor;
+import br.unicap.eticket.controller.usuarios.AdminController;
+import br.unicap.eticket.controller.auxiliares.Conversor;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.excecoes.SenhaInvalidaException;
 import br.unicap.eticket.model.auxiliares.Endereco;
-import br.unicap.eticket.model.locais.Cinema;
-import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locais.Teatro;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
@@ -52,7 +49,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         fldPais = new javax.swing.JTextField();
         lblPais = new javax.swing.JLabel();
         fldNomeDoLocal = new javax.swing.JTextField();
-        jcbCategoria = new javax.swing.JComboBox<String>();
+        jcbCategoria = new javax.swing.JComboBox<>();
         jbtEntrar = new javax.swing.JButton();
         lblCategoria = new javax.swing.JLabel();
         jbtSelecionarImg = new javax.swing.JButton();
@@ -158,7 +155,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
         jcbCategoria.setBackground(new java.awt.Color(240, 240, 240));
         jcbCategoria.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         jcbCategoria.setForeground(new java.awt.Color(102, 102, 102));
-        jcbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-   Selecione  -", "Cinema", "Teatro" }));
+        jcbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-   Selecione  -", "Cinema", "Teatro", "Auditorio" }));
         add(jcbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 360, 250, 20));
 
         jbtEntrar.setBackground(new java.awt.Color(227, 0, 0));
@@ -261,22 +258,15 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseClicked
-        AdminControl admC = new AdminControl();
+        AdminController admC = new AdminController();
         Endereco end = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(),
                 fldBairro.getText(), fldRua.getText(), fldNum.getText(), fldComplemento.getText());
-        LocalGenerico local;
-        if (jcbCategoria.getSelectedItem() == "Cinema") {
-            local = new Cinema(fldNomeDoLocal.getText(), end);
-        } else {
-            local = new Teatro(fldNomeDoLocal.getText(), end);
-        }
-        adm.setLocalAdministrado(local);
         try {
-
-            admC.cadastrar(adm.getNome(), adm.getEmail(), adm.getSenha(), adm.getLocalAdministrado());
+            admC.cadastrar(adm.getNome(), adm.getEmail(), adm.getSenha(), jcbCategoria.getSelectedItem().toString(), fldNomeDoLocal.getText(), end);
+            
             Admin cadastrado = admC.buscar(adm);
             if (captura.getImagemSelecionada() != null) {
-                adm.getLocalAdministrado().inserirCapaESalvar(captura.getImagemSelecionada());
+                cadastrado.getLocalAdministrado().inserirCapaESalvar(captura.getImagemSelecionada());
             }
             JDialogsControl.mostrarPopUp("Admin e local Cadastrados", false);
             FrameInicio.getFrame().setContentPane(new TelaInicio());
@@ -298,9 +288,9 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
 
     private void jbtLocalizarCEPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseClicked
         if (!fldCEP.getText().equals("")) {
-            HashMap<String, String> endereco = null;
+            HashMap<String, String> endereco;
             try {
-                endereco = Conversor.coverterCepEmEndereco(fldCEP.getText());
+                endereco = Conversor.converterCepEmEndereco(fldCEP.getText());
                 fldPais.setText("Brasil");
                 fldRua.setText(endereco.get("Logradouro"));
                 fldBairro.setText(endereco.get("Bairro"));

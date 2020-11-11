@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.SessaoControl;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
@@ -306,10 +306,10 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
             if (telaConf.getConfirmarAcao()) {
                 Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
 
-                SessaoControl sessaoC = new SessaoControl();
+                SessaoController sessaoC = new SessaoController();
                 try {
                     sessaoC.buscar(selecionada).desativarSessao();
-                    //sessaoC.remover(sessaoC.buscar(selecionada));
+                    //sessaoC.remover(sessaoC.buscar(selecionada)); DESATIVAR
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
                     FrameInicio.getFrame().revalidate();

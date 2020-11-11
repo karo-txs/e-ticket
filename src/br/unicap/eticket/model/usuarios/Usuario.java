@@ -1,7 +1,7 @@
 package br.unicap.eticket.model.usuarios;
 
-import br.unicap.eticket.control.usuarios.UsuarioControl;
-import br.unicap.eticket.control.validacoes.ValidaDados;
+import br.unicap.eticket.controller.usuarios.UsuarioController;
+import br.unicap.eticket.controller.auxiliares.ValidaDados;
 import br.unicap.eticket.dao.UsuarioDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -76,7 +76,7 @@ public abstract class Usuario implements Serializable, Comparable<Usuario> {
 
     public void atualizarEmail(String novoEmail) throws AtualizacaoMalSucedidaException, CadastroInexistenteException {
         UsuarioDAO ud = new UsuarioDAO();
-        UsuarioControl ac = new UsuarioControl();
+        UsuarioController ac = new UsuarioController();
         Usuario busca = this.getId() == null ? ac.buscarUser(this) : this;
         if (!busca.getEmail().equalsIgnoreCase(novoEmail)) {
             if (ValidaDados.validaEmail(novoEmail)) {

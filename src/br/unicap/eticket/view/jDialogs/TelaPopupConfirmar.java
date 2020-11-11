@@ -1,8 +1,5 @@
 package br.unicap.eticket.view.jDialogs;
 
-import br.unicap.eticket.view.FrameInicio;
-import javax.swing.JPanel;
-
 public class TelaPopupConfirmar extends javax.swing.JDialog {
 
     private boolean confirmarAcao;
@@ -84,7 +81,6 @@ public class TelaPopupConfirmar extends javax.swing.JDialog {
         return this.confirmarAcao;
     }
 
-
     private void jbtNaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtNaoMouseClicked
         this.dispose();
     }//GEN-LAST:event_jbtNaoMouseClicked
@@ -111,10 +107,6 @@ public class TelaPopupConfirmar extends javax.swing.JDialog {
     private void jbtSimMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSimMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtSimMouseExited
-
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbtNao;

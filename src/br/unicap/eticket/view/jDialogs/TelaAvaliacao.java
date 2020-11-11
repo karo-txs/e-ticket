@@ -1,10 +1,10 @@
 package br.unicap.eticket.view.jDialogs;
 
-import br.unicap.eticket.control.auxiliares.ReservaControl;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
 
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.view.FrameInicio;
@@ -27,7 +27,7 @@ public class TelaAvaliacao extends javax.swing.JDialog {
 
     public TelaAvaliacao(Long idReserva, Cliente cliente) {
         initComponents();
-        ReservaControl reservaC = new ReservaControl();
+        ReservaController reservaC = new ReservaController();
         Reserva busca = reservaC.buscaPorId(idReserva);
         this.reserva = busca;
         this.cliente = cliente;

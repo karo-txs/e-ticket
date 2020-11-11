@@ -1,23 +1,20 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.EntretenimentoControl;
+import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import br.unicap.eticket.viewAuxiliares.VetorEntretenimentos;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.io.File;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 public class TelaHomepageAdmin extends javax.swing.JPanel {
@@ -33,14 +30,16 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
         selecionarBotao(lblEmCartaz);
         lblEntretenimentoMsg.setVisible(false);
         jpnScroll.setVisible(true);
-        EntretenimentoControl entC = new EntretenimentoControl();
+
+        EntretenimentoController entC = new EntretenimentoController();
         List<Entretenimento> entretenimento = entC.entreterimentosEmCartaz(local);
 
         if (entretenimento.isEmpty()) {
             lblEntretenimentoMsg.setVisible(true);
             jpnScroll.setVisible(false);
         } else {
-            mostrarEntreterimentos(entretenimento);
+            VetorEntretenimentos entretenimentos = new VetorEntretenimentos(entretenimento);
+            entretenimentos.mostrarEntreterimentos(this.jpnScroll, this.jpnScrollInterno, this.local, this.adm);
         }
         this.initLocal();
     }
@@ -53,40 +52,6 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
         Image im = new ImageIcon(local.getBanner()).getImage();
         Icon ic = new ImageIcon(im);
         jlbBanner.setIcon(ic);
-    }
-
-    private void mostrarEntreterimentos(List<Entretenimento> entretenimento) {
-
-        int x = entretenimento.size();
-
-        if (x != 0 && x < 6) {
-
-            jpnScroll.setPreferredSize(new Dimension((145 + 10) * x, 223));
-            jpnScrollInterno.setLayout(new GridLayout(1, 10, x, 10));
-            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * x, 223));
-        } else if (((x / 6) + 1) < 2) {
-
-            jpnScroll.setPreferredSize(new Dimension(930, 223 * ((x / 6) + 1)));
-
-            jpnScrollInterno.setLayout(new GridLayout(((x / 6) + 1), 10, 6, 10));
-            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * 6, 223 * ((x / 6) + 1)));
-
-        } else {
-
-            jpnScroll.setPreferredSize(new Dimension(930, 223 * 2));
-            jpnScrollInterno.setLayout(new GridLayout(((x / 6) + 1), 10, 6, 10));
-            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * 6, 223 * ((x / 6) + 1)));
-
-        }
-
-        VetorEntretenimentos entretenimentos = new VetorEntretenimentos(entretenimento);
-        entretenimentos.setLocal(local);
-        entretenimentos.setCliente(this.adm);
-        for (int i = 0; i < x; i++) {
-            jpnScrollInterno.add(entretenimentos.getEntretenimentos()[i]);
-        }
-
-        FrameInicio.getFrame().revalidate();
     }
 
     @SuppressWarnings("unchecked")
@@ -502,23 +467,8 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomePageMouseExited
 
     private void jbtAlterarBannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseClicked
-        JFileChooser arquivo = new JFileChooser();
-        arquivo.setDialogTitle("Selecione uma Capa:");
-        arquivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int opc = arquivo.showOpenDialog(this);
-        if (opc == JFileChooser.APPROVE_OPTION) {
-            File file = new File("Caminho");
-            file = arquivo.getSelectedFile();
-            String fileName = file.getAbsolutePath();
-
-            ImageIcon img = new ImageIcon(arquivo.getSelectedFile().getPath());
-            jlbBanner.setIcon(new ImageIcon(img.getImage().getScaledInstance(
-                    jlbBanner.getWidth(), jlbBanner.getHeight(), Image.SCALE_DEFAULT)));
-
-            String caminhoCompleto = this.caminhoCompleto(fileName);
-            adm.getLocalAdministrado().inserirBannerESalvar(caminhoCompleto);
-        }
-
+        String caminho = EntradaImagens.caminhoBanner(jlbBanner, this);
+        adm.getLocalAdministrado().inserirBannerESalvar(caminho);
     }//GEN-LAST:event_jbtAlterarBannerMouseClicked
 
     private void jbtAlterarBannerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseEntered
@@ -627,20 +577,6 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
         lbl.setForeground(new java.awt.Color(51, 102, 255));
     }
 
-    private String caminhoCompleto(String caminho) {
-        char[] chars = caminho.toCharArray();
-        String aux = "";
-
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] != '\\') {
-                aux = aux.concat(Character.toString(chars[i]));
-            } else {
-                aux = aux.concat(Character.toString(chars[i])).concat(Character.toString(chars[i]));
-            }
-        }
-
-        return aux;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

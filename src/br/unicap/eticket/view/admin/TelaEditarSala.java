@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.SalaControl;
+import br.unicap.eticket.controller.localAuxiliares.SalaController;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
@@ -282,7 +282,7 @@ public class TelaEditarSala extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initSala() {
-        SalaControl salaC = new SalaControl();
+        SalaController salaC = new SalaController();
         Sala sala = new Sala(local, nomeSala);
         try {
             busca = salaC.buscar(sala);
@@ -296,16 +296,14 @@ public class TelaEditarSala extends javax.swing.JPanel {
         }
     }
     private void jbtEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseClicked
-        SalaControl salaC = new SalaControl();
-        TiposDeSala tipo = TiposDeSala.valueOf(String.valueOf(jcbTipoSala.getSelectedItem()));
-
-        Sala sala = new Sala(local, tipo, this.nomeSala, Integer.parseInt(fldQtdCadx.getText()),
+        SalaController salaC = new SalaController();
+        
+        Sala sala = new Sala(local, TiposDeSala.valueOf(String.valueOf(jcbTipoSala.getSelectedItem())),
+                 this.nomeSala, Integer.parseInt(fldQtdCadx.getText()),
                 Integer.parseInt(fldQtdCady.getText()), Double.parseDouble(jfldValIngresso.getText()));
         try {
             salaC.atualizar(sala);
-            if (!fldNome.getText().equalsIgnoreCase(this.nomeSala)) {
-                busca.alterarNome(fldNome.getText());
-            }
+            salaC.atualizarChave(sala, fldNome.getText());
 
             FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
             FrameInicio.getFrame().revalidate();

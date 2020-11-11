@@ -1,6 +1,7 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.EventoControl;
+import br.unicap.eticket.controller.localAuxiliares.EventoController;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.auxiliares.Evento;
@@ -12,15 +13,12 @@ import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 public class TelaCriarEventos extends javax.swing.JPanel {
 
     private LocalGenerico local;
     private Sessao[] sessoesAux;
-    // private Eventos[];
 
     public TelaCriarEventos(LocalGenerico local) {
         initComponents();
@@ -29,7 +27,6 @@ public class TelaCriarEventos extends javax.swing.JPanel {
     }
 
     private void initEventos(LocalGenerico local) {
-
         String[] dados;
 
         List<Sessao> sessoes = local.getSessoes();
@@ -41,7 +38,7 @@ public class TelaCriarEventos extends javax.swing.JPanel {
             sessoesAux[i] = s;
             i++;
         }
-
+        
         lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
         lstEventos.setModel(new javax.swing.DefaultComboBoxModel<>(TipoEvento.eventos()));
     }
@@ -382,7 +379,7 @@ public class TelaCriarEventos extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomePageMouseExited
 
     private void jbtAtivarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAtivarEventoMouseClicked
-        EventoControl evtC = new EventoControl();
+        EventoController evtC = new EventoController();
         if (lstSessoes.getSelectedIndex() == -1) {
             JDialogsControl.mostrarPopUp("Selecione a sessão!", true);
         } else if (lstEventos.getSelectedIndex() == -1) {
@@ -410,7 +407,7 @@ public class TelaCriarEventos extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAtivarEventoMouseExited
 
     private void jbtDesativarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtDesativarEventoMouseClicked
-        EventoControl evtC = new EventoControl();
+        EventoController evtC = new EventoController();
         if (lstSessoes.getSelectedIndex() == -1) {
             JDialogsControl.mostrarPopUp("Selecione a sessão!", true);
         } else {

@@ -1,13 +1,10 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.SalaControl;
-import br.unicap.eticket.control.locais.LocalControl;
+import br.unicap.eticket.controller.localAuxiliares.SalaController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locais.Teatro;
-import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.TiposDeSala;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
@@ -279,26 +276,18 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadastrarMouseClicked
-        SalaControl salaC = new SalaControl();
+        SalaController salaC = new SalaController();
         TiposDeSala tipo = TiposDeSala.valueOf(jcbTipoSala.getSelectedItem().toString());
-
         try {
             salaC.cadastrar(local, tipo, fldNomeSala.getText(), Integer.parseInt(fldQtdCadx.getText()),
                     Integer.parseInt(fldQtdCady.getText()), Double.parseDouble(jfldValIngresso.getText()));
-            if (local instanceof Teatro) {
-                LocalControl localC = new LocalControl();
-                localC.cadastrarSalaUnica((Teatro) local, new Sala(local, tipo, fldNomeSala.getText(), Integer.parseInt(fldQtdCadx.getText()),
-                        Integer.parseInt(fldQtdCady.getText()), Double.parseDouble(jfldValIngresso.getText())));
-                FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local, true));
-            } else {
-                FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
-            }
+
+            FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
+
         } catch (DadosInvalidosException | DadosRepetidosException | CadastroInexistenteException ex) {
             JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         }
-
         FrameInicio.getFrame().revalidate();
-
     }//GEN-LAST:event_jbtCadastrarMouseClicked
 
     private void jbtCadastrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadastrarMouseEntered
@@ -318,7 +307,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_lblDeslogarMouseClicked
 
     private void lblDeslogarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseEntered
-        ascenderBotao(lblDeslogar);
+        acenderBotao(lblDeslogar);
     }//GEN-LAST:event_lblDeslogarMouseEntered
 
     private void lblDeslogarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseExited
@@ -331,7 +320,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_lblPerfilMouseClicked
 
     private void lblPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPerfilMouseEntered
-        ascenderBotao(lblPerfil);
+        acenderBotao(lblPerfil);
     }//GEN-LAST:event_lblPerfilMouseEntered
 
     private void lblPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPerfilMouseExited
@@ -344,7 +333,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_lblControleOrcamentoMouseClicked
 
     private void lblControleOrcamentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblControleOrcamentoMouseEntered
-        ascenderBotao(lblControleOrcamento);
+        acenderBotao(lblControleOrcamento);
     }//GEN-LAST:event_lblControleOrcamentoMouseEntered
 
     private void lblControleOrcamentoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblControleOrcamentoMouseExited
@@ -358,7 +347,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSessoesMouseClicked
 
     private void lblSessoesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseEntered
-        ascenderBotao(lblSessoes);
+        acenderBotao(lblSessoes);
     }//GEN-LAST:event_lblSessoesMouseEntered
 
     private void lblSessoesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseExited
@@ -366,13 +355,12 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSessoesMouseExited
 
     private void lblSalasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSalasMouseClicked
 
     private void lblSalasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseEntered
-        ascenderBotao(lblSalas);
+        acenderBotao(lblSalas);
     }//GEN-LAST:event_lblSalasMouseEntered
 
     private void lblSalasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseExited
@@ -380,13 +368,12 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSalasMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(local.getAdmin()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblHomePageMouseClicked
 
     private void lblHomePageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseEntered
-        ascenderBotao(lblHomePage);
+        acenderBotao(lblHomePage);
     }//GEN-LAST:event_lblHomePageMouseEntered
 
     private void lblHomePageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseExited
@@ -406,7 +393,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblEventosMouseExited
 
-    private void ascenderBotao(JLabel lbl) {
+    private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
 

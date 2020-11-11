@@ -1,6 +1,6 @@
 package br.unicap.eticket.view;
 
-import br.unicap.eticket.control.usuarios.ClienteControl;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.viewAuxiliares.ClockSessao;
 import java.util.TimeZone;
 import javax.swing.JFrame;
@@ -73,7 +73,7 @@ public class FrameInicio extends JFrame {
                 frame.setVisible(true);
                 frame.requestFocus();
 
-                ClienteControl clienteC = new ClienteControl();
+                ClienteController clienteC = new ClienteController();
 
                 frame.setContentPane(new TelaInicio());
                 frame.revalidate();

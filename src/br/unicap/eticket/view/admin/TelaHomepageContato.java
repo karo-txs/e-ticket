@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.locais.LocalControl;
+import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
@@ -9,6 +9,7 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
 import java.awt.Image;
@@ -439,7 +440,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
 
     private void initContato() {
         this.trocarEditable();
-        LocalControl localC = new LocalControl();
+        LocalController localC = new LocalController();
         LocalGenerico atual;
         try {
             atual = localC.buscarPorId(this.local.getId());
@@ -608,18 +609,16 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     private void jbtAlterarContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseClicked
         
         if (jbtAlterarContato.getText().equalsIgnoreCase("Salvar")) {
-            LocalControl localC = new LocalControl();
+            LocalController localC = new LocalController();
             LocalGenerico novo;
             try {
-                
                 novo = (LocalGenerico) local.clone();
                 novo.setTelefone(fldTelefone.getText());
                 novo.setEmail(fldEmailLocal.getText());
                 novo.setRedeSocial_facebook(fldFacebook.getText());
                 novo.setRedeSocial_instragam(fldInstagram.getText());
-                System.out.println("Novo" + novo.getRedeSocial_facebook());
                 localC.atualizar(novo);
-                adm.atualizarEmail(fldEmailAdm.getText());
+                adm.atualizarEmail(fldEmailAdm.getText()); //atualizarChave
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(TelaHomepageContato.class.getName()).log(Level.SEVERE, null, ex);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
@@ -644,22 +643,8 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarContatoActionPerformed
 
     private void jbtAlterarBannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseClicked
-        JFileChooser arquivo = new JFileChooser();
-        arquivo.setDialogTitle("Selecione uma Capa:");
-        arquivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int opc = arquivo.showOpenDialog(this);
-        if (opc == JFileChooser.APPROVE_OPTION) {
-            File file = new File("Caminho");
-            file = arquivo.getSelectedFile();
-            String fileName = file.getAbsolutePath();
-            
-            ImageIcon img = new ImageIcon(arquivo.getSelectedFile().getPath());
-            jlbBanner.setIcon(new ImageIcon(img.getImage().getScaledInstance(
-                    jlbBanner.getWidth(), jlbBanner.getHeight(), Image.SCALE_DEFAULT)));
-            
-            String caminhoCompleto = this.caminhoCompleto(fileName);
-            adm.getLocalAdministrado().inserirBannerESalvar(caminhoCompleto);
-        }
+        String caminho = EntradaImagens.caminhoBanner(jlbBanner, this);
+        adm.getLocalAdministrado().inserirBannerESalvar(caminho);//chamar control
     }//GEN-LAST:event_jbtAlterarBannerMouseClicked
 
     private void jbtAlterarBannerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseEntered
@@ -710,21 +695,6 @@ public class TelaHomepageContato extends javax.swing.JPanel {
         fldEmailAdm.setEditable(!fldEmailAdm.isEditable());
         fldFacebook.setEditable(!fldFacebook.isEditable());
         fldInstagram.setEditable(!fldInstagram.isEditable());
-    }
-    
-    private String caminhoCompleto(String caminho) {
-        char[] chars = caminho.toCharArray();
-        String aux = "";
-        
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] != '\\') {
-                aux = aux.concat(Character.toString(chars[i]));
-            } else {
-                aux = aux.concat(Character.toString(chars[i])).concat(Character.toString(chars[i]));
-            }
-        }
-        
-        return aux;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,19 +1,17 @@
 package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.viewAuxiliares.VetorEntretenimentos;
-import br.unicap.eticket.control.auxiliares.EntretenimentoControl;
+import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.view.jDialogs.TelaPopupMissoes;
 import br.unicap.eticket.viewAuxiliares.Notas;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.Icon;
@@ -29,12 +27,9 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
         initComponents();
         this.local = local;
         this.cliente = cliente;
-
         this.initEntretenimentos();
         this.initCliente();
         this.initLocal();
-        // jpnScroll.setBackground(new java.awt.Color(0, 0, 0, 0));
-        //jpnScrollInterno.setBackground(new java.awt.Color(0, 0, 0, 0));
     }
 
     private void initLocal() {
@@ -49,36 +44,28 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
     }
 
     private void initCliente() {
+        ClienteController cc = new ClienteController();
         this.lblTier.setVisible(false);
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
-
-        if (cliente.isEspecial()) {
-            ClienteEspecial clienteE = (ClienteEspecial) cliente;
-            if (clienteE.getDesconto(local) != 0) {
-                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
-
-                String caminho = clienteE.getTierImg(local);
-                if (caminho != null) {
-                    this.lblTier.setVisible(true);
-                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-                }
-            }
+        this.lblUsername.setText("@" + cliente.getNickName());
+        String img = cc.retornaImagemTier(cliente, this.local);
+        if (img != null) {
+            lblTier.setVisible(true);
+            lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
         }
     }
 
     private void initEntretenimentos() {
         lblEntretenimentoMsg.setVisible(false);
         jpnScroll.setVisible(true);
-        EntretenimentoControl entC = new EntretenimentoControl();
+        EntretenimentoController entC = new EntretenimentoController();
         List<Entretenimento> entretenimento = entC.entreterimentosEmCartaz(local);
 
         if (entretenimento.isEmpty()) {
             lblEntretenimentoMsg.setVisible(true);
             jpnScroll.setVisible(false);
         } else {
-            mostrarEntreterimentos(entretenimento);
+            VetorEntretenimentos entretenimentos = new VetorEntretenimentos(entretenimento);
+            entretenimentos.mostrarEntreterimentos(this.jpnScroll, this.jpnScrollInterno, this.local, this.cliente);
         }
     }
 
@@ -482,41 +469,6 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
     private void lblTierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTierMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_lblTierMouseClicked
-
-    private void mostrarEntreterimentos(List<Entretenimento> entretenimento) {
-
-        int x = entretenimento.size();
-
-        if (x != 0 && x < 6) {
-
-            jpnScroll.setPreferredSize(new Dimension((145 + 10) * x, 223));
-            jpnScrollInterno.setLayout(new GridLayout(1, 10, x, 10));
-            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * x, 223));
-        } else if (((x / 6) + 1) < 2) {
-
-            jpnScroll.setPreferredSize(new Dimension(930, 223 * ((x / 6) + 1)));
-
-            jpnScrollInterno.setLayout(new GridLayout(((x / 6) + 1), 10, 6, 10));
-            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * 6, 223 * ((x / 6) + 1)));
-
-        } else {
-
-            jpnScroll.setPreferredSize(new Dimension(930, 223 * 2));
-            jpnScrollInterno.setLayout(new GridLayout(((x / 6) + 1), 10, 6, 10));
-            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * 6, 223 * ((x / 6) + 1)));
-
-        }
-
-        VetorEntretenimentos entretenimentos = new VetorEntretenimentos(entretenimento);
-        entretenimentos.setLocal(local);
-        System.out.println("HomePageLocal" + cliente);
-        entretenimentos.setCliente(cliente);
-        for (int i = 0; i < x; i++) {
-            jpnScrollInterno.add(entretenimentos.getEntretenimentos()[i]);
-        }
-
-        FrameInicio.getFrame().revalidate();
-    }
 
     private void selecionarBotao(JLabel lbl) {
         lblEmCartaz.setForeground(new java.awt.Color(255, 255, 255));

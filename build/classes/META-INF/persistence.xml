@@ -12,14 +12,18 @@
     <class>br.unicap.eticket.model.locais.LocalGenerico</class>
     <class>br.unicap.eticket.model.locais.Teatro</class>
     <class>br.unicap.eticket.model.locaisAuxiliares.Sessao</class>
-    <class>br.unicap.eticket.model.locaisAuxiliares.Filme</class>
     <class>br.unicap.eticket.model.locaisAuxiliares.Assento</class>
-    <class>br.unicap.eticket.model.locaisAuxiliares.Peca</class>
     <class>br.unicap.eticket.model.locaisAuxiliares.Sala</class>
     <class>br.unicap.eticket.model.usuarios.Cliente</class>
     <class>br.unicap.eticket.model.usuarios.Admin</class>
     <class>br.unicap.eticket.model.usuarios.Usuario</class>
-    <class>br.unicap.eticket.model.locaisAuxiliares.Entretenimento</class>
+    <class>br.unicap.eticket.model.entretenimentos.Entretenimento</class>
+    <class>br.unicap.eticket.model.entretenimentos.Peca</class>
+    <class>br.unicap.eticket.model.entretenimentos.Filme</class>
+    <class>br.unicap.eticket.model.auxiliares.Evento</class>
+    <class>br.unicap.eticket.model.usuarios.ClienteEspecial</class>
+    <class>br.unicap.eticket.model.entretenimentos.Palestra</class>
+    <class>br.unicap.eticket.model.locais.Auditorio</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eticketbd?useTimezone=true&amp;serverTimezone=UTC"/>

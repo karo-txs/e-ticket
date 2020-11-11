@@ -1,7 +1,7 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.control.usuarios.ClienteControl;
-import br.unicap.eticket.control.validacoes.Conversor;
+import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.auxiliares.Conversor;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -394,7 +394,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         if (!fldCEP.getText().equals("")) {
             HashMap<String, String> endereco = null;
             try {
-                endereco = Conversor.coverterCepEmEndereco(fldCEP.getText());
+                endereco = Conversor.converterCepEmEndereco(fldCEP.getText());
                 fldPais.setText("Brasil");
                 fldRua.setText(endereco.get("Logradouro"));
                 fldBairro.setText(endereco.get("Bairro"));
@@ -486,7 +486,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     private void jbtAlterarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseClicked
 
         if (jbtAlterarPerfil.getText().equalsIgnoreCase("Salvar")) {
-            ClienteControl cc = new ClienteControl();
+            ClienteController cc = new ClienteController();
             Endereco novoEnd;
                 novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                         fldRua.getText(), fldNum.getText(), fldComplemento.getText());

@@ -194,10 +194,6 @@ public class TelaPopupSenhaInvalida extends javax.swing.JDialog {
         jbtFinalizar.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtFinalizarMouseExited
 
-    /**
-     * @param args the command line arguments
-     */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbtFinalizar;

@@ -28,6 +28,12 @@
         </query>
     </named-query>
     
+    <named-query name="todosAuditorios">
+        <query>
+            select a from Auditorio a
+        </query>
+    </named-query>
+    
     <!---SALAS-->
     <named-query name="salasDoLocal">
         <query>

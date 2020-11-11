@@ -1,6 +1,6 @@
 package br.unicap.eticket.testes;
 
-import br.unicap.eticket.control.usuarios.AdminControl;
+import br.unicap.eticket.controller.usuarios.AdminController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.auxiliares.Endereco;
@@ -30,7 +30,7 @@ public class CadastroLocais {
         Admin adm4 = new Admin("admMovieMax", "adm@MovieMax.com", "cine123", cine4);
         Admin adm5 = new Admin("admKinoplex", "adm@Kinoplex.com", "cine123", cine5);
 
-        AdminControl admC = new AdminControl();
+        AdminController admC = new AdminController();
         admC.cadastrar(adm1);
         admC.cadastrar(adm2);
         admC.cadastrar(adm3);

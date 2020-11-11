@@ -1,7 +1,6 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.control.auxiliares.ReservaControl;
-import br.unicap.eticket.control.usuarios.ClienteControl;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.usuarios.Cliente;
@@ -13,6 +12,7 @@ import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 
 public class TelaListaDeReservas extends javax.swing.JPanel {
@@ -29,31 +29,19 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
         }
     }
 
-    private void initReservas(Cliente cliente)  {
-        String[] dados;
-        ClienteControl clienteC = new ClienteControl();
-        try {
-            cliente = clienteC.buscar(cliente);
-        } catch (CadastroInexistenteException ex) {
-           JDialogsControl.mostrarPopUp(ex.getMessage(), true);
-        }
-        List<Reserva> reservas = cliente.getReservas();
-        dados = new String[reservas.size()];
-        int i = 0;
-        this.idReservas = new Long[reservas.size()];
-        if (reservas != null) {
-            for (Reserva r : reservas) {
-                if (!r.getSessao().isAtiva() && r.isAvaliacaoDisp()) {
-                    dados[i] = r.toString() + " - Avaliação Disponível!";
-                } else {
-                    dados[i] = r.toString();
-                }
-                idReservas[i] = r.getId();
-                i++;
-            }
+    private void initReservas(Cliente cliente) {
 
-            lstReservas.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
-        }
+//        ClienteController clienteC = new ClienteController();
+//        try {
+//            cliente = clienteC.buscar(cliente);
+//        } catch (CadastroInexistenteException ex) {
+//           JDialogsControl.mostrarPopUp(ex.getMessage(), true);
+//        }
+        ReservaController rv = new ReservaController();
+        List<Reserva> reservas = cliente.getReservas();
+        String[] dados = rv.formataDados(reservas);
+        this.idReservas = rv.listarIDs(reservas);
+        this.lstReservas.setModel(new DefaultComboBoxModel<>(dados));
     }
 
     @SuppressWarnings("unchecked")
@@ -223,7 +211,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtRemoverSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseClicked
-        ReservaControl reservaC = new ReservaControl();
+        ReservaController reservaC = new ReservaController();
         int valSelecionado = lstReservas.getSelectedIndex();
 
         if (valSelecionado != -1) {
@@ -232,14 +220,15 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
             TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Confirmar Exclusão?");
             if (telaConf.getConfirmarAcao()) {
                 try {
-                    cliente.cancelarReserva(reserva);
+                    cliente.cancelarReserva(reserva);//sair
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
                     FrameInicio.getFrame().revalidate();
                 } catch (CadastroInexistenteException ex) {
                     JDialogsControl.mostrarPopUp(ex.getMessage(), true);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(TelaListaDeReservas.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TelaListaDeReservas.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -275,7 +264,6 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
     private void lblMinhasReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinhasReservasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblMinhasReservasMouseClicked
@@ -302,7 +290,6 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomepageMouseExited
 
     private void jbtFazerAvaliacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFazerAvaliacaoMouseClicked
-
         if (lstReservas.getSelectedIndex() != -1 && lstReservas.getSelectedValue().contains("Avaliação Disponível")) {
             TelaAvaliacao tela = new TelaAvaliacao(idReservas[lstReservas.getSelectedIndex()], cliente);
             tela.setLocationRelativeTo(null);
@@ -313,12 +300,10 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseClicked
 
     private void jbtFazerAvaliacaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFazerAvaliacaoMouseEntered
-
         jbtFazerAvaliacao.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseEntered
 
     private void jbtFazerAvaliacaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFazerAvaliacaoMouseExited
-
         jbtFazerAvaliacao.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtFazerAvaliacaoMouseExited
 

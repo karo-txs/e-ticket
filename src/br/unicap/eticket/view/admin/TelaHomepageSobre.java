@@ -7,13 +7,12 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
 import java.awt.Image;
-import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 public class TelaHomepageSobre extends javax.swing.JPanel {
@@ -34,7 +33,7 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
         this.lblNomeDoLocal.setText(local.getNome());
         String caminho = Notas.qualCaminho(local.getNota()).getCaminho();
         lblEstrelas.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-        
+
         Image im = new ImageIcon(local.getBanner()).getImage();
         Icon ic = new ImageIcon(im);
         jlbBanner.setIcon(ic);
@@ -437,7 +436,6 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_lblControleOrcamentoMouseExited
 
     private void lblSessoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSessoesMouseClicked
@@ -451,7 +449,6 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSessoesMouseExited
 
     private void lblSalasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSalasMouseClicked
@@ -551,9 +548,9 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
 
         if (jbtAlterarSobre.getText().equalsIgnoreCase("Salvar")) {
             try {
-                local.atualizarSobre(txtSobre.getText());
+                local.atualizarSobre(txtSobre.getText()); //chamar control?
             } catch (CadastroInexistenteException ex) {
-                JDialogsControl.mostrarPopUp(ex.getMessage(),true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
         }
         trocarNome();
@@ -561,11 +558,11 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarSobreMouseClicked
 
     private void jbtAlterarSobreMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarSobreMouseEntered
-        jbtAlterarSobre.setForeground(new Color(0,0,0));
+        jbtAlterarSobre.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jbtAlterarSobreMouseEntered
 
     private void jbtAlterarSobreMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarSobreMouseExited
-       jbtAlterarSobre.setForeground(new Color(255,255,255));
+        jbtAlterarSobre.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jbtAlterarSobreMouseExited
 
     private void jbtAlterarSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAlterarSobreActionPerformed
@@ -573,22 +570,8 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarSobreActionPerformed
 
     private void jbtAlterarBannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseClicked
-        JFileChooser arquivo = new JFileChooser();
-        arquivo.setDialogTitle("Selecione uma Capa:");
-        arquivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int opc = arquivo.showOpenDialog(this);
-        if (opc == JFileChooser.APPROVE_OPTION) {
-            File file = new File("Caminho");
-            file = arquivo.getSelectedFile();
-            String fileName = file.getAbsolutePath();
-
-            ImageIcon img = new ImageIcon(arquivo.getSelectedFile().getPath());
-            jlbBanner.setIcon(new ImageIcon(img.getImage().getScaledInstance(
-                jlbBanner.getWidth(), jlbBanner.getHeight(), Image.SCALE_DEFAULT)));
-
-    String caminhoCompleto = this.caminhoCompleto(fileName);
-    adm.getLocalAdministrado().inserirBannerESalvar(caminhoCompleto);
-    }
+        String caminho = EntradaImagens.caminhoBanner(jlbBanner, this);
+        adm.getLocalAdministrado().inserirBannerESalvar(caminho);//chamar control
     }//GEN-LAST:event_jbtAlterarBannerMouseClicked
 
     private void jbtAlterarBannerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseEntered
@@ -635,20 +618,6 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
 
     private void trocarEditable() {
         txtSobre.setEditable(!txtSobre.isEditable());
-    }
-    private String caminhoCompleto(String caminho) {
-        char[] chars = caminho.toCharArray();
-        String aux = "";
-
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] != '\\') {
-                aux = aux.concat(Character.toString(chars[i]));
-            } else {
-                aux = aux.concat(Character.toString(chars[i])).concat(Character.toString(chars[i]));
-            }
-        }
-
-        return aux;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

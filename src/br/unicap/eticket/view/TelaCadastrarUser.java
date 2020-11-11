@@ -1,8 +1,8 @@
 package br.unicap.eticket.view;
 
 import br.unicap.eticket.view.admin.TelaCadastrarLocal;
-import br.unicap.eticket.control.usuarios.AdminControl;
-import br.unicap.eticket.control.usuarios.ClienteControl;
+import br.unicap.eticket.controller.usuarios.AdminController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -119,13 +119,12 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
 
     private void jbtCriarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseClicked
 
-        ClienteControl clienteC = new ClienteControl();
-        AdminControl admC = new AdminControl();
+        ClienteController clienteC = new ClienteController();
+        AdminController admC = new AdminController();
         Usuario user;
         if (senhaIgual(String.valueOf(fldSenha.getPassword()), String.valueOf(fldSenhaConf.getPassword()))) {
             try {
                 if (!this.isAdmin) {
-
                     clienteC.cadastrar(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
                     Cliente c = new Cliente(fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
                     Cliente busca = clienteC.buscar(c);
@@ -147,7 +146,6 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
             } catch (IOException ex) {
                 Logger.getLogger(TelaCadastrarUser.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         } else {
             JDialogsControl.mostrarPopUp("Senhas não conferem!", true);
         }

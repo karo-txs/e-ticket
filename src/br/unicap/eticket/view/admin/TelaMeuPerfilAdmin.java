@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.usuarios.AdminControl;
+import br.unicap.eticket.controller.usuarios.AdminController;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -412,14 +412,14 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     private void jbtEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseClicked
 
         if (jbtEditar.getText().equalsIgnoreCase("Salvar")) {
-            AdminControl cc = new AdminControl();
+            AdminController cc = new AdminController();
            
             Admin novo = new Admin(fldNome.getText(), fldEmail.getText(), adm.getSenha(), Integer.parseInt(fldIdade.getText()),
                     fldCPF.getText(), jfldTelefone.getText(), this.adm.getLocalAdministrado());
 
             try {
                 if (fldEmail.getText() != null && !fldEmail.getText().equalsIgnoreCase(adm.getEmail())) {
-                    adm.atualizarEmail(fldEmail.getText());
+                    adm.atualizarEmail(fldEmail.getText()); //atualizar chave
                 }
                 if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.adm.getSenha())) {
                     novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));

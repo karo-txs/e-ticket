@@ -1,5 +1,6 @@
 package br.unicap.eticket.view.jDialogs;
 
+import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -135,11 +136,10 @@ public class CapturarCapa extends javax.swing.JDialog {
                     jlbImagem.getWidth(), jlbImagem.getHeight(), Image.SCALE_DEFAULT)));
             
             String caminhoCompleto = this.caminhoCompleto(fileName);
-            
+            System.out.println("URL"+caminhoCompleto);
             this.urlImagem = caminhoCompleto;
         }
     }//GEN-LAST:event_jbtSelecionarImagem1MouseClicked
-    
     private String caminhoCompleto(String caminho) {
         char[] chars = caminho.toCharArray();
         String aux = "";

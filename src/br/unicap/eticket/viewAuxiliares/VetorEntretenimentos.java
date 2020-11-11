@@ -3,11 +3,13 @@ package br.unicap.eticket.viewAuxiliares;
 import br.unicap.eticket.dao.EntreterimentoDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.Usuario;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.cliente.TelaEntSelecionado;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,8 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class VetorEntretenimentos implements ActionListener {
 
@@ -55,6 +59,43 @@ public class VetorEntretenimentos implements ActionListener {
         }
     }
 
+    public void ajustarPaineis(JScrollPane jpnScroll, JPanel jpnScrollInterno, int qtdeEnts) {
+        if (qtdeEnts != 0 && qtdeEnts < 6) {
+
+            jpnScroll.setPreferredSize(new Dimension((145 + 10) * qtdeEnts, 223));
+            jpnScrollInterno.setLayout(new GridLayout(1, 10, qtdeEnts, 10));
+            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * qtdeEnts, 223));
+        } else if (((qtdeEnts / 6) + 1) < 2) {
+
+            jpnScroll.setPreferredSize(new Dimension(930, 223 * ((qtdeEnts / 6) + 1)));
+
+            jpnScrollInterno.setLayout(new GridLayout(((qtdeEnts / 6) + 1), 10, 6, 10));
+            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * 6, 223 * ((qtdeEnts / 6) + 1)));
+
+        } else {
+
+            jpnScroll.setPreferredSize(new Dimension(930, 223 * 2));
+            jpnScrollInterno.setLayout(new GridLayout(((qtdeEnts / 6) + 1), 10, 6, 10));
+            jpnScrollInterno.setPreferredSize(new Dimension((145 + 10) * 6, 223 * ((qtdeEnts / 6) + 1)));
+
+        }
+    }
+
+    public void adicionarEntsAoPainel(JPanel jpnScrollInterno) {
+        for (JButton entretenimento : this.getEntretenimentos()) {
+            jpnScrollInterno.add(entretenimento);
+        }
+    }
+    
+    public void mostrarEntreterimentos(JScrollPane jpnScroll, JPanel jpnScrollInterno, LocalGenerico local, Usuario u) {
+        this.ajustarPaineis(jpnScroll, jpnScrollInterno, this.vetorEntretenimentos.length);
+        this.setLocal(local);
+        this.user = u;
+        this.adicionarEntsAoPainel(jpnScrollInterno);
+        FrameInicio.getFrame().revalidate();
+    }
+
+
     public JButton[] getEntretenimentos() {
         return vetorEntretenimentos;
     }
@@ -65,8 +106,7 @@ public class VetorEntretenimentos implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // ((JButton) e.getSource()).setEnabled(false);
-        atual = (JButton) e.getSource();
+atual = (JButton) e.getSource();
         EntreterimentoDAO entD = new EntreterimentoDAO();
         Entretenimento clicado = entD.buscarPorId(Long.parseLong(atual.getName()));
         if (user instanceof Cliente) {
@@ -80,16 +120,7 @@ public class VetorEntretenimentos implements ActionListener {
     }
 
     public void eventoMouseClicked(MouseEvent evt) {
-
-        for (int i = 0; i < vetorEntretenimentos.length; i++) {
-
-            if (vetorEntretenimentos[i].equals(atual)) {
-                //trocarCor();
-                //matrizString[i][j] = matrizBotoes[i][j].getText();
-            }
-
-        }
-
+        
     }
 
     public JButton getAtual() {
@@ -107,13 +138,13 @@ public class VetorEntretenimentos implements ActionListener {
     public void setLocal(LocalGenerico local) {
         this.local = local;
     }
+    
+    public void setCliente(Usuario u){
+        this.user = u;
+    }
 
     public Usuario getCliente() {
         return user;
-    }
-
-    public void setCliente(Usuario cliente) {
-        this.user = cliente;
     }
 
     public JButton[] getVetorEntretenimentos() {

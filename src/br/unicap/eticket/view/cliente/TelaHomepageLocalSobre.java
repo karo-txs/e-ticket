@@ -1,5 +1,6 @@
 package br.unicap.eticket.view.cliente;
 
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.ClienteEspecial;
@@ -41,22 +42,13 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
     }
 
     private void initCliente() {
+        ClienteController cc = new ClienteController();
         this.lblTier.setVisible(false);
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
-
-        if (cliente.isEspecial()) {
-            ClienteEspecial clienteE = (ClienteEspecial) cliente;
-            if (clienteE.getDesconto(local) != 0) {
-                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
-
-                String caminho = clienteE.getTierImg(local);
-                if (caminho != null) {
-                    this.lblTier.setVisible(true);
-                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-                }
-            }
+        this.lblUsername.setText("@" + cliente.getNickName());
+        String img = cc.retornaImagemTier(cliente, this.local);
+        if (img != null) {
+            lblTier.setVisible(true);
+            lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
         }
     }
 

@@ -1,8 +1,8 @@
 package br.unicap.eticket.model.locaisAuxiliares;
 
-import br.unicap.eticket.control.auxiliares.ReservaControl;
-import br.unicap.eticket.control.auxiliares.SalaControl;
-import br.unicap.eticket.control.auxiliares.SessaoControl;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
+import br.unicap.eticket.controller.localAuxiliares.SalaController;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.dao.SalaDAO;
 import br.unicap.eticket.dao.SessaoDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -125,8 +125,8 @@ public class Sala implements Serializable {
     public void alterarNome(String nome) throws CadastroInexistenteException {
         SalaDAO salaD = new SalaDAO();
         SessaoDAO sessaoD = new SessaoDAO();
-        SalaControl salaC = new SalaControl();
-        SessaoControl sessaoC = new SessaoControl();
+        SalaController salaC = new SalaController();
+        SessaoController sessaoC = new SessaoController();
 
         Sala busca = this.getId() == null ? salaC.buscar(this) : this;
 
@@ -150,8 +150,8 @@ public class Sala implements Serializable {
      * @throws CadastroInexistenteException
      */
     public void desativarSala() throws CadastroInexistenteException {
-        SalaControl sc = new SalaControl();
-        SessaoControl sessaoC = new SessaoControl();
+        SalaController sc = new SalaController();
+        SessaoController sessaoC = new SessaoController();
         SalaDAO sd = new SalaDAO();
         Sala busca = this.getId() == null ? sc.buscar(this) : this;
 
@@ -177,7 +177,7 @@ public class Sala implements Serializable {
     public Reserva reservarAssento(String numCadeira, Sessao sessao, Cliente cliente) throws DadosRepetidosException, CadastroInexistenteException {
         Assento assento = this.buscaAssentoPorNum(numCadeira);
         if (assento != null) {
-            ReservaControl rc = new ReservaControl();
+            ReservaController rc = new ReservaController();
             Reserva reserva = new Reserva(sessao, numCadeira);
 
             String urlCodigo = "src\\br\\unicap\\eticket\\imagens\\qrcodes\\" + cliente.getNome() + "-QrCode.png";
@@ -217,9 +217,9 @@ public class Sala implements Serializable {
      */
     public void esvaziarAssentoDaSessao(Assento a, Sessao sessao) throws CadastroInexistenteException {
         SalaDAO sdao = new SalaDAO();
-        SalaControl sd = new SalaControl();
-        SessaoControl sc = new SessaoControl();
-        ReservaControl rc = new ReservaControl();
+        SalaController sd = new SalaController();
+        SessaoController sc = new SessaoController();
+        ReservaController rc = new ReservaController();
 
         Sala s = sd.buscar(new Sala(this.getLocal(),this.getNome()));
         Sessao ses = sc.buscar(sessao);

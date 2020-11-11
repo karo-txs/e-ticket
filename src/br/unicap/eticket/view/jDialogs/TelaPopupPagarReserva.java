@@ -1,6 +1,7 @@
 package br.unicap.eticket.view.jDialogs;
 
-import br.unicap.eticket.control.usuarios.ClienteControl;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosFinanceirosInvalidosException;
 import br.unicap.eticket.model.auxiliares.Reserva;
@@ -207,9 +208,12 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
 
             double total;
             if (cliente.isEspecial()) {
+                ReservaController rv = new ReservaController();
                 ClienteEspecial clienteE = (ClienteEspecial) cliente;
-                double desconto = this.reserva.getValorIngresso() * clienteE.getDesconto(this.reserva.getSessao().getLocal());
-                total = this.reserva.getValorIngresso() - desconto;
+                double[] ingresso = rv.mostrarIngresso(cliente, reserva);
+                total = ingresso[0];
+                //double desconto = this.reserva.getValorIngresso() * clienteE.getDesconto(this.reserva.getSessao().getLocal());
+                //total = this.reserva.getValorIngresso() - desconto;
                 lblTotal.setText(String.format("R$%.2f", total));
             } else {
                 total = this.reserva.getValorIngresso();
@@ -240,7 +244,7 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtSimMouseExited
 
     private void jbtAlterarDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarDadosMouseClicked
-        ClienteControl clienteC = new ClienteControl();
+        ClienteController clienteC = new ClienteController();
         if (jbtAlterarDados.getText().equalsIgnoreCase("Salvar")) {
             Calendar data = Calendar.getInstance();
             if (jcbAno.getSelectedIndex() != -1 && jcbMes.getSelectedIndex() != -1) {

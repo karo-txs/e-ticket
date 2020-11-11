@@ -1,9 +1,9 @@
 package br.unicap.eticket.model.usuarios;
 
-import br.unicap.eticket.control.auxiliares.ReservaControl;
-import br.unicap.eticket.control.auxiliares.SessaoControl;
-import br.unicap.eticket.control.usuarios.ClienteControl;
-import br.unicap.eticket.control.validacoes.ValidaDados;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.auxiliares.ValidaDados;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -16,7 +16,7 @@ import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import br.unicap.eticket.model.usuarios.financeiro.DadosFinanceirosCliente;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,7 +106,7 @@ public class Cliente extends Usuario {
      * @throws CadastroInexistenteException
      */
     public void preencherDadosFinanceiros(String numero, String nomeNoCartao, Calendar dataExpiracao, int codigoSeguranca) throws DadosFinanceirosInvalidosException, CadastroInexistenteException {
-        ClienteControl clienteC = new ClienteControl();
+        ClienteController clienteC = new ClienteController();
         ClienteDAO clienteD = new ClienteDAO();
         String validade = ValidaDados.validaDadosFinanceirosCredito(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
 
@@ -131,8 +131,8 @@ public class Cliente extends Usuario {
      * @throws CadastroInexistenteException
      */
     public double pagarReserva(Reserva reserva) throws CadastroInexistenteException {
-        ClienteControl clienteC = new ClienteControl();
-        ReservaControl reservaC = new ReservaControl();
+        ClienteController clienteC = new ClienteController();
+        ReservaController reservaC = new ReservaController();
         Cliente busca = this.getId() == null ? clienteC.buscar(this) : this;
         Reserva buscaR = reservaC.buscar(reserva);
 
@@ -168,7 +168,7 @@ public class Cliente extends Usuario {
     private void trasformarEmClienteEspecial(LocalGenerico local) throws CadastroInexistenteException {
         if (this.qtdeTickets(local) == TierCliente.TIER3.getQtdeTickets()) {
             ClienteDAO clienteD = new ClienteDAO();
-            ClienteControl clienteC = new ClienteControl();
+            ClienteController clienteC = new ClienteController();
 
             ClienteEspecial e = new ClienteEspecial(this.getNome(), this.nickName, this.getEmail(),
                     this.getSenha(), this.getIdade(), this.getCpf(), this.getTelefone(), this.getEndereco());
@@ -207,7 +207,7 @@ public class Cliente extends Usuario {
     public Reserva fazerReserva(Sessao sessao, String numCadeira) throws CadastroInexistenteException, DadosRepetidosException, DadosInvalidosException {
         ReservaDAO reservaC = new ReservaDAO();
         ClienteDAO dao = new ClienteDAO();
-        SessaoControl sc = new SessaoControl();
+        SessaoController sc = new SessaoController();
         Sessao buscaS = sessao.getId() == null ? sc.buscar(sessao) : sessao;
 
         Reserva busca = reservaC.buscarReserva(new Reserva(buscaS, numCadeira));
@@ -235,7 +235,7 @@ public class Cliente extends Usuario {
      * @throws CadastroInexistenteException
      */
     public void cancelarReserva(Reserva r) throws CadastroInexistenteException {
-        ReservaControl rc = new ReservaControl();
+        ReservaController rc = new ReservaController();
         ClienteDAO dao = new ClienteDAO();
         Reserva reserva = rc.buscar(r);
 
@@ -267,7 +267,7 @@ public class Cliente extends Usuario {
      * @throws CadastroInexistenteException
      */
     public List<Reserva> listaReservas() throws CadastroInexistenteException {
-        ClienteControl cc = new ClienteControl();
+        ClienteController cc = new ClienteController();
         Cliente c = this.getId() == null ? cc.buscar(this) : this;
         return c.getReservas();
     }

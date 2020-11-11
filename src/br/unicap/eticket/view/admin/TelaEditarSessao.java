@@ -1,12 +1,12 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.EntretenimentoControl;
-import br.unicap.eticket.control.auxiliares.SessaoControl;
+import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
+import br.unicap.eticket.controller.localAuxiliares.SalaController;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.auxiliares.Conversor;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
-import br.unicap.eticket.model.locais.Cinema;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.view.FrameInicio;
@@ -14,7 +14,6 @@ import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.util.Calendar;
-import java.util.List;
 import javax.swing.JLabel;
 
 public class TelaEditarSessao extends javax.swing.JPanel {
@@ -26,7 +25,6 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     public TelaEditarSessao(LocalGenerico local, Sessao sessao) {
         initComponents();
         this.local = local;
-        //this.nomeSessao = nomeSessao;
         this.sessao = sessao;
         initEntretenimentos();
         initSalas();
@@ -34,45 +32,23 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     }
 
     private void initEntretenimentos() {
-        String[] ents = null;
-        EntretenimentoControl entC = new EntretenimentoControl();
-        List<Entretenimento> entreterimentos;
-        if (local instanceof Cinema) {
-            entreterimentos = entC.todosFilmes();
-        } else {
-            entreterimentos = entC.todasPecas();
-        }
-        int tam = entreterimentos.size();
-
-        ents = new String[tam];
-        for (int i = 0; i < tam; i++) {
-            ents[i] = entreterimentos.get(i).getNome();
-        }
-
-        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(ents));
+        EntretenimentoController entC = new EntretenimentoController();
+        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(entC.todosEntretenimentosDoLocal(local)));
     }
 
     private void initSalas() {
-
-        List<Sala> s = local.getSalas();
-        String[] salas = new String[s.size()];
-        int i = 0;
-        for (Sala a : s) {
-            salas[i] = a.getNome();
-            i++;
-        }
-        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salas));
+        SalaController salaC = new SalaController();
+        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salaC.salasDoLocal(local,false)));
     }
 
     private void initSessao() {
-        SessaoControl sessaoC = new SessaoControl();
-        //Sessao sala = new Sessao(local,nomeSessao);
+        SessaoController sessaoC = new SessaoController();
         try {
             busca = sessaoC.buscar(sessao);
             fldNome.setText(busca.getNome());
             Calendar data = busca.getDataInicial();
             jcbDia.setSelectedItem(String.valueOf(data.get(Calendar.DAY_OF_MONTH)));
-            jcbMes.setSelectedIndex(data.get(Calendar.MONTH)+ 1);
+            jcbMes.setSelectedIndex(data.get(Calendar.MONTH) + 1);
             jcbAno.setSelectedItem(String.valueOf(data.get(Calendar.YEAR)));
             jfldHora.setText(String.valueOf(data.get(Calendar.HOUR_OF_DAY)));
             jfldMinutos.setText(String.valueOf(data.get(Calendar.MINUTE)));
@@ -387,31 +363,31 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_jfldHoraActionPerformed
 
     private void jbtEditarSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSessaoMouseClicked
-        SessaoControl sessaoC = new SessaoControl();
-        Calendar dataInicial = Calendar.getInstance();
+        EntretenimentoController entC = new EntretenimentoController();
+        SessaoController sessaoC = new SessaoController();
+        
+        if (jcbDia.getSelectedIndex() == 0 || jcbMes.getSelectedIndex() == 0 || jcbAno.getSelectedIndex() == 0) {
+            JDialogsControl.mostrarPopUp("Data inicial inválida!", true);
+        } else {
+            Calendar dataInicial
+                    = Conversor.converterParaData(Integer.parseInt(String.valueOf(jcbAno.getSelectedItem())),
+                            jcbMes.getSelectedIndex(),
+                            jcbDia.getSelectedIndex(),
+                            Integer.parseInt(jfldHora.getText()),
+                            Integer.parseInt(jfldMinutos.getText()));
 
-        dataInicial.set(Calendar.YEAR, Integer.parseInt(String.valueOf(jcbAno.getSelectedItem())));
-        dataInicial.set(Calendar.MONTH, Integer.parseInt(String.valueOf(jcbMes.getSelectedIndex() - 1)));
-        dataInicial.set(Calendar.DAY_OF_MONTH, Integer.parseInt(String.valueOf(jcbDia.getSelectedIndex())));
-        dataInicial.set(Calendar.HOUR_OF_DAY, Integer.parseInt(jfldHora.getText()));
-        dataInicial.set(Calendar.MINUTE, Integer.parseInt(jfldMinutos.getText()));
-        dataInicial.set(Calendar.SECOND, 0);
+            try {
+                Sessao s = new Sessao(this.local, new Sala(this.local, String.valueOf(jcbSalas.getSelectedItem())), this.sessao.getNome(),
+                        dataInicial, entC.buscar(String.valueOf(jcbEntretenimento.getSelectedItem())));
 
-        String nomeEnt = String.valueOf(jcbEntretenimento.getSelectedItem());
-        EntretenimentoControl entC = new EntretenimentoControl();
+                sessaoC.atualizar(s);
+                sessaoC.atualizarChave(s, fldNome.getText());
 
-        try {
-            Entretenimento ent = entC.buscar(nomeEnt);
-            Sessao sessao = new Sessao(this.local, new Sala(this.local, String.valueOf(jcbSalas.getSelectedItem())), this.sessao.getNome(),
-                    dataInicial, ent);
-            sessaoC.atualizar(sessao);
-
-            busca.atualizarNome(fldNome.getText());
-
-            FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
-            FrameInicio.getFrame().revalidate();
-        } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
-            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
+                FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
+                FrameInicio.getFrame().revalidate();
+            } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
+            }
         }
     }//GEN-LAST:event_jbtEditarSessaoMouseClicked
 
@@ -424,7 +400,6 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtEditarSessaoMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(local.getAdmin()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblHomePageMouseClicked
@@ -452,7 +427,6 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSalasMouseExited
 
     private void lblSessoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSessoesMouseClicked
@@ -527,7 +501,6 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     private void apagarBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(255, 255, 255));
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fldNome;

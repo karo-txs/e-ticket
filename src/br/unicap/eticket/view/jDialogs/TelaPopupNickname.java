@@ -2,7 +2,6 @@ package br.unicap.eticket.view.jDialogs;
 
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.view.FrameInicio;
 
 public class TelaPopupNickname extends javax.swing.JDialog {
     
@@ -82,8 +81,7 @@ public class TelaPopupNickname extends javax.swing.JDialog {
     private void jbtFinalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseClicked
         
         try {
-            cliente.atualizarNickName(fldNick.getText());
-            
+            cliente.atualizarNickName(fldNick.getText());//sair
             this.confirmarAcao = true;
             this.dispose();
         } catch (DadosInvalidosException ex) {
@@ -105,10 +103,6 @@ public class TelaPopupNickname extends javax.swing.JDialog {
     private void fldNickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fldNickActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fldNickActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fldNick;

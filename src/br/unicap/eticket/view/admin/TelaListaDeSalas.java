@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.control.auxiliares.SalaControl;
+import br.unicap.eticket.controller.localAuxiliares.SalaController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
@@ -8,38 +8,21 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
-import java.util.List;
 import javax.swing.JLabel;
 
 public class TelaListaDeSalas extends javax.swing.JPanel {
 
     private LocalGenerico local;
-    private boolean salaUnicaAtiva;
-
+    
     public TelaListaDeSalas(LocalGenerico local) {
         initComponents();
         this.local = local;
         initSalas(local);
-        this.salaUnicaAtiva = false;
-    }
-
-    public TelaListaDeSalas(LocalGenerico local, boolean salaUnicaAtiva) {
-        initComponents();
-        this.local = local;
-        initSalas(local);
-        this.jbtAdicionarSala.setEnabled(salaUnicaAtiva);
     }
 
     private void initSalas(LocalGenerico local) {
-        String[] dados;
-        List<Sala> salas = local.getSalas();
-        dados = new String[salas.size()];
-        int i = 0;
-        for (Sala s : salas) {
-            dados[i] = s.toString();
-            i++;
-        }
-        lstSalas.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
+        SalaController salaC = new SalaController();
+        lstSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salaC.salasDoLocal(local,true)));
     }
 
     @SuppressWarnings("unchecked")
@@ -309,10 +292,10 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
             TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja Remover?");
             if (telaConf.getConfirmarAcao()) {
                 String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
-                SalaControl salaC = new SalaControl();
+                SalaController salaC = new SalaController();
                 try {
                     salaC.buscar(new Sala(this.local, valSelecionado[0])).desativarSala();
-                    //salaC.remover(salaC.buscar(new Sala(this.local, valSelecionado[0])));
+                    //salaC.remover(salaC.buscar(new Sala(this.local, valSelecionado[0]))); DESATIVAR
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
                     FrameInicio.getFrame().revalidate();

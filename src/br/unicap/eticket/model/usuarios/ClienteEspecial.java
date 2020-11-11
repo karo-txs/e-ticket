@@ -1,7 +1,7 @@
 package br.unicap.eticket.model.usuarios;
 
-import br.unicap.eticket.control.auxiliares.ReservaControl;
-import br.unicap.eticket.control.locais.LocalControl;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
+import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Endereco;
@@ -48,7 +48,7 @@ public class ClienteEspecial extends Cliente {
         ClienteDAO clienteD = new ClienteDAO();
         ClienteEspecial buscaC = this.getId() == null ? (ClienteEspecial) clienteD.buscarCliente(this) : this;
 
-        ReservaControl reservaC = new ReservaControl();
+        ReservaController reservaC = new ReservaController();
         Reserva buscaR = reserva.getId() == null ? reservaC.buscar(reserva) : reserva;
         LocalGenerico local = buscaR.getSessao().getLocal();
 
@@ -75,13 +75,13 @@ public class ClienteEspecial extends Cliente {
     }
 
     public void criarFidelidade(LocalGenerico local) throws CadastroInexistenteException {
-        LocalControl localC = new LocalControl();
+        LocalController localC = new LocalController();
         LocalGenerico busca = local.getId() == null ? localC.buscar(local) : local;
         this.fidelidades.put(busca, TierCliente.TIER3);
     }
 
     private void subirDeTier(LocalGenerico local) throws CadastroInexistenteException {
-        LocalControl localC = new LocalControl();
+        LocalController localC = new LocalController();
         TierCliente novoTier = null;
         TierCliente tierAtual = this.fidelidades.get(local);
         LocalGenerico busca = local.getId() == null ? localC.buscar(local) : local;

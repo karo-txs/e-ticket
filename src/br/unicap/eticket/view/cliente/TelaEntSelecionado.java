@@ -1,23 +1,21 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.viewAuxiliares.Format;
-import br.unicap.eticket.control.auxiliares.SessaoControl;
+import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.auxiliares.Gerador;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import br.unicap.eticket.model.locaisAuxiliares.Entretenimento;
+import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Image;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,78 +30,47 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     private Cliente cliente;
     private LocalGenerico local;
     private Entretenimento ent;
-    private Calendar dias[] = new Calendar[7];
+    private JButton[] labelSemana;
 
     public TelaEntSelecionado(LocalGenerico local, Entretenimento ent, Cliente cliente) throws CadastroInexistenteException {
         initComponents();
         this.local = local;
         this.ent = ent;
         this.cliente = cliente;
-        diaSelecionado(jbtHoje);
         initEntretenimento();
         initSessoes(Calendar.getInstance());
         initDatas();
         this.initCliente();
     }
-     private void initCliente() {
-         this.lblTier.setVisible(false);
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
 
-        if (cliente.isEspecial()) {
-            ClienteEspecial clienteE = (ClienteEspecial) cliente;
-            if (clienteE.getDesconto(local) != 0) {
-                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
-
-                String caminho = clienteE.getTierImg(local);
-                if (caminho != null) {
-                     this.lblTier.setVisible(true);
-                    lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-                }
-            }
+    private void initCliente() {
+        ClienteController cc = new ClienteController();
+        this.lblTier.setVisible(false);
+        this.lblUsername.setText("@" + cliente.getNickName());
+        String img = cc.retornaImagemTier(cliente, local);
+        if (img != null) {
+            lblTier.setVisible(true);
+            lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
         }
     }
 
     private void initSessoes(Calendar dia) throws CadastroInexistenteException {
-        String[] dados;
-        SessaoControl sc = new SessaoControl();
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        Calendar finalDia = (Calendar) dia.clone();
-        finalDia.set(Calendar.HOUR_OF_DAY, 23);
-        finalDia.set(Calendar.MINUTE, 59);
-        finalDia.set(Calendar.SECOND, 59);
-        List<Sessao> sessoes = sc.sessoesPorEntEData(ent, this.local, dia, finalDia);
-
-        dados = new String[sessoes.size()];
-        this.idSessoes = new Long[sessoes.size()];
-        int i = 0;
-        for (Sessao s : sessoes) {
-            if (s.isAtiva()) {
-                dados[i] = s.getSala().getTipoSala().toString() + " | " + s.getSala().getNome() + " | "
-                        + df.format(s.getDataInicial().getTime());
-                idSessoes[i] = s.getId();
-            }
-            i++;
-        }
-
-        lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
+        SessaoController sc = new SessaoController();
+        List<Sessao> sessoes = sc.sessoesPorEntEData(ent, this.local, dia);
+        this.idSessoes = sc.listarIDs(sessoes);
+        lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(sc.formataDadosAbreviados(sessoes)));
     }
 
     private void initDatas() {
+        this.labelSemana = new JButton[]{jbtHoje, jbtDia1, jbtDia2, jbtDia3, jbtDia4, jbtDia5, jbtDia6};
+        diaSelecionado(jbtHoje);
+        String[] semana = Gerador.geraSemana();
 
-        Calendar cal = Calendar.getInstance();
-        Date dt = cal.getTime();
-        DateFormat diaMes = new SimpleDateFormat("dd/MM");
-
-        jbtHoje.setText("<html><center> HOJE " + diaMes.format(dt));
-        jbtDia1.setText("<html><center> " + Format.diaSemana(1));
-        jbtDia2.setText("<html><center> " + Format.diaSemana(2));
-        jbtDia3.setText("<html><center> " + Format.diaSemana(3));
-        jbtDia4.setText("<html><center> " + Format.diaSemana(4));
-        jbtDia5.setText("<html><center> " + Format.diaSemana(5));
-        jbtDia6.setText("<html><center> " + Format.diaSemana(6));
-
+        int i = 0;
+        for (JButton j : this.labelSemana) {
+            j.setText("<html><center> " + semana[i]);
+            i++;
+        }
     }
 
     private void initEntretenimento() {
@@ -119,8 +86,11 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         lblEstrelas.setText("");
         String caminho = Notas.qualCaminho(ent.getNota()).getCaminho();
         lblEstrelas.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-        String caminhoIconClassificacao = ent.getClassificacao().getCaminho();
-        lblClassificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminhoIconClassificacao)));
+         String caminhoIconClassificacao = null;
+        if (ent.getClassificacao().getCaminho() != null) {
+            caminhoIconClassificacao = ent.getClassificacao().getCaminho();
+            lblClassificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminhoIconClassificacao)));
+        }
 
     }
 
@@ -523,14 +493,13 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtSelecionarAssentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentosMouseClicked
-        SessaoControl sessaoC = new SessaoControl();
+        SessaoController sessaoC = new SessaoController();
         int valSelecionado = lstSessoes.getSelectedIndex();
         Long idSelecionado = this.idSessoes[valSelecionado];
-
-        Sessao sessao = sessaoC.buscarPorId(idSelecionado);
-
+        System.out.println("ID -> " + idSelecionado);
+        System.out.println("AQUI ESTA" + sessaoC.buscarPorId(idSelecionado));
         try {
-            FrameInicio.getFrame().setContentPane(new TelaSelecionarAssentos(cliente, sessao));
+            FrameInicio.getFrame().setContentPane(new TelaSelecionarAssentos(cliente, sessaoC.buscarPorId(idSelecionado)));
         } catch (CadastroInexistenteException ex) {
             Logger.getLogger(TelaEntSelecionado.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -547,22 +516,12 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
 
     private void jbtHojeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtHojeMouseClicked
         diaSelecionado(jbtHoje);
-        String[] d = jbtHoje.getText().split(" ");
-        String dia = d[1] + "/" + Calendar.getInstance().get(Calendar.YEAR);
-        String[] dataAux = dia.split("/");
-
-        Calendar data = Calendar.getInstance();
-        data.set(Calendar.YEAR, Integer.parseInt(dataAux[2]));
-        data.set(Calendar.MONTH, Integer.parseInt(dataAux[1]) - 1);
-        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]));
-
         try {
-            this.initSessoes(data);
+            this.initSessoes(Conversor.converterParaData(jbtHoje.getText()));
         } catch (CadastroInexistenteException ex) {
             Logger.getLogger(TelaEntSelecionado.class.getName()).log(Level.SEVERE, null, ex);
         }
         FrameInicio.getFrame().revalidate();
-
     }//GEN-LAST:event_jbtHojeMouseClicked
 
     private void jbtHojeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtHojeMouseEntered
@@ -724,25 +683,12 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
         jbtDia6.setBackground(new java.awt.Color(102, 102, 102));
 
         jbt.setBackground(new java.awt.Color(204, 0, 0));
-
     }
 
     public void listarSessoes(JButton jbt) {
         diaSelecionado(jbt);
-        String[] d = jbt.getText().split(" ");
-        String dia = d[1] + "/" + Calendar.getInstance().get(Calendar.YEAR);
-        String[] dataAux = dia.split("/");
-
-        Calendar data = Calendar.getInstance();
-        data.set(Calendar.YEAR, Integer.parseInt(dataAux[2]));
-        data.set(Calendar.MONTH, Integer.parseInt(dataAux[1]) - 1);
-        data.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dataAux[0]));
-        data.set(Calendar.HOUR_OF_DAY, 0);
-        data.set(Calendar.MINUTE, 0);
-        data.set(Calendar.SECOND, 0);
-
         try {
-            this.initSessoes(data);
+            this.initSessoes(Conversor.converterParaData(jbt.getText()));
         } catch (CadastroInexistenteException ex) {
             Logger.getLogger(TelaEntSelecionado.class.getName()).log(Level.SEVERE, null, ex);
         }

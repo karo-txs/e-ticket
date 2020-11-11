@@ -1,17 +1,12 @@
 package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.viewAuxiliares.VetorLocais;
-import br.unicap.eticket.control.locais.LocalControl;
-import br.unicap.eticket.model.locais.Cinema;
-import br.unicap.eticket.model.locais.LocalGenerico;
+import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -32,30 +27,14 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         jpnScrollCinemas.setVisible(true);
         jpnScrollTeatro.setVisible(true);
 
-        LocalControl localC = new LocalControl();
-        List<LocalGenerico> cines = localC.todosCinemas();
-
         this.trocarBanner();
-        if (this.primeiraEntrada) {
-            if (cines.isEmpty()) {
-                lblCinemasMsg.setVisible(true);
-                jpnScrollCinemas.setVisible(false);
-            } else {
-                mostrarLocais(cines);
-            }
 
-            List<LocalGenerico> teatros = localC.todosTeatros();
-            if (teatros.isEmpty()) {
-                lblTeatrosMsg.setVisible(true);
-                jpnScrollTeatro.setVisible(false);
-            } else {
-                mostrarLocais(teatros);
-            }
+        if (this.primeiraEntrada) {
+            mostrarLocais();
         }
         this.primeiraEntrada = false;
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
+        this.lblUsername.setText("@" + cliente.getNickName());
+
     }
 
     @SuppressWarnings("unchecked")
@@ -78,6 +57,11 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         lblTeatrosMsg = new javax.swing.JLabel();
         lblCategorias = new javax.swing.JLabel();
         lblCategoriasBar = new javax.swing.JLabel();
+        lblCategorias2 = new javax.swing.JLabel();
+        lblCategoriasBar2 = new javax.swing.JLabel();
+        lblAuditorioMsg = new javax.swing.JLabel();
+        jpnScrollAuditorios = new javax.swing.JScrollPane();
+        jpnScrollInternoAuditorios = new javax.swing.JPanel();
         jpnScrollCinemas = new javax.swing.JScrollPane();
         jpnScrollInternoCinema = new javax.swing.JPanel();
         lblCategorias1 = new javax.swing.JLabel();
@@ -181,7 +165,7 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         jpnScroll.setHorizontalScrollBar(null);
 
         jpnScrollInterno.setBackground(new java.awt.Color(21, 17, 17));
-        jpnScrollInterno.setPreferredSize(new java.awt.Dimension(998, 1200));
+        jpnScrollInterno.setPreferredSize(new java.awt.Dimension(998, 1500));
         jpnScrollInterno.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout jpnTopoLayout = new javax.swing.GroupLayout(jpnTopo);
@@ -215,6 +199,35 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         lblCategoriasBar.setForeground(new java.awt.Color(102, 102, 102));
         lblCategoriasBar.setOpaque(true);
         jpnScrollInterno.add(lblCategoriasBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 1060, 60));
+
+        lblCategorias2.setBackground(new java.awt.Color(51, 51, 51));
+        lblCategorias2.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        lblCategorias2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCategorias2.setText("Auditórios");
+        jpnScrollInterno.add(lblCategorias2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 930, 230, 60));
+
+        lblCategoriasBar2.setBackground(new java.awt.Color(204, 204, 204));
+        lblCategoriasBar2.setForeground(new java.awt.Color(102, 102, 102));
+        lblCategoriasBar2.setOpaque(true);
+        jpnScrollInterno.add(lblCategoriasBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 930, 1060, 60));
+
+        lblAuditorioMsg.setFont(new java.awt.Font("Segoe UI Symbol", 2, 18)); // NOI18N
+        lblAuditorioMsg.setForeground(new java.awt.Color(240, 240, 240));
+        lblAuditorioMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAuditorioMsg.setText("Sem auditórios cadastrados no momento!");
+        jpnScrollInterno.add(lblAuditorioMsg, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 1000, 400, 30));
+
+        jpnScrollAuditorios.setBackground(new java.awt.Color(51, 51, 51));
+        jpnScrollAuditorios.setBorder(null);
+        jpnScrollAuditorios.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jpnScrollAuditorios.setPreferredSize(new java.awt.Dimension(3000, 150));
+
+        jpnScrollInternoAuditorios.setBackground(new java.awt.Color(21, 17, 17));
+        jpnScrollInternoAuditorios.setPreferredSize(new java.awt.Dimension(1020, 213));
+        jpnScrollInternoAuditorios.setLayout(new java.awt.GridLayout(1, 10, 10, 0));
+        jpnScrollAuditorios.setViewportView(jpnScrollInternoAuditorios);
+
+        jpnScrollInterno.add(jpnScrollAuditorios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1040, -1, -1));
 
         jpnScrollCinemas.setBackground(new java.awt.Color(51, 51, 51));
         jpnScrollCinemas.setBorder(null);
@@ -322,64 +335,32 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         apagarBotao(lblMeuPerfil);
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
-    private void mostrarLocais(List<LocalGenerico> local) {
+    private void mostrarLocais() {//colocar em outro canto
+        LocalController localC = new LocalController();
+        VetorLocais locais;
 
-        int x = local.size();
-
-        VetorLocais locais = new VetorLocais(local);
-        locais.setCliente(cliente);
-        if (x != 0) {
-            if (local.get(0) instanceof Cinema) {
-
-                if (x < 5) {
-                    jpnScrollCinemas.setPreferredSize(new Dimension((223) * x, 145));
-                } else {
-                    jpnScrollCinemas.setPreferredSize(new Dimension(1020, 145));
-                }
-                jpnScrollInternoCinema.setPreferredSize(new Dimension((213 + 10) * x, 145));
-                jpnScrollInternoCinema.setLayout(new GridLayout(1, 10, x, 0));
-
-                for (int i = 0; i < x; i++) {
-                    jpnScrollInternoCinema.add(locais.getLocais()[i]);
-                }
-            } else {
-
-                if (x < 5) {
-                    jpnScrollTeatro.setPreferredSize(new Dimension((223) * x, 145));
-                } else {
-                    jpnScrollTeatro.setPreferredSize(new Dimension(1020, 145));
-                }
-                jpnScrollInternoTeatro.setPreferredSize(new Dimension((213 + 10) * x, 145));
-                jpnScrollInternoTeatro.setLayout(new GridLayout(1, 10, x, 0));
-
-                for (int i = 0; i < x; i++) {
-                    jpnScrollInternoTeatro.add(locais.getLocais()[i]);
-                }
-            }
-        }
+        locais = new VetorLocais(localC.todosCinemas());
+        locais.mostrarLocais(lblCinemasMsg, jpnScrollCinemas, jpnScrollInternoCinema, cliente);
+        locais = new VetorLocais(localC.todosTeatros());
+        locais.mostrarLocais(lblTeatrosMsg, jpnScrollTeatro, jpnScrollInternoTeatro, cliente);
+        locais = new VetorLocais(localC.todosAuditorios());
+        locais.mostrarLocais(lblAuditorioMsg, jpnScrollAuditorios, jpnScrollInternoAuditorios, cliente);
 
         FrameInicio.getFrame().revalidate();
     }
 
     private void trocarBanner() {
         Timer t = new Timer(5000, e -> {
-            troca();
+            ImageIcon im = new ImageIcon("src\\imagensRework\\Banner (" + this.bannerAtual + ").png");
+            Icon ic = new ImageIcon(im.getImage());
+            this.bannerAtual += 1;
+            if (this.bannerAtual == 5) {
+                this.bannerAtual = 1;
+            }
+            this.jlbBanner.setIcon(ic);
         });
         t.setInitialDelay(0);
         t.start();
-    }
-
-    private boolean troca() {
-        ImageIcon im;
-        Icon ic = null;
-        im = new ImageIcon("src\\imagensRework\\Banner (" + this.bannerAtual + ").png");
-        ic = new ImageIcon(im.getImage());
-        this.bannerAtual += 1;
-        if (this.bannerAtual == 5) {
-            this.bannerAtual = 1;
-        }
-        this.jlbBanner.setIcon(ic);
-        return true;
     }
 
     private void acenderBotao(JLabel lbl) {
@@ -395,17 +376,22 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jlbBanner;
     private javax.swing.JScrollPane jpnScroll;
+    private javax.swing.JScrollPane jpnScrollAuditorios;
     private javax.swing.JScrollPane jpnScrollCinemas;
     private javax.swing.JPanel jpnScrollInterno;
+    private javax.swing.JPanel jpnScrollInternoAuditorios;
     private javax.swing.JPanel jpnScrollInternoCinema;
     private javax.swing.JPanel jpnScrollInternoTeatro;
     private javax.swing.JScrollPane jpnScrollTeatro;
     private javax.swing.JPanel jpnTopo;
+    private javax.swing.JLabel lblAuditorioMsg;
     private javax.swing.JLabel lblBordaEsquerda;
     private javax.swing.JLabel lblCategorias;
     private javax.swing.JLabel lblCategorias1;
+    private javax.swing.JLabel lblCategorias2;
     private javax.swing.JLabel lblCategoriasBar;
     private javax.swing.JLabel lblCategoriasBar1;
+    private javax.swing.JLabel lblCategoriasBar2;
     private javax.swing.JLabel lblCinemasMsg;
     private javax.swing.JLabel lblDeslogar;
     private javax.swing.JLabel lblHomepage;
