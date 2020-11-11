@@ -1,7 +1,7 @@
-# <img src= "https://user-images.githubusercontent.com/58193125/95666608-a2595a80-0b31-11eb-88bb-8f280743082d.png" heigth="150" width = "100">e-ticket: Gerenciamento de Reservas e Entretenimentos
+# <img src= "https://user-images.githubusercontent.com/58193125/95666608-a2595a80-0b31-11eb-88bb-8f280743082d.png" heigth="150" width = "100">e-ticket: Gerenciamento de Reservas de Cinemas, Teatros e Auditórios
 
 ## Resumo do Projeto:
-O e-ticket é um gerenciador de reservas e entretenimentos facilitado. Nele os estabalecimentos controlam suas reservas e eventos e os clientes tem um local unificado para gerenciar suas diversões.
+O e-ticket é um gerenciador de reservas e entretenimentos de cinemas, teatros e auditórios. Nele estes estabalecimentos controlam suas reservas e eventos e os clientes tem um local unificado para gerenciar suas diversões.
 
 ## Status: EM DESENVOLVIMENTO
 
@@ -14,7 +14,7 @@ O e-ticket é um gerenciador de reservas e entretenimentos facilitado. Nele os e
 - Cliente:
   - Fazer Reservas/ Cancelar Reservas;
   - Criar Grupos de passeio e reservar para grupo; [Em andamento]
-  - Dar notas a estabelecimentos, filmes e peças;
+  - Dar notas a estabelecimentos e entretenimentos;
   - Acessar QR-code de suas reservas, facilitando sua identificação;
   - Fazer buscas.
   
@@ -26,6 +26,7 @@ O e-ticket é um gerenciador de reservas e entretenimentos facilitado. Nele os e
 ## Estabelecimentos e eventos Aceitos
 - Cinema;
 - Teatro;
+- Auditório.
 
 ## Tecnologias/Bibliotecas Utilizadas
 - Java EE 8
@@ -35,7 +36,6 @@ O e-ticket é um gerenciador de reservas e entretenimentos facilitado. Nele os e
 - JXing 3.4
 - JPA 2.2
 - Hibernate 5.4
-- Hibernate Search 5.11.4
 - Banco de dados: MYSQL( Connector/J 8.0.11 )
 
 ## Referências
