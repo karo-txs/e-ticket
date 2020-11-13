@@ -1,11 +1,10 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.viewAuxiliares.MatrizCadeiras;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
@@ -31,22 +30,13 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     }
 
     private void initCliente() {
+        ClienteController cc = new ClienteController();
         this.lblTier1.setVisible(false);
-        if (cliente.getNickName() != null) {
-            this.lblUsername.setText("@" + cliente.getNickName());
-        }
-
-        if (cliente.isEspecial()) {
-            ClienteEspecial clienteE = (ClienteEspecial) cliente;
-            if (clienteE.getDesconto(sessao.getLocal()) != 0) {
-                this.lblUsername.setForeground(new java.awt.Color(0, 0, 0));
-
-                String caminho = clienteE.getTierImg(sessao.getLocal());
-                if (caminho != null) {
-                    this.lblTier1.setVisible(true);
-                    lblTier1.setIcon(new javax.swing.ImageIcon(getClass().getResource(caminho)));
-                }
-            }
+        this.lblUsername.setText("@" + cliente.getNickName());
+        String img = cc.retornaImagemTier(cliente, this.sessao.getLocal());
+        if (img != null) {
+            lblTier1.setVisible(true);
+            lblTier1.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
         }
     }
 
@@ -231,52 +221,21 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
         jpnHorz.setLayout(new GridLayout(1, y));
 
         assentos = new MatrizCadeiras(x, y, ocupacao);
-
-        char a = 'A';
-        a = (char) (a + x - 1);
-        for (int i = 0; i < x; i++) {
-            JLabel lbl = new JLabel();
-
-            lbl.setText(String.valueOf(a));
-            lbl.setFont(new java.awt.Font("Impact", 0, 24));
-            lbl.setForeground(new java.awt.Color(102, 102, 102));
-            lbl.setHorizontalAlignment(0);
-            jpnVert.add(lbl);
-
-            a--;
-
-            for (int j = 0; j < y; j++) {
-                jpnAssentos.add(assentos.getAssentos()[i][j]);
-
-            }
-        }
-
-        for (int i = 0; i < y; i++) {
-            JLabel lbl2 = new JLabel();
-            lbl2.setText(String.valueOf(i + 1));
-            lbl2.setFont(new java.awt.Font("Impact", 0, 24));
-            lbl2.setForeground(new java.awt.Color(102, 102, 102));
-            lbl2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            jpnHorz.add(lbl2);
-        }
+        assentos.mostrarCadeiras(jpnAssentos,jpnVert,jpnHorz);
 
         FrameInicio.getFrame().revalidate();
 
     }
     private void jbtSelecionarAssentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseClicked
-       
-        System.out.println("AQUI ESTA2"+this.sessao);
         FrameInicio.getFrame().setContentPane(new TelaFinalizarReserva(cliente, sessao, assentos.getAtual().getName()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_jbtSelecionarAssentoMouseClicked
 
     private void jbtSelecionarAssentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseEntered
-
         jbtSelecionarAssento.setForeground(new java.awt.Color(191, 30, 30));
     }//GEN-LAST:event_jbtSelecionarAssentoMouseEntered
 
     private void jbtSelecionarAssentoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentoMouseExited
-
         jbtSelecionarAssento.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtSelecionarAssentoMouseExited
 
@@ -294,7 +253,6 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomepageMouseExited
 
     private void lblMinhasReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinhasReservasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblMinhasReservasMouseClicked

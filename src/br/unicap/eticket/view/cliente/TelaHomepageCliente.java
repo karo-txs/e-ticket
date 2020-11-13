@@ -7,6 +7,8 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,8 +26,10 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
         this.cliente = cliente;
         lblCinemasMsg.setVisible(false);
         lblTeatrosMsg.setVisible(false);
+        lblAuditorioMsg.setVisible(false);
         jpnScrollCinemas.setVisible(true);
         jpnScrollTeatro.setVisible(true);
+        jpnScrollAuditorios.setVisible(true);
 
         this.trocarBanner();
 
@@ -309,7 +313,6 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomepageMouseExited
 
     private void lblMinhasReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinhasReservasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblMinhasReservasMouseClicked
@@ -351,13 +354,18 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
 
     private void trocarBanner() {
         Timer t = new Timer(5000, e -> {
-            ImageIcon im = new ImageIcon("src\\imagensRework\\Banner (" + this.bannerAtual + ").png");
-            Icon ic = new ImageIcon(im.getImage());
-            this.bannerAtual += 1;
-            if (this.bannerAtual == 5) {
-                this.bannerAtual = 1;
-            }
-            this.jlbBanner.setIcon(ic);
+            new Thread() {
+                @Override
+                public void run() {
+                    ImageIcon im = new ImageIcon("src\\imagensRework\\Banner (" + TelaHomepageCliente.this.bannerAtual + ").png");
+                    Icon ic = new ImageIcon(im.getImage());
+                    TelaHomepageCliente.this.bannerAtual += 1;
+                    if (TelaHomepageCliente.this.bannerAtual == 5) {
+                        TelaHomepageCliente.this.bannerAtual = 1;
+                    }
+                    TelaHomepageCliente.this.jlbBanner.setIcon(ic);
+                }
+            }.start();
         });
         t.setInitialDelay(0);
         t.start();

@@ -9,14 +9,15 @@ import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.ClienteEspecial;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ReservaController implements BaseControl<Reserva>, Formatador<Reserva> {
 
-    private ReservaDAO dao = new ReservaDAO();
+    private ReservaDAO dao;
 
+    public ReservaController(){
+        this.dao = new ReservaDAO();
+    }
     /**
      * Cadastro de uma Reserva
      *

@@ -173,15 +173,15 @@ public abstract class LocalGenerico implements Serializable, Cloneable {
         this.setBanner(Conversor.converterImagemEmByte(urlCapa));
     }
 
-    public void atualizarSobre(String sobre) throws CadastroInexistenteException {
-        LocalDAO localD = new LocalDAO();
-        LocalController localC = new LocalController();
-
-        LocalGenerico busca = this.getId() == null ? localC.buscar(this) : this;
-
-        busca.setSobre(sobre);
-        localD.atualizarAtomico(busca);
-    }
+//    public void atualizarSobre(String sobre) throws CadastroInexistenteException {
+//        LocalDAO localD = new LocalDAO();
+//        LocalController localC = new LocalController();
+//
+//        LocalGenerico busca = this.getId() == null ? localC.buscar(this) : this;
+//
+//        busca.setSobre(sobre);
+//        localD.atualizarAtomico(busca);
+//    }
 
     public abstract void inserirCapaESalvar(String urlCapa);
 

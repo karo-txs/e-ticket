@@ -494,10 +494,7 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
 
     private void jbtSelecionarAssentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentosMouseClicked
         SessaoController sessaoC = new SessaoController();
-        int valSelecionado = lstSessoes.getSelectedIndex();
-        Long idSelecionado = this.idSessoes[valSelecionado];
-        System.out.println("ID -> " + idSelecionado);
-        System.out.println("AQUI ESTA" + sessaoC.buscarPorId(idSelecionado));
+        Long idSelecionado = this.idSessoes[lstSessoes.getSelectedIndex()];
         try {
             FrameInicio.getFrame().setContentPane(new TelaSelecionarAssentos(cliente, sessaoC.buscarPorId(idSelecionado)));
         } catch (CadastroInexistenteException ex) {
@@ -533,10 +530,8 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtHojeMouseExited
 
     private void jbtDia1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtDia1MouseClicked
-
         this.listarSessoes(jbtDia1);
         FrameInicio.getFrame().revalidate();
-
     }//GEN-LAST:event_jbtDia1MouseClicked
 
     private void jbtDia1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtDia1MouseEntered
@@ -701,7 +696,6 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     private void apagarBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(255, 255, 255));
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

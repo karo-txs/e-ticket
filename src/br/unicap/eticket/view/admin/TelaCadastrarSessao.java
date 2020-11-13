@@ -392,7 +392,6 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtCadastrarSessaoMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(local.getAdmin()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblHomePageMouseClicked
@@ -491,22 +490,6 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
         telaConf.setLocationRelativeTo(null);
         telaConf.setVisible(true);
         this.initEntretenimentos();
-//        
-//        CapturarCapa captura = new CapturarCapa();
-//        captura.setLocationRelativeTo(null);
-//        captura.setVisible(true);
-//        
-//        String img = captura.getImagemSelecionada();
-//        System.out.println("IMG"+img);
-//        if(img!=null){
-//            EntretenimentoController entC = new EntretenimentoController();
-//            try {
-//                entC.setImagem(telaConf.getPalestra(),img);
-//            } catch (CadastroInexistenteException ex) {
-//                System.out.println(ex.getMessage());
-//            }
-//        }
-//        FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_jbtCadPalestraMouseClicked
 
     private void ascenderBotao(JLabel lbl) {

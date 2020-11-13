@@ -1,6 +1,6 @@
 package br.unicap.eticket.viewAuxiliares;
 
-import br.unicap.eticket.dao.EntreterimentoDAO;
+import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.entretenimentos.Entretenimento;
@@ -107,7 +107,7 @@ public class VetorEntretenimentos implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 atual = (JButton) e.getSource();
-        EntreterimentoDAO entD = new EntreterimentoDAO();
+        EntretenimentoDAO entD = new EntretenimentoDAO();
         Entretenimento clicado = entD.buscarPorId(Long.parseLong(atual.getName()));
         if (user instanceof Cliente) {
             try {

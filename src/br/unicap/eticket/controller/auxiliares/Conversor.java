@@ -11,8 +11,7 @@ import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-
-public class Conversor {
+public class Conversor{
        
     /**
      * Converte uma Imagem em um vetor de bytes

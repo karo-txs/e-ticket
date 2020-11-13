@@ -2,7 +2,7 @@ package br.unicap.eticket.controller.financeiro;
 
 import br.unicap.eticket.controller.localAuxiliares.SalaController;
 import br.unicap.eticket.controller.localAuxiliares.SessaoController;
-import br.unicap.eticket.dao.EntreterimentoDAO;
+import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
@@ -18,7 +18,7 @@ public class Orcamento implements Serializable {
     //NÃO IMPLEMENTADO//
     private LocalGenerico local;
     private LocalDAO dao;
-    private EntreterimentoDAO entD;
+    private EntretenimentoDAO entD;
     private SalaController salaC;
     private SessaoController sessaoC;
 
@@ -28,7 +28,7 @@ public class Orcamento implements Serializable {
     public Orcamento(LocalGenerico local) {
         this.local = local;
         dao = new LocalDAO();
-        entD = new EntreterimentoDAO();
+        entD = new EntretenimentoDAO();
         salaC = new SalaController();
         sessaoC = new SessaoController();
     }

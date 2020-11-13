@@ -1,7 +1,7 @@
 package br.unicap.eticket.model.entretenimentos;
 
 import br.unicap.eticket.controller.auxiliares.Conversor;
-import br.unicap.eticket.dao.EntreterimentoDAO;
+import br.unicap.eticket.dao.EntretenimentoDAO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -72,7 +72,7 @@ public abstract class Entretenimento implements Serializable{
     }
 
      public void receberNota(double nota){
-        EntreterimentoDAO dao = new EntreterimentoDAO();
+        EntretenimentoDAO dao = new EntretenimentoDAO();
         dao.abrirTransacao();
         
         Entretenimento ent = this.getId()==null ? dao.buscarEntreterimento(this.getNome()) : this;
@@ -97,7 +97,7 @@ public abstract class Entretenimento implements Serializable{
     }
 
     public void inserirCapaESalvar(String urlCapa){
-        EntreterimentoDAO cineD = new EntreterimentoDAO();
+        EntretenimentoDAO cineD = new EntretenimentoDAO();
         Entretenimento busca = this.getId() == null ? cineD.buscarEntreterimento(this.getNome()) : this;
         
         busca.inserirCapa(urlCapa);

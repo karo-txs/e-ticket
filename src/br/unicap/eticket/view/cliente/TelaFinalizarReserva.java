@@ -397,12 +397,12 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     private void jbtFinalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseClicked
         ClienteController clienteC = new ClienteController();
         try {
-            Reserva rFeita = cliente.fazerReserva(sessao, numCadeira); //sair
+            Reserva rFeita = clienteC.fazerReserva(cliente, sessao, numCadeira); 
 
             TelaPopupPagarReserva ppPagar = new TelaPopupPagarReserva(FrameInicio.getFrame(), true, cliente, this.reserva);
             ppPagar.setLocationRelativeTo(null);
             ppPagar.setVisible(true);
-            cliente = ppPagar.getCliente(); //sair
+            cliente = ppPagar.getCliente(); 
 
             if (ppPagar.getConfirmarAcao()) {
                 try {
@@ -419,8 +419,8 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
                 ppQrCode.setLocationRelativeTo(null);
                 ppQrCode.setVisible(true);
             } else {
+                clienteC.cancelarReserva(cliente, rFeita);
                 JDialogsControl.mostrarPopUp("Operação Cancelada!", true);
-                cliente.cancelarReserva(rFeita); //sair
             }
         } catch (CadastroInexistenteException | DadosRepetidosException | DadosInvalidosException ex) {
             JDialogsControl.mostrarPopUp(ex.getMessage(), true);

@@ -20,8 +20,11 @@ import java.util.List;
 
 public class SalaController implements BaseControl<Sala> {
 
-    private SalaDAO dao = new SalaDAO();
+    private SalaDAO dao;
 
+    public SalaController(){
+        this.dao = new SalaDAO();
+    }
     /**
      * Cadastro de uma Sala
      *

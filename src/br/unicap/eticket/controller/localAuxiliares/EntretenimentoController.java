@@ -3,7 +3,7 @@ package br.unicap.eticket.controller.localAuxiliares;
 import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.interfaces.BuscasEntreterimento;
 import br.unicap.eticket.controller.auxiliares.Conversor;
-import br.unicap.eticket.dao.EntreterimentoDAO;
+import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -17,8 +17,12 @@ import java.util.List;
 
 public class EntretenimentoController implements BaseControl<Entretenimento>, BuscasEntreterimento {
     
-    private EntreterimentoDAO dao = new EntreterimentoDAO();
+    private EntretenimentoDAO dao;
 
+     public EntretenimentoController(){
+        this.dao = new EntretenimentoDAO();
+    }
+     
     /**
      * Cadastro de um Entretenimento com Varificação
      *
@@ -100,7 +104,7 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
      * @return List
      */
     private List<Entretenimento> todosFilmes() {
-        EntreterimentoDAO ed = new EntreterimentoDAO();
+        EntretenimentoDAO ed = new EntretenimentoDAO();
         List<Entretenimento> entreterimentos = ed.consultar("todosFilmes");
         return entreterimentos;
     }
@@ -111,7 +115,7 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
      * @return List
      */
     private List<Entretenimento> todasPecas() {
-        EntreterimentoDAO ed = new EntreterimentoDAO();
+        EntretenimentoDAO ed = new EntretenimentoDAO();
         List<Entretenimento> entreterimentos = ed.consultar("todasPecas");
         return entreterimentos;
     }
@@ -122,7 +126,7 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
      * @return
      */
     private List<Entretenimento> todasPalestras(LocalGenerico local) {
-        EntreterimentoDAO ed = new EntreterimentoDAO();
+        EntretenimentoDAO ed = new EntretenimentoDAO();
         List<Entretenimento> entreterimentos = ed.consultar("todasPalestras","local",local);
         return entreterimentos;
     }
@@ -160,7 +164,7 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
      */
     @Override
     public List<Entretenimento> entreterimentosEmCartaz() {
-        EntreterimentoDAO ed = new EntreterimentoDAO();
+        EntretenimentoDAO ed = new EntretenimentoDAO();
         List<Entretenimento> entreterimentos = ed.consultar("entreterimentosEmCartaz");
         return entreterimentos;
     }

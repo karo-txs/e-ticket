@@ -12,6 +12,7 @@ import br.unicap.eticket.excecoes.SubiuDeTierException;
 import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.locais.LocalGenerico;
+import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.model.usuarios.TierCliente;
@@ -21,8 +22,12 @@ import java.util.logging.Logger;
 
 public class ClienteController extends UsuarioController implements BaseControl<Cliente> {
 
-    private ClienteDAO dao = new ClienteDAO();
+    private ClienteDAO dao;
 
+    public ClienteController() {
+        this.dao = new ClienteDAO();
+    }
+    
     /**
      * Cadastro de um Cliente
      *
@@ -209,5 +214,28 @@ public class ClienteController extends UsuarioController implements BaseControl<
             }
         }
         return val;
+    }
+    /**
+     * Atualiza a chave de identificação secundária (sendo a primaria o ID, que
+     * é identificado diretamente pelo BD)
+     *
+     * @param cliente
+     * @param chave
+     * @throws CadastroInexistenteException
+     * @throws AtualizacaoMalSucedidaException
+     */
+    public void atualizarChave(Cliente cliente, Object chave) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
+        String email = (String) chave;
+        if (chave != null && !email.equalsIgnoreCase(cliente.getEmail())) {
+            Cliente busca = cliente.getId() == null ? this.buscar(cliente) : cliente;
+            busca.atualizarEmail(email);
+        }
+    }
+    
+    public Reserva fazerReserva(Cliente cliente, Sessao sessao, String numCadeira) throws CadastroInexistenteException, DadosInvalidosException, DadosRepetidosException{
+        return cliente.fazerReserva(sessao, numCadeira);
+    }
+    public void cancelarReserva(Cliente cliente, Reserva rFeita) throws CadastroInexistenteException {
+        cliente.cancelarReserva(rFeita);
     }
 }

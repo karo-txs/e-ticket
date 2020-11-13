@@ -12,7 +12,6 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
-import java.util.List;
 import javax.swing.JLabel;
 
 public class TelaCriarEventos extends javax.swing.JPanel {
@@ -23,21 +22,13 @@ public class TelaCriarEventos extends javax.swing.JPanel {
     public TelaCriarEventos(LocalGenerico local) {
         initComponents();
         this.local = local;
-        initEventos(local);
+        initSessoes(local);
     }
 
-    private void initEventos(LocalGenerico local) {
-        String[] dados;
-
-        List<Sessao> sessoes = local.getSessoes();
-        dados = new String[sessoes.size()];
-        sessoesAux = new Sessao[sessoes.size()];
-        int i = 0;
-        for (Sessao s : sessoes) {
-            dados[i] = s.toString();
-            sessoesAux[i] = s;
-            i++;
-        }
+    private void initSessoes(LocalGenerico local) {
+        SessaoController sc = new SessaoController();
+        String[] dados = sc.formataDados(local.getSessoes());
+        sessoesAux = sc.converterListEmArray(local.getSessoes());
         
         lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
         lstEventos.setModel(new javax.swing.DefaultComboBoxModel<>(TipoEvento.eventos()));

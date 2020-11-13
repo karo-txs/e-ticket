@@ -3,7 +3,7 @@ package br.unicap.eticket.controller.localAuxiliares;
 import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.interfaces.Formatador;
 import br.unicap.eticket.controller.locais.LocalController;
-import br.unicap.eticket.dao.EntreterimentoDAO;
+import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.dao.SessaoDAO;
@@ -23,7 +23,11 @@ import java.util.List;
 
 public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao> {
 
-    private SessaoDAO dao = new SessaoDAO();
+    private SessaoDAO dao;
+
+    public SessaoController() {
+        this.dao = new SessaoDAO();
+    }
 
     /**
      * Cadastra uma sessão
@@ -143,7 +147,7 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
      * @throws CadastroInexistenteException
      */
     public List<Sessao> sessoesPorEntELocal(Entretenimento ent, LocalGenerico local) throws CadastroInexistenteException {
-        EntreterimentoDAO entD = new EntreterimentoDAO();
+        EntretenimentoDAO entD = new EntretenimentoDAO();
         LocalDAO localD = new LocalDAO();
 
         LocalGenerico busca = local.getId() == null ? localD.buscarLocal(local) : local;
@@ -171,7 +175,6 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
      * @param ent
      * @param local
      * @param dataInicial
-     * @param dataFinal
      * @return
      * @throws CadastroInexistenteException
      */
@@ -303,6 +306,11 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
         dao.fecharTransacao();
     }
 
+    /**
+     * Transforma uma lista de sessoes em um vetor String com seus respectivos dados
+     * @param sessoes
+     * @return String[]
+     */
     @Override
     public String[] formataDados(List<Sessao> sessoes) {
         DateFormat df = new SimpleDateFormat("HH:mm");
@@ -320,6 +328,11 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
         return dadosFormatados;
     }
 
+    /**
+     * Transforma uma lista de sessoes em um vetor String com seus respectivos dados abreviados
+     * @param sessoes
+     * @return String[]
+     */
     public String[] formataDadosAbreviados(List<Sessao> sessoes) {
         DateFormat df = new SimpleDateFormat("HH:mm");
         String[] dadosFormatados = null;
@@ -337,9 +350,9 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
     }
 
     /**
-     *
+     * Retorna a lista de IDs de uma lista de sessoes
      * @param sessoes
-     * @return
+     * @return Long[]
      */
     @Override
     public Long[] listarIDs(List<Sessao> sessoes) {
@@ -352,5 +365,15 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
             i++;
         }
         return idSessoes;
+    }
+    
+     public Sessao[] converterListEmArray(List<Sessao> sessoes){
+        Sessao[] dados = new Sessao[sessoes.size()];
+         int i = 0;
+        for (Sessao s : sessoes) {
+            dados[i] = s;
+            i++;
+        }
+        return dados;
     }
 }

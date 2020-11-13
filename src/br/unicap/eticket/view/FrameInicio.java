@@ -4,16 +4,15 @@ import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.viewAuxiliares.ClockSessao;
 import java.util.TimeZone;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class FrameInicio extends JFrame {
 
-    public JLabel label = new JLabel();
+    public ClockSessao clock;
     private static JFrame frame;
 
     public FrameInicio() {
         initComponents();
-        //label = new ClockSessao();
+        clock = new ClockSessao();
         TimeZone.setDefault(TimeZone.getTimeZone("Etc/UTC"));
     }
 

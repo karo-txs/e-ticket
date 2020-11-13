@@ -8,7 +8,6 @@ import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
-import java.util.List;
 import javax.swing.JLabel;
 
 public class TelaListaDeSessoes extends javax.swing.JPanel {
@@ -23,18 +22,9 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     }
 
     private void initSessoes(LocalGenerico local) {
-        String[] dados;
-
-        List<Sessao> sessoes = local.getSessoes();
-        dados = new String[sessoes.size()];
-        sessoesAux = new Sessao[sessoes.size()];
-        int i = 0;
-        for (Sessao s : sessoes) {
-            dados[i] = s.toString();
-            sessoesAux[i] = s;
-            i++;
-        }
-
+        SessaoController sesC = new SessaoController();
+        String[] dados = sesC.formataDados(local.getSessoes());
+        sessoesAux = sesC.converterListEmArray(local.getSessoes());
         lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
     }
 
@@ -331,11 +321,8 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtRemoverSessaoMouseExited
 
     private void jbtEditarSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSessaoMouseClicked
-        //String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
         if (lstSessoes.getSelectedIndex() != -1) {
             Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
-            System.out.println(selecionada);
-            System.out.println("Local ID" + selecionada.getSala().getLocal().getId());
             FrameInicio.getFrame().setContentPane(new TelaEditarSessao(local, selecionada));
             FrameInicio.getFrame().revalidate();
         }

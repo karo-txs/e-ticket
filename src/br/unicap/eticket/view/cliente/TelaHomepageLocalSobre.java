@@ -3,7 +3,6 @@ package br.unicap.eticket.view.cliente;
 import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
@@ -421,7 +420,6 @@ public class TelaHomepageLocalSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
     private void lblMinhasReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinhasReservasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblMinhasReservasMouseClicked

@@ -352,7 +352,6 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_lblControleOrcamentoMouseExited
 
     private void lblSessoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSessoesMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(adm.getLocalAdministrado()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSessoesMouseClicked
@@ -366,7 +365,6 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSessoesMouseExited
 
     private void lblSalasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalasMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(adm.getLocalAdministrado()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblSalasMouseClicked
@@ -380,7 +378,6 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSalasMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(adm));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblHomePageMouseClicked
@@ -410,25 +407,24 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_lblDeslogarMouseExited
 
     private void jbtEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseClicked
-
         if (jbtEditar.getText().equalsIgnoreCase("Salvar")) {
             AdminController cc = new AdminController();
-           
-            Admin novo = new Admin(fldNome.getText(), fldEmail.getText(), adm.getSenha(), Integer.parseInt(fldIdade.getText()),
-                    fldCPF.getText(), jfldTelefone.getText(), this.adm.getLocalAdministrado());
+
+            Admin novo = new Admin(fldNome.getText(), fldEmail.getText(), adm.getSenha(),
+                    Integer.parseInt(fldIdade.getText()), fldCPF.getText(), jfldTelefone.getText(),
+                    this.adm.getLocalAdministrado());
 
             try {
-                if (fldEmail.getText() != null && !fldEmail.getText().equalsIgnoreCase(adm.getEmail())) {
-                    adm.atualizarEmail(fldEmail.getText()); //atualizar chave
-                }
+                cc.atualizarChave(adm, fldEmail.getText());
+                
                 if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.adm.getSenha())) {
                     novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));
                 }
                 cc.atualizar(novo);
-                JDialogsControl.mostrarPopUp("Atualizado Com Sucesso!",false);
+                JDialogsControl.mostrarPopUp("Atualizado Com Sucesso!", false);
                 this.adm = cc.buscar(adm);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException | DadosInvalidosException ex) {
-                JDialogsControl.mostrarPopUp(ex.getMessage(),true);
+                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
         }
         trocarNome();
@@ -436,11 +432,11 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtEditarMouseClicked
 
     private void jbtEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseEntered
-       jbtEditar.setForeground(new Color(0,0,0));
+        jbtEditar.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jbtEditarMouseEntered
 
     private void jbtEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseExited
-        jbtEditar.setForeground(new Color(255,255,255));
+        jbtEditar.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jbtEditarMouseExited
 
     private void jbtEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditarActionPerformed
@@ -473,7 +469,7 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     }
 
     private void trocarEditable() {
-       fldNome.setEditable(!fldNome.isEditable());
+        fldNome.setEditable(!fldNome.isEditable());
         fldIdade.setEditable(!fldIdade.isEditable());
         fldCPF.setEditable(!fldCPF.isEditable());
         fldEmail.setEditable(!fldEmail.isEditable());

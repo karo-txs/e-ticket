@@ -126,8 +126,7 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
             try {
                 if (!this.isAdmin) {
                     clienteC.cadastrar(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
-                    Cliente c = new Cliente(fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
-                    Cliente busca = clienteC.buscar(c);
+                    Cliente busca = clienteC.buscar(new Cliente(fldEmail.getText(), String.valueOf(fldSenha.getPassword())));
                     TelaPopupNickname telaConf = JDialogsControl.mostrarNick(busca);
                     if (telaConf.getConfirmarAcao()) {
                         FrameInicio.getFrame().setContentPane(new TelaInicio());

@@ -9,6 +9,7 @@ import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
+import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.locais.Auditorio;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locais.Teatro;
@@ -18,7 +19,11 @@ import java.util.List;
 
 public class LocalController implements BaseControl<LocalGenerico> {
 
-    private LocalDAO dao = new LocalDAO();
+    private LocalDAO dao;
+
+    public LocalController() {
+        this.dao = new LocalDAO();
+    }
 
     /**
      * Cadastra um Local, caso o admin tenha excluido o seu local original, e
@@ -105,6 +110,13 @@ public class LocalController implements BaseControl<LocalGenerico> {
         }
     }
 
+    /**
+     * Retorna um local pelo id
+     *
+     * @param id
+     * @return LocalGenerico
+     * @throws CadastroInexistenteException
+     */
     public LocalGenerico buscarPorId(Long id) throws CadastroInexistenteException {
         LocalGenerico busca = dao.buscarPorId(id);
         if (busca != null) {
@@ -136,6 +148,7 @@ public class LocalController implements BaseControl<LocalGenerico> {
 
     /**
      * Retorna Todos os Auditorios Cadastrados
+     *
      * @return
      */
     public List<LocalGenerico> todosAuditorios() {
@@ -153,6 +166,7 @@ public class LocalController implements BaseControl<LocalGenerico> {
     @Override
     public void atualizar(LocalGenerico novo) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
         LocalGenerico busca = novo.getId() == null ? this.buscar(novo) : novo;
+
         if (novo.getNome() != null) {
             if (!novo.getNome().equals("") && !novo.getNome().equalsIgnoreCase(busca.getNome())) {
                 if (ValidaDados.validaNome(novo.getNome())) {
@@ -162,6 +176,7 @@ public class LocalController implements BaseControl<LocalGenerico> {
                 }
             }
         }
+
         if (novo.getEmail() != null) {
             if (!novo.getEmail().equals("") && !novo.getEmail().equalsIgnoreCase(busca.getEmail())) {
                 if (ValidaDados.validaEmail(novo.getEmail())) {
@@ -203,7 +218,15 @@ public class LocalController implements BaseControl<LocalGenerico> {
                 }
             }
         }
+
+        if (novo.getSobre() != null) {
+            if (!novo.getSobre().equals("") && !novo.getSobre().
+                    equalsIgnoreCase(busca.getSobre())) {
+                busca.setSobre(novo.getSobre());
+            }
+        }
         dao.atualizarAtomico(busca);
+
     }
 
     /**
@@ -240,5 +263,28 @@ public class LocalController implements BaseControl<LocalGenerico> {
                 salaC.remover(s);
             }
         }
+    }
+
+    /**
+     * Atualiza a chave de identificação secundária (sendo a primaria o ID, que
+     * é identificado diretamente pelo BD)
+     *
+     * @param local
+     * @param chave
+     * @throws CadastroInexistenteException
+     * @throws AtualizacaoMalSucedidaException
+     */
+    public void atualizarChave(LocalGenerico local, Object chave) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
+        LocalGenerico busca = local.getId() == null ? this.buscar(local) : local;
+        busca.atualizarEnd((Endereco) chave);
+    }
+
+    /**
+     *
+     * @param local
+     * @param caminho
+     */
+    public void inserirBanner(LocalGenerico local, String caminho) {
+        local.inserirBannerESalvar(caminho);
     }
 }

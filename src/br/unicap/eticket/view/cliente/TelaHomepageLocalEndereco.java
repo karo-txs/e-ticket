@@ -4,7 +4,6 @@ import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;

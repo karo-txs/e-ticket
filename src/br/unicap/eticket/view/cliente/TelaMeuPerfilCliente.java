@@ -484,11 +484,10 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_lblDeslogarMouseExited
 
     private void jbtAlterarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseClicked
-
+        ClienteController clienteC = new ClienteController();
         if (jbtAlterarPerfil.getText().equalsIgnoreCase("Salvar")) {
             ClienteController cc = new ClienteController();
-            Endereco novoEnd;
-                novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
+            Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                         fldRua.getText(), fldNum.getText(), fldComplemento.getText());
             
             Cliente novo = new Cliente(fldNome.getText(), fldNome.getText(), fldEmail.getText(), cliente.getSenha(), Integer.parseInt(fldIdade.getText()),
@@ -496,7 +495,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
 
             try {
                 if (fldEmail.getText() != null && !fldEmail.getText().equalsIgnoreCase(cliente.getEmail())) {
-                    cliente.atualizarEmail(fldEmail.getText());
+                    clienteC.atualizarChave(cliente,fldEmail.getText());
                 }
                 if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.cliente.getSenha())) {
                     novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));

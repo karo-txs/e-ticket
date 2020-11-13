@@ -143,7 +143,6 @@ public class TelaInicio extends javax.swing.JPanel {
         Usuario u;
         try {
             u = userC.login(email, senha);
-            System.out.println("Login efetuado!!");
 
             if (u instanceof Cliente) {
                 FrameInicio.getFrame().setContentPane(new TelaHomepageCliente((Cliente) u));

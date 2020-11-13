@@ -5,7 +5,11 @@ import java.util.List;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 
 public class UsuarioController{
-    private UsuarioDAO dao = new UsuarioDAO();
+    private UsuarioDAO dao;
+
+    public UsuarioController() {
+        this.dao = new UsuarioDAO();
+    }
     
     /**
      * Busca um usuario pelo e-mail, seja ele um Cliente ou Admin

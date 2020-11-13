@@ -1,6 +1,7 @@
 package br.unicap.eticket.view.admin;
 
 import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -15,11 +16,9 @@ import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
 import java.awt.Image;
-import java.io.File;
 import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 public class TelaHomepageEndereco extends javax.swing.JPanel {
@@ -626,13 +625,13 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
     private void jbtAlterarEndMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseClicked
-
+        LocalController localC = new LocalController();
         if (jbtAlterarEnd.getText().equalsIgnoreCase("Salvar")) {
             try {
                 Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                         fldRua.getText(), fldNum.getText(), fldComplemento.getText());
                 if (!this.local.getEndereco().equals(novoEnd)) {
-                    local.atualizarEnd(novoEnd);//atualizarChave
+                    localC.atualizarChave(local, novoEnd);
                 }
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
                 JDialogsControl.mostrarPopUp(ex.getMessage(), true);
@@ -656,8 +655,9 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarEndActionPerformed
 
     private void jbtAlterarBannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseClicked
+        LocalController localC = new LocalController();
         String caminho = EntradaImagens.caminhoBanner(jlbBanner, this);
-        adm.getLocalAdministrado().inserirBannerESalvar(caminho);//chamar control
+        localC.inserirBanner(local, caminho);
     }//GEN-LAST:event_jbtAlterarBannerMouseClicked
 
     private void jbtAlterarBannerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseEntered

@@ -1,6 +1,7 @@
 package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.controller.localAuxiliares.ReservaController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.usuarios.Cliente;
@@ -30,13 +31,6 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }
 
     private void initReservas(Cliente cliente) {
-
-//        ClienteController clienteC = new ClienteController();
-//        try {
-//            cliente = clienteC.buscar(cliente);
-//        } catch (CadastroInexistenteException ex) {
-//           JDialogsControl.mostrarPopUp(ex.getMessage(), true);
-//        }
         ReservaController rv = new ReservaController();
         List<Reserva> reservas = cliente.getReservas();
         String[] dados = rv.formataDados(reservas);
@@ -212,6 +206,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
 
     private void jbtRemoverSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseClicked
         ReservaController reservaC = new ReservaController();
+        ClienteController clienteC = new ClienteController();
         int valSelecionado = lstReservas.getSelectedIndex();
 
         if (valSelecionado != -1) {
@@ -220,7 +215,7 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
             TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Confirmar Exclusão?");
             if (telaConf.getConfirmarAcao()) {
                 try {
-                    cliente.cancelarReserva(reserva);//sair
+                    clienteC.cancelarReserva(cliente, reserva);
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
                     FrameInicio.getFrame().revalidate();

@@ -9,8 +9,11 @@ import br.unicap.eticket.model.auxiliares.Evento;
 
 public class EventoController implements BaseControl<Evento> {
 
-    private EventoDAO dao = new EventoDAO();
+    private EventoDAO dao;
 
+    public EventoController(){
+        this.dao =  new EventoDAO();
+    }
     /**
      * Cadastra um evento
      *

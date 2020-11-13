@@ -1,5 +1,7 @@
 package br.unicap.eticket.view.admin;
 
+import br.unicap.eticket.controller.locais.LocalController;
+import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Admin;
@@ -11,6 +13,8 @@ import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -462,7 +466,6 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_lblSalasMouseExited
 
     private void lblHomePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomePageMouseClicked
-
         FrameInicio.getFrame().setContentPane(new TelaHomepageSobre(local.getAdmin()));
         FrameInicio.getFrame().revalidate();
     }//GEN-LAST:event_lblHomePageMouseClicked
@@ -545,13 +548,15 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_lblEnderecoMouseExited
 
     private void jbtAlterarSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarSobreMouseClicked
-
+        LocalController localC = new LocalController();
         if (jbtAlterarSobre.getText().equalsIgnoreCase("Salvar")) {
-            try {
-                local.atualizarSobre(txtSobre.getText()); //chamar control?
-            } catch (CadastroInexistenteException ex) {
-                JDialogsControl.mostrarPopUp(ex.getMessage(), true);
-            }
+                local.setSobre(txtSobre.getText());
+                try {
+                    localC.atualizar(local);
+                    local = localC.buscar(local);
+                } catch (AtualizacaoMalSucedidaException | CadastroInexistenteException ex) {
+                    JDialogsControl.mostrarPopUp(ex.getMessage(), true);
+                }
         }
         trocarNome();
         trocarEditable();

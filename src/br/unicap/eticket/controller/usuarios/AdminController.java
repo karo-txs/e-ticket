@@ -22,8 +22,12 @@ import java.util.logging.Logger;
 
 public class AdminController extends UsuarioController implements BaseControl<Admin> {
 
-    private AdminDAO dao = new AdminDAO();
+    private AdminDAO dao;
 
+    public AdminController() {
+        this.dao = new AdminDAO();
+    }
+    
     /**
      * Cadastro de um Admin
      *
@@ -67,7 +71,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
         c.setEmail(email);
         c.setSenha(senha);
         LocalGenerico local = null;
-        
+
         switch (tipoLocal) {
             case "Cinema":
                 local = new Cinema(nomeDoLocal, end);
@@ -80,7 +84,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
                 break;
             default:
                 throw new DadosInvalidosException("Tipo De Local");
-            
+
         }
 
         if (!ValidaDados.validaEndereco(end)) {
@@ -142,7 +146,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
 
         Admin busca = this.buscar(novo);
 
-        if (novo.getNome()!=null && !novo.getNome().equals("")) {
+        if (novo.getNome() != null && !novo.getNome().equals("")) {
             if (ValidaDados.validaNome(novo.getNome())) {
                 if (!novo.getNome().equals(busca.getNome())) {
                     busca.setNome(novo.getNome());
@@ -151,7 +155,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
                 throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Nome"));
             }
         }
-        
+
         if (novo.getIdade() != 0) {
             if (ValidaDados.validaQuantidade(String.valueOf(novo.getIdade()))) {
                 if (novo.getIdade() != busca.getIdade()) {
@@ -162,7 +166,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
             }
         }
 
-        if (novo.getTelefone()!=null && !novo.getTelefone().equals("")) {
+        if (novo.getTelefone() != null && !novo.getTelefone().equals("")) {
             if (ValidaDados.validaTelefone(novo.getTelefone())) {
                 if (!novo.getTelefone().equals(busca.getTelefone())) {
                     busca.setTelefone(novo.getTelefone());
@@ -172,7 +176,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
             }
         }
 
-        if (novo.getCpf()!=null && !novo.getCpf().equals("")) {
+        if (novo.getCpf() != null && !novo.getCpf().equals("")) {
             if (ValidaDados.validaCpf(novo.getCpf())) {
                 if (!busca.getCpf().equals(novo.getCpf())) {
                     busca.setCpf(novo.getCpf());
@@ -182,7 +186,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
             }
         }
 
-        if (novo.getSenha()!=null && !novo.getSenha().equals("")) {
+        if (novo.getSenha() != null && !novo.getSenha().equals("")) {
             try {
                 if (ValidaDados.validaSenha(novo.getSenha())) {
                     if (!busca.getSenha().equals(novo.getSenha())) {
@@ -253,5 +257,22 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
         dao.atualizar(busca);
         dao.fecharTransacao();
 
+    }
+
+    /**
+     * Atualiza a chave de identificação secundária (sendo a primaria o ID, que
+     * é identificado diretamente pelo BD)
+     *
+     * @param adm
+     * @param chave
+     * @throws CadastroInexistenteException
+     * @throws AtualizacaoMalSucedidaException
+     */
+    public void atualizarChave(Admin adm, Object chave) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
+        String email = (String) chave;
+        if (chave != null && !email.equalsIgnoreCase(adm.getEmail())) {
+            Admin busca = adm.getId() == null ? this.buscar(adm) : adm;
+            busca.atualizarEmail(email);
+        }
     }
 }
