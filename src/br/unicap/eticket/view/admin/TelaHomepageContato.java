@@ -449,7 +449,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
             fldEmailLocal.setText(atual.getEmail());
             fldEmailAdm.setText(atual.getAdmin().getEmail());
             fldFacebook.setText(atual.getRedeSocial_facebook());
-            fldInstagram.setText(atual.getRedeSocial_instragam());
+            fldInstagram.setText(atual.getRedeSocial_instagram());
         } catch (CadastroInexistenteException ex) {
             JDialogsControl.mostrarPopUp(ex.getMessage(), true);
         }

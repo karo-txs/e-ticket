@@ -196,7 +196,7 @@ public class TelaPopupCadPalestra extends javax.swing.JDialog {
         
              if (captura.getImagemSelecionada() != null) {
                 try {
-                    entC.setImagem(ent,captura.getImagemSelecionada());
+                    entC.modificarCapa(ent,captura.getImagemSelecionada());
                 } catch (CadastroInexistenteException ex) {
                     Logger.getLogger(TelaPopupCadPalestra.class.getName()).log(Level.SEVERE, null, ex);
                 }

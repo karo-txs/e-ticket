@@ -534,8 +534,6 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         jbtLocalizarCEP.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
-    
-
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }

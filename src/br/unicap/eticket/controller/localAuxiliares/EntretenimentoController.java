@@ -3,6 +3,8 @@ package br.unicap.eticket.controller.localAuxiliares;
 import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.interfaces.BuscasEntreterimento;
 import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.auxiliares.ValidaDados;
+import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -14,36 +16,52 @@ import br.unicap.eticket.model.locais.Auditorio;
 import br.unicap.eticket.model.locais.Cinema;
 import br.unicap.eticket.model.locais.Teatro;
 import java.util.List;
+import java.util.function.Function;
+import br.unicap.eticket.controller.interfaces.FunctionSimple;
 
 public class EntretenimentoController implements BaseControl<Entretenimento>, BuscasEntreterimento {
-    
+
     private EntretenimentoDAO dao;
 
-     public EntretenimentoController(){
+    public EntretenimentoController() {
         this.dao = new EntretenimentoDAO();
     }
-     
+
     /**
-     * Cadastro de um Entretenimento com Varificação
+     * Cadastro de um Entretenimento com Verificação
      *
      * @param ent
      * @throws br.unicap.eticket.excecoes.DadosInvalidosException
      */
     @Override
     public void cadastrar(Entretenimento ent) throws DadosInvalidosException {
-        //falta validações
+
+        if (!ValidaDados.validaNumero(ent.getDuracao() + "")) {
+            throw new DadosInvalidosException("Nome do Local");
+        }
+
         if (dao.buscarEntreterimento(ent.getNome()) == null) {
             dao.incluirAtomico(ent);
         }
     }
-    
-    public void cadastrar(Palestra ent, Auditorio a, String urlCapa) throws DadosInvalidosException {
-        //falta validações
-        ent.setAuditorio(a);
+
+    /**
+     * Cadastra uma palestra e a vincula a seu respectivo auditorio
+     *
+     * @param palestra
+     * @param auditorio
+     * @param urlCapa
+     * @throws DadosInvalidosException
+     */
+    public void cadastrar(Palestra palestra, Auditorio auditorio, String urlCapa) throws DadosInvalidosException {
+        LocalController localC = new LocalController();
+        Auditorio buscaA = auditorio.getId() == null ? (Auditorio) localC.buscar(auditorio) : auditorio;
+        palestra.setAuditorio(buscaA);
+
         if (urlCapa != null) {
-            this.cadastrarComCapa(ent, urlCapa);
+            this.cadastrarComCapa(palestra, urlCapa);
         } else {
-            this.cadastrar(ent);
+            this.cadastrar(palestra);
         }
     }
 
@@ -55,13 +73,18 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
      * @throws DadosInvalidosException
      */
     public void cadastrarComCapa(Entretenimento ent, String urlCapa) throws DadosInvalidosException {
-        if (urlCapa != null) {
-            ent.setCapa(Conversor.converterImagemEmByte(urlCapa));
-        }
+        ent.setCapa(Conversor.converterImagemEmByte(urlCapa));
         this.cadastrar(ent);
     }
-    
-    public void setImagem(Entretenimento ent, String urlCapa) throws CadastroInexistenteException{
+
+    /**
+     * Modifica a capa de um entretenimento
+     *
+     * @param ent
+     * @param urlCapa
+     * @throws CadastroInexistenteException
+     */
+    public void modificarCapa(Entretenimento ent, String urlCapa) throws CadastroInexistenteException {
         ent.inserirCapaESalvar(urlCapa);
     }
 
@@ -69,7 +92,7 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
      * Buscar um entreterimento
      *
      * @param entreterimento
-     * @return
+     * @return Entretenimento
      * @throws br.unicap.eticket.excecoes.CadastroInexistenteException
      */
     @Override
@@ -99,56 +122,33 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
     }
 
     /**
-     * Retorna a lista com todos os filmes cadastrados
-     *
-     * @return List
-     */
-    private List<Entretenimento> todosFilmes() {
-        EntretenimentoDAO ed = new EntretenimentoDAO();
-        List<Entretenimento> entreterimentos = ed.consultar("todosFilmes");
-        return entreterimentos;
-    }
-
-    /**
-     * Retorna a lista com todas os pecas cadastradas
-     *
-     * @return List
-     */
-    private List<Entretenimento> todasPecas() {
-        EntretenimentoDAO ed = new EntretenimentoDAO();
-        List<Entretenimento> entreterimentos = ed.consultar("todasPecas");
-        return entreterimentos;
-    }
-
-    /**
-     * Retorna a lista com todas os palestras cadastradas
-     *
-     * @return
-     */
-    private List<Entretenimento> todasPalestras(LocalGenerico local) {
-        EntretenimentoDAO ed = new EntretenimentoDAO();
-        List<Entretenimento> entreterimentos = ed.consultar("todasPalestras","local",local);
-        return entreterimentos;
-    }
-
-    /**
-     * retorna a lista de nomes de entretenimentos por tipo de local
+     * Retorna a lista de nomes de entretenimentos por tipo de local
      *
      * @param local
      * @return
      */
     public String[] todosEntretenimentosDoLocal(LocalGenerico local) {
+        EntretenimentoDAO ed = new EntretenimentoDAO();
         String[] entsVector;
         List<Entretenimento> ents;
-        
+
         if (local instanceof Cinema) {
-            ents = this.todosFilmes();
+            FunctionSimple<List<Entretenimento>> function = () -> {
+                return ed.consultar("todosFilmes");
+            };
+            ents = function.apply();
         } else if (local instanceof Teatro) {
-            ents = this.todasPecas();
+            FunctionSimple<List<Entretenimento>> function = () -> {
+                return ed.consultar("todasPecas");
+            };
+            ents = function.apply();
         } else {
-            ents = this.todasPalestras(local);
+            Function<LocalGenerico, List<Entretenimento>> function = (LocalGenerico l) -> {
+                return ed.consultar("todasPalestras", "local", l);
+            };
+            ents = function.apply(local);
         }
-        
+
         int tam = ents.size();
         entsVector = new String[tam];
         for (int i = 0; i < tam; i++) {
@@ -179,24 +179,31 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
     public List<Entretenimento> entreterimentosEmCartaz(LocalGenerico local) {
         LocalDAO localD = new LocalDAO();
         LocalGenerico busca = local.getId() == null ? localD.buscarLocal(local) : local;
-        
+
         List<Entretenimento> ents = dao.consultar("entreterimentoPorLocal", "local", busca);
         return ents;
     }
-    
+
     @Override
     public List<Entretenimento> entreterimentosNotaMaiorQue(double nota) {
         List<Entretenimento> ents = dao.consultar("filmesNotaMaiorQue", "nota", nota);
         return ents;
     }
 
-    //ATUALIZAÇÃO
     @Override
     public void atualizar(Entretenimento obj) throws CadastroInexistenteException {
     }
 
-    //REMOÇÃO
+    /**
+     * Remoção de um entretenimento
+     *
+     * @param ent
+     * @throws CadastroInexistenteException
+     */
     @Override
-    public void remover(Entretenimento obj) throws CadastroInexistenteException {
+    public void remover(Entretenimento ent) throws CadastroInexistenteException {
+        if (dao.buscarEntreterimento(ent.getNome()) != null) {
+            dao.removerAtomico(ent);
+        }
     }
 }

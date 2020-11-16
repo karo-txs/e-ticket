@@ -369,6 +369,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         
         lblNomeFilme.setText(this.sessao.getEntretenimento().getNome());
         lblNomeSala.setText(this.sessao.getSala().getNome());
+        lblNomeSessao1.setText(this.sessao.getNome());
         lblAssento.setText(this.sessao.getNome());
         lblHoraMin.setText(df.format(this.sessao.getDataInicial().getTime()));
         lblDataCompleta.setText(dfDia.format(this.sessao.getDataInicial().getTime()));

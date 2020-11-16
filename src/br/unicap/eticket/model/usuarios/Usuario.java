@@ -1,7 +1,7 @@
 package br.unicap.eticket.model.usuarios;
 
-import br.unicap.eticket.controller.usuarios.UsuarioController;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
+import br.unicap.eticket.controller.usuarios.UsuarioController;
 import br.unicap.eticket.dao.UsuarioDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;

@@ -18,15 +18,13 @@ public class ClockSessao {
                 public void run() {
                     SessaoController sc = new SessaoController();
                     List<Sessao> sessoes = sc.sessoesPassadas(getDateTimeC());
-                    for (Sessao s : sessoes) {
-                        if (s.isAtiva()) {
-                            try {
-                                s.desativarSessao();
-                            } catch (CadastroInexistenteException ex) {
-                                Logger.getLogger(ClockSessao.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                    sessoes.stream().filter((s) -> (s.isAtiva())).forEachOrdered((s) -> {
+                        try {
+                            s.desativarSessao();
+                        } catch (CadastroInexistenteException ex) {
+                            Logger.getLogger(ClockSessao.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    }
+                    });
                 }
             }.start();
         });

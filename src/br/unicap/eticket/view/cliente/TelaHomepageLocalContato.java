@@ -366,7 +366,7 @@ public class TelaHomepageLocalContato extends javax.swing.JPanel {
         fldEmailLocal.setText(local.getEmail());
         fldEmailAdm.setText(local.getAdmin().getEmail());
         fldFacebook.setText(local.getRedeSocial_facebook());
-        fldInstagram.setText(local.getRedeSocial_instragam());
+        fldInstagram.setText(local.getRedeSocial_instagram());
     }
 
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked

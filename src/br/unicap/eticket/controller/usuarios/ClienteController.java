@@ -2,9 +2,12 @@ package br.unicap.eticket.controller.usuarios;
 
 import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
+import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.dao.ClienteDAO;
+import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
+import br.unicap.eticket.excecoes.DadosFinanceirosInvalidosException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.excecoes.SenhaInvalidaException;
@@ -17,6 +20,7 @@ import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.model.usuarios.TierCliente;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +31,7 @@ public class ClienteController extends UsuarioController implements BaseControl<
     public ClienteController() {
         this.dao = new ClienteDAO();
     }
-    
+
     /**
      * Cadastro de um Cliente
      *
@@ -67,6 +71,7 @@ public class ClienteController extends UsuarioController implements BaseControl<
         } else {
             throw new DadosInvalidosException("Email");
         }
+
         if (ValidaDados.validaSenha(senha)) {
             c.setSenha(senha);
         } else {
@@ -100,15 +105,16 @@ public class ClienteController extends UsuarioController implements BaseControl<
      * @throws br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException
      */
     @Override
-    public void atualizar(Cliente novo) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
+    public void atualizar(Cliente novo) throws CadastroInexistenteException, AtualizacaoMalSucedidaException, DadosInvalidosException {
 
         Cliente busca = this.buscar(novo);
-        if (novo.getNome() != null && !novo.getNome().equals("") && !novo.getNome().equals(busca.getNome())) {
-            if (ValidaDados.validaNome(novo.getNome())) {
-                busca.setNome(novo.getNome());
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Nome"));
-            }
+
+        if (ValidaDados.validaNome(novo.getNome())) {
+            busca.setNome(novo.getNome());
+        }
+
+        if (ValidaDados.validaIdade(String.valueOf(novo.getIdade()))) {
+            busca.setIdade(novo.getIdade());
         }
 
         if (novo.getNickName() != null && !novo.getNickName().equals("") && !novo.getNome().equals(busca.getNome())) {
@@ -119,29 +125,14 @@ public class ClienteController extends UsuarioController implements BaseControl<
             }
         }
 
-        if (novo.getIdade() != 0 && novo.getIdade() != busca.getIdade()) {
-            if (ValidaDados.validaQuantidade(String.valueOf(novo.getIdade()))) {
-                busca.setIdade(novo.getIdade());
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Idade"));
-            }
+        if (ValidaDados.validaTelefone(novo.getTelefone())) {
+            busca.setTelefone(novo.getTelefone());
         }
 
-        if (novo.getTelefone() != null && !novo.getTelefone().equals("") && !novo.getTelefone().equals(busca.getTelefone())) {
-            System.out.println(novo.getTelefone());
-            if (ValidaDados.validaTelefone(novo.getTelefone())) {
-                busca.setTelefone(novo.getTelefone());
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Telefone"));
-            }
+        if (ValidaDados.validaCpf(novo.getCpf())) {
+            busca.setCpf(novo.getCpf());
         }
-        if (novo.getCpf() != null && !novo.getCpf().equals("") && !busca.getCpf().equals(novo.getCpf())) {
-            if (ValidaDados.validaCpf(novo.getCpf())) {
-                busca.setCpf(novo.getCpf());
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Cpf"));
-            }
-        }
+
         Endereco end = novo.getEndereco();
         if (end.getCep().equals("") || end.getUf().equals("") || end.getCidade().equals("") || end.getBairro().equals("")
                 || end.getLogradouro().equals("") || end.getNum().equals("")) {
@@ -155,10 +146,12 @@ public class ClienteController extends UsuarioController implements BaseControl<
             }
         }
 
-        if (novo.getSenha() != null && !novo.getSenha().equals("") && !busca.getSenha().equals(novo.getSenha())) {
+        if (novo.getSenha() != null && !novo.getSenha().equals("")) {
             try {
                 if (ValidaDados.validaSenha(novo.getSenha())) {
-                    busca.setSenha(novo.getSenha());
+                    if (!busca.getSenha().equals(novo.getSenha())) {
+                        busca.setSenha(novo.getSenha());
+                    }
                 }
             } catch (SenhaInvalidaException ex) {
                 throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Senha"));
@@ -166,6 +159,7 @@ public class ClienteController extends UsuarioController implements BaseControl<
                 Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
         dao.atualizarAtomico(busca);
     }
 
@@ -181,6 +175,13 @@ public class ClienteController extends UsuarioController implements BaseControl<
         dao.removerAtomico(busca);
     }
 
+    /**
+     * Retorna o caminho do tier de um cliente
+     * 
+     * @param cliente
+     * @param local
+     * @return
+     */
     public String retornaImagemTier(Cliente cliente, LocalGenerico local) {
         String caminho = null;
         if (cliente.isEspecial()) {
@@ -192,8 +193,17 @@ public class ClienteController extends UsuarioController implements BaseControl<
         return caminho;
     }
 
+    /**
+     * Paga reserva, retornando o valor pago
+     * 
+     * @param cliente
+     * @param reserva
+     * @return
+     * @throws CadastroInexistenteException
+     * @throws SubiuDeTierException
+     */
     public double pagaReserva(Cliente cliente, Reserva reserva) throws CadastroInexistenteException, SubiuDeTierException {
-       
+
         double val;
         if (cliente.isEspecial()) {
             ClienteEspecial clienteE = (ClienteEspecial) cliente;
@@ -215,6 +225,7 @@ public class ClienteController extends UsuarioController implements BaseControl<
         }
         return val;
     }
+
     /**
      * Atualiza a chave de identificação secundária (sendo a primaria o ID, que
      * é identificado diretamente pelo BD)
@@ -231,11 +242,63 @@ public class ClienteController extends UsuarioController implements BaseControl<
             busca.atualizarEmail(email);
         }
     }
-    
-    public Reserva fazerReserva(Cliente cliente, Sessao sessao, String numCadeira) throws CadastroInexistenteException, DadosInvalidosException, DadosRepetidosException{
-        return cliente.fazerReserva(sessao, numCadeira);
+
+    /**
+     * Faz a reserva de um assento
+     * 
+     * @param cliente
+     * @param sessao
+     * @param numCadeira
+     * @return
+     * @throws CadastroInexistenteException
+     * @throws DadosInvalidosException
+     * @throws DadosRepetidosException
+     */
+    public Reserva fazerReserva(Cliente cliente, Sessao sessao, String numCadeira) throws CadastroInexistenteException, DadosInvalidosException, DadosRepetidosException {
+        ReservaDAO reservaC = new ReservaDAO();
+        ClienteDAO dao = new ClienteDAO();
+        SessaoController sc = new SessaoController();
+        Sessao buscaS = sessao.getId() == null ? sc.buscar(sessao) : sessao;
+
+        Reserva busca = reservaC.buscarReserva(new Reserva(buscaS, numCadeira));
+        Cliente c = cliente.getId() == null ? dao.buscarCliente(cliente) : cliente;
+        if (busca == null) {
+            return c.fazerReserva(sessao, numCadeira);
+        } else {
+            throw new DadosRepetidosException("Reserva");
+        }
     }
+
+    /**
+     * Cancela a reserva de um assento
+     * 
+     * @param cliente
+     * @param rFeita
+     * @throws CadastroInexistenteException
+     */
     public void cancelarReserva(Cliente cliente, Reserva rFeita) throws CadastroInexistenteException {
         cliente.cancelarReserva(rFeita);
+    }
+    
+    /**
+     * Preenchimento dos dados financeiros, com validação previa
+     * 
+     * @param cliente
+     * @param numero
+     * @param nomeNoCartao
+     * @param dataExpiracao
+     * @param codigoSeguranca
+     * @throws DadosFinanceirosInvalidosException
+     */
+    public void preencherDadosFinanceiros(Cliente cliente, String numero, String nomeNoCartao, Calendar dataExpiracao, int codigoSeguranca) throws DadosFinanceirosInvalidosException{
+        ClienteController clienteC = new ClienteController();
+        String validade = ValidaDados.validaDadosFinanceirosCredito(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
+
+        if (validade.equals("VALIDO")) {
+            Cliente busca = clienteC.buscar(cliente);
+            busca.preencherDadosFinanceiros(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
+        } else {
+            throw new DadosFinanceirosInvalidosException(validade);
+        }
     }
 }

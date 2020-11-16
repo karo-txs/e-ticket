@@ -6,7 +6,6 @@ import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosFinanceirosInvalidosException;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.usuarios.Cliente;
-import br.unicap.eticket.model.usuarios.ClienteEspecial;
 import br.unicap.eticket.model.usuarios.financeiro.DadosFinanceirosCliente;
 import java.awt.Color;
 import java.util.Calendar;
@@ -209,7 +208,6 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
             double total;
             if (cliente.isEspecial()) {
                 ReservaController rv = new ReservaController();
-                ClienteEspecial clienteE = (ClienteEspecial) cliente;
                 double[] ingresso = rv.mostrarIngresso(cliente, reserva);
                 total = ingresso[0];
                 //double desconto = this.reserva.getValorIngresso() * clienteE.getDesconto(this.reserva.getSessao().getLocal());
@@ -251,7 +249,7 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
                 data.set(Calendar.YEAR, Integer.parseInt(jcbAno.getSelectedItem().toString()));
                 data.set(Calendar.MONTH, jcbMes.getSelectedIndex() - 1);
                 try {
-                    cliente.preencherDadosFinanceiros(fldNumeroCartao.getText(), fldNomeNoCartao.getText(),
+                    clienteC.preencherDadosFinanceiros(cliente,fldNumeroCartao.getText(), fldNomeNoCartao.getText(),
                             data, Integer.parseInt(fldCod.getText()));
                     cliente = clienteC.buscar(cliente);
                 } catch (DadosFinanceirosInvalidosException | CadastroInexistenteException ex) {

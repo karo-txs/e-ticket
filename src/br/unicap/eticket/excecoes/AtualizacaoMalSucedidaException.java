@@ -1,5 +1,5 @@
 package br.unicap.eticket.excecoes;
-public class AtualizacaoMalSucedidaException extends Exception{
+public class AtualizacaoMalSucedidaException extends RuntimeException{
 
     public AtualizacaoMalSucedidaException(String message) {
         super(message+" não Atualizado(a)!");

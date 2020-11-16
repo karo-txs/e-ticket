@@ -65,19 +65,16 @@ public class FrameInicio extends JFrame {
             java.util.logging.Logger.getLogger(FrameInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frame = new FrameInicio();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-                frame.requestFocus();
-
-                ClienteController clienteC = new ClienteController();
-
-                frame.setContentPane(new TelaInicio());
-                frame.revalidate();
-
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frame = new FrameInicio();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.requestFocus();
+            
+            ClienteController clienteC = new ClienteController();
+            
+            frame.setContentPane(new TelaInicio());
+            frame.revalidate();
         });
     }
 

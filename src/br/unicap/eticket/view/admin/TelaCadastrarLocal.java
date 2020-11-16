@@ -2,6 +2,7 @@ package br.unicap.eticket.view.admin;
 
 import br.unicap.eticket.controller.usuarios.AdminController;
 import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -259,6 +260,8 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
 
     private void jbtEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseClicked
         AdminController admC = new AdminController();
+        LocalController localC = new LocalController();
+        
         Endereco end = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(),
                 fldBairro.getText(), fldRua.getText(), fldNum.getText(), fldComplemento.getText());
         try {
@@ -266,7 +269,7 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
             
             Admin cadastrado = admC.buscar(adm);
             if (captura.getImagemSelecionada() != null) {
-                cadastrado.getLocalAdministrado().inserirCapaESalvar(captura.getImagemSelecionada());
+                localC.inserirCapa(cadastrado.getLocalAdministrado(), captura.getImagemSelecionada());
             }
             JDialogsControl.mostrarPopUp("Admin e local Cadastrados", false);
             FrameInicio.getFrame().setContentPane(new TelaInicio());

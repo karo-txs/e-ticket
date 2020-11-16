@@ -1,5 +1,6 @@
 package br.unicap.eticket.controller.localAuxiliares;
 
+import br.unicap.eticket.controller.auxiliares.ValidaDados;
 import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.interfaces.Formatador;
 import br.unicap.eticket.controller.locais.LocalController;
@@ -20,6 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao> {
 
@@ -38,17 +42,30 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
      */
     @Override
     public void cadastrar(Sessao sessao) throws DadosRepetidosException, CadastroInexistenteException {
+        ExecutorService es = Executors.newCachedThreadPool();
         LocalController localC = new LocalController();
-        LocalGenerico buscaLocal = sessao.getLocal().getId() == null ? localC.buscar(sessao.getLocal()) : sessao.getLocal();
 
-        String nomeSessao = buscaLocal.getId() + "-" + sessao.getSala().getNome() + ":" + sessao.getNome();
-        if (dao.buscarSessao(nomeSessao) == null && dao.buscarSessao(sessao.getSala(),
-                sessao.getDataInicial(), sessao.getDataFinal()) == null) {
-            sessao.setNome(nomeSessao);
-            dao.incluirAtomico(sessao);
-        } else {
-            throw new DadosRepetidosException("Sessão");
+        String nomeSessao;
+        LocalGenerico buscaLocal;
+        Sessao buscaS1, buscaS2;
+
+        try {
+            buscaLocal = es.submit(() -> sessao.getLocal().getId() == null ? localC.buscar(sessao.getLocal()) : sessao.getLocal()).get();
+            nomeSessao = buscaLocal.getId() + "-" + sessao.getSala().getNome() + ":" + sessao.getNome();
+            buscaS1 = es.submit(() -> dao.buscarSessao(nomeSessao)).get();
+            buscaS2 = es.submit(() -> dao.buscarSessao(sessao.getSala(),
+                    sessao.getDataInicial(), sessao.getDataFinal())).get();
+
+            if (buscaS1 == null && buscaS2 == null) {
+                sessao.setNome(nomeSessao);
+                dao.incluirAtomico(sessao);
+            } else {
+                throw new DadosRepetidosException("Sessão");
+            }
+
+        } catch (InterruptedException | ExecutionException ex) {
         }
+
     }
 
     /**
@@ -63,15 +80,19 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
      * @throws CadastroInexistenteException
      */
     public void cadastrar(LocalGenerico local, Sala sala, String nome, Calendar dataInicial, Entretenimento entreterimento) throws DadosRepetidosException, CadastroInexistenteException {
+        ExecutorService es = Executors.newCachedThreadPool();
         LocalController localC = new LocalController();
         SalaController salaC = new SalaController();
         EntretenimentoController entC = new EntretenimentoController();
-        //Lançam cadastro inexistente caso o resutado da busca seja null
-        LocalGenerico buscaLocal = local.getId() == null ? localC.buscar(local) : local;
-        Sala buscaSala = sala.getId() != null ? sala : salaC.buscar(sala);
-        Entretenimento buscaEnt = entreterimento.getId() == null ? entC.buscar(entreterimento) : entreterimento;
 
-        this.cadastrar(new Sessao(buscaLocal, buscaSala, nome, dataInicial, buscaEnt));
+        try {
+            LocalGenerico buscaLocal = es.submit(() -> local.getId() == null ? localC.buscar(local) : local).get();
+            Sala buscaSala = es.submit(() -> sala.getId() != null ? sala : salaC.buscar(sala)).get();
+            Entretenimento buscaEnt = es.submit(() -> entreterimento.getId() == null ? entC.buscar(entreterimento) : entreterimento).get();
+            this.cadastrar(new Sessao(buscaLocal, buscaSala, nome, dataInicial, buscaEnt));
+        } catch (InterruptedException | ExecutionException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**
@@ -147,26 +168,35 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
      * @throws CadastroInexistenteException
      */
     public List<Sessao> sessoesPorEntELocal(Entretenimento ent, LocalGenerico local) throws CadastroInexistenteException {
+        ExecutorService es = Executors.newCachedThreadPool();
         EntretenimentoDAO entD = new EntretenimentoDAO();
         LocalDAO localD = new LocalDAO();
+        LocalGenerico busca = null;
+        Entretenimento buscaEnt = null;
 
-        LocalGenerico busca = local.getId() == null ? localD.buscarLocal(local) : local;
-        Entretenimento buscaEnt = ent.getId() == null ? entD.buscarEntreterimento(ent.getNome()) : ent;
+        try {
+            busca = es.submit(() -> local.getId() == null ? localD.buscarLocal(local) : local).get();
+            buscaEnt = es.submit(() -> ent.getId() == null ? entD.buscarEntreterimento(ent.getNome()) : ent).get();
+
+        } catch (InterruptedException | ExecutionException ex) {
+            System.out.println(ex.getMessage());
+        }
 
         SessaoDAO sessaoD = new SessaoDAO();
+        List<Sessao> ativas = new ArrayList<>();
+        if (busca != null && buscaEnt != null) {
+            List<Sessao> sessoes = sessaoD.consultar("sessoesPorEntreterimentoELocal", "entreterimento", buscaEnt, "id", busca.getId());
+            if (!sessoes.isEmpty()) {
 
-        List<Sessao> sessoes = sessaoD.consultar("sessoesPorEntreterimentoELocal", "entreterimento", buscaEnt, "id", busca.getId());
-        if (!sessoes.isEmpty()) {
-            List<Sessao> ativas = new ArrayList<>();
-            for (Sessao s : sessoes) {
-                if (s.isAtiva()) {
+                sessoes.stream().filter((s) -> (s.isAtiva())).forEachOrdered((s) -> {
                     ativas.add(s);
-                }
+                });
+                return ativas;
+            } else {
+                throw new CadastroInexistenteException("Sessao");
             }
-            return ativas;
-        } else {
-            throw new CadastroInexistenteException("Sessao");
         }
+        return ativas;
     }
 
     /**
@@ -187,11 +217,9 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
 
         List<Sessao> sessoes = dao.sessoesPorData(local, dataInicial, dataFinal);
         List<Sessao> result = new ArrayList<>();
-        for (Sessao s : sessoes) {
-            if (s.getEntretenimento().getNome().equalsIgnoreCase(ent.getNome()) && s.isAtiva()) {
-                result.add(s);
-            }
-        }
+        sessoes.stream().filter((s) -> (s.getEntretenimento().getNome().equalsIgnoreCase(ent.getNome()) && s.isAtiva())).forEachOrdered((s) -> {
+            result.add(s);
+        });
         return result;
     }
 
@@ -233,10 +261,9 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
     public void atualizar(Sessao nova) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
         SalaController salaC = new SalaController();
         EntretenimentoController entC = new EntretenimentoController();
-
         Sessao busca = this.buscar(nova);
-
         Sala salaAntiga = busca.getSala();
+
         try {
             Sala novaSala = salaC.buscar(nova.getSala());
             if (!busca.getSala().equals(novaSala)) {
@@ -255,7 +282,7 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
                 throw new AtualizacaoMalSucedidaException("Entreterimento");
             }
         }
-        //verificar
+
         if (!busca.getDataInicial().equals(nova.getDataInicial())) {
             Sessao buscaSessaoPorData = dao.buscarSessao(salaAntiga, nova.getDataInicial(), nova.getDataFinal());
             if (buscaSessaoPorData == null) {
@@ -265,6 +292,7 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
                 throw new AtualizacaoMalSucedidaException("Data");
             }
         }
+
         dao.atualizarAtomico(busca);
     }
 
@@ -279,7 +307,10 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
      */
     public void atualizarChave(Sessao sessao, Object chave) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
         Sessao busca = sessao.getId() == null ? this.buscar(sessao) : sessao;
-        busca.atualizarNome((String) chave);
+        String nomeNovo = (String) chave;
+        if (ValidaDados.validaNome(nomeNovo)) {
+            busca.atualizarNome((String) chave);
+        }
     }
 
     /**
@@ -297,9 +328,9 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
         List<Reserva> reservas = reservaD.consultar("reservasDaSessao", "sessao", busca);
 
         if (!reservas.isEmpty()) {
-            for (Reserva r : reservas) {
+            reservas.forEach((r) -> {
                 reservaD.removerAtomico(r);
-            }
+            });
         }
 
         dao.removerDetached(busca);
@@ -307,21 +338,21 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
     }
 
     /**
-     * Transforma uma lista de sessoes em um vetor String com seus respectivos dados
+     * Transforma uma lista de sessoes em um vetor String com seus respectivos
+     * dados
+     *
      * @param sessoes
      * @return String[]
      */
     @Override
     public String[] formataDados(List<Sessao> sessoes) {
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        String[] dadosFormatados = null;
+        String[] dadosFormatados;
         dadosFormatados = new String[sessoes.size()];
 
         int i = 0;
         for (Sessao s : sessoes) {
             if (s.isAtiva()) {
-                dadosFormatados[i] = s.getSala().getTipoSala().toString() + " | " + s.getSala().getNome() + " | "
-                        + df.format(s.getDataInicial().getTime());
+                dadosFormatados[i] = s.toString();
             }
             i++;
         }
@@ -329,13 +360,15 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
     }
 
     /**
-     * Transforma uma lista de sessoes em um vetor String com seus respectivos dados abreviados
+     * Transforma uma lista de sessoes em um vetor String com seus respectivos
+     * dados abreviados
+     *
      * @param sessoes
      * @return String[]
      */
     public String[] formataDadosAbreviados(List<Sessao> sessoes) {
         DateFormat df = new SimpleDateFormat("HH:mm");
-        String[] dadosFormatados = null;
+        String[] dadosFormatados;
         dadosFormatados = new String[sessoes.size()];
 
         int i = 0;
@@ -351,6 +384,7 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
 
     /**
      * Retorna a lista de IDs de uma lista de sessoes
+     *
      * @param sessoes
      * @return Long[]
      */
@@ -366,10 +400,10 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
         }
         return idSessoes;
     }
-    
-     public Sessao[] converterListEmArray(List<Sessao> sessoes){
+
+    public Sessao[] converterListEmArray(List<Sessao> sessoes) {
         Sessao[] dados = new Sessao[sessoes.size()];
-         int i = 0;
+        int i = 0;
         for (Sessao s : sessoes) {
             dados[i] = s;
             i++;

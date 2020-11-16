@@ -71,7 +71,7 @@ public class VetorLocais implements ActionListener {
     }
 
     public void mostrarLocais(JLabel lblLocalMsg, JScrollPane jpnScroll, JPanel jpnScrollInterno, Cliente cliente) {
-        if (this.vetorLocais.length==0) {
+        if (this.vetorLocais == null || this.vetorLocais.length==0) {
             lblLocalMsg.setVisible(true);
             jpnScroll.setVisible(false);
         } else {

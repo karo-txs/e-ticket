@@ -68,6 +68,16 @@ public class Conversor{
         return endereco;
     }
     
+    /**
+     * Converte para calendar
+     * 
+     * @param ano
+     * @param mes
+     * @param dia
+     * @param hora
+     * @param min
+     * @return
+     */
     public static Calendar converterParaData(int ano, int mes, int dia, int hora, int min){
         
         Calendar dataInicial = Calendar.getInstance();
@@ -82,6 +92,12 @@ public class Conversor{
         return dataInicial;
     }
     
+    /**
+     * Converte String em calendar
+     * 
+     * @param data
+     * @return
+     */
     public static Calendar converterParaData(String data){
         String[] dataVector = data.split(" ");
         String dia = dataVector[1] + "/" + Calendar.getInstance().get(Calendar.YEAR);

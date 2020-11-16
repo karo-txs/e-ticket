@@ -17,14 +17,18 @@ import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locais.Teatro;
 import br.unicap.eticket.model.locaisAuxiliares.TiposDeSala;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SalaController implements BaseControl<Sala> {
 
     private SalaDAO dao;
 
-    public SalaController(){
+    public SalaController() {
         this.dao = new SalaDAO();
     }
+
     /**
      * Cadastro de uma Sala
      *
@@ -34,18 +38,28 @@ public class SalaController implements BaseControl<Sala> {
      */
     @Override
     public void cadastrar(Sala sala) throws DadosRepetidosException, CadastroInexistenteException {
+        ExecutorService es = Executors.newCachedThreadPool();
         LocalController localC = new LocalController();
-        LocalGenerico local = sala.getLocal();
-        String nomeSala = local.getId() + "-" + sala.getNome();
-        if (dao.buscarSala(nomeSala) == null) {
-            Sala s = new Sala(sala.getLocal(), sala.getTipoSala(), nomeSala, sala.getFileirasX(), sala.getFileirasY(),
-                    sala.getValorIngresso());
-            dao.incluirAtomico(s);
-            if (local instanceof Teatro || local instanceof Auditorio) {
-                localC.cadastrarSalaUnica(local, s);
+        LocalGenerico local;
+        Sala buscaSala;
+        String nomeSala;
+
+        try {
+            local = es.submit(() -> sala.getLocal().getId() == null ? localC.buscar(sala.getLocal()) : sala.getLocal()).get();
+            nomeSala = local.getId() + "-" + sala.getNome();
+            buscaSala = es.submit(() -> dao.buscarSala(nomeSala)).get();
+            if (buscaSala == null) {
+                Sala s = new Sala(sala.getLocal(), sala.getTipoSala(), nomeSala, sala.getFileirasX(), sala.getFileirasY(),
+                        sala.getValorIngresso());
+                dao.incluirAtomico(s);
+                if (local instanceof Teatro || local instanceof Auditorio) {
+                    localC.cadastrarSalaUnica(local, s);
+                }
+            } else {
+                throw new DadosRepetidosException("Sala");
             }
-        } else {
-            throw new DadosRepetidosException("Sala");
+
+        } catch (InterruptedException | ExecutionException ex) {
         }
     }
 
@@ -93,11 +107,9 @@ public class SalaController implements BaseControl<Sala> {
     @Override
     public Sala buscar(Sala sala) throws CadastroInexistenteException {
         LocalDAO localD = new LocalDAO();
-        if (!sala.getNome().contains("-")) {
-            return this.buscar(localD.buscarLocal(sala.getLocal()).getId() + "-" + sala.getNome());
-        } else {
-            return this.buscar(sala.getNome());
-        }
+
+        return !sala.getNome().contains("-") ? this.buscar(localD.buscarLocal(sala.getLocal()).getId() + "-" + sala.getNome())
+                : this.buscar(sala.getNome());
     }
 
     /**
@@ -147,54 +159,39 @@ public class SalaController implements BaseControl<Sala> {
      */
     @Override
     public void atualizar(Sala nova) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
-        boolean assentosMudaram = false;
+
         Sala busca = this.buscar(nova);
 
-        if (nova.getFileirasX() != 0) {
-            if (ValidaDados.validaQuantidade(String.valueOf(nova.getFileirasX()))) {
-                if (busca.getFileirasX() != nova.getFileirasX()) {
-                    busca.setFileirasX(nova.getFileirasX());
-                    assentosMudaram = true;
-                }
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Fileiras X"));
-            }
-        }
+        boolean assentosMudaram = false;
 
-        if (nova.getFileirasY() != 0) {
-            if (ValidaDados.validaQuantidade(String.valueOf(nova.getFileirasX()))) {
-                if (busca.getFileirasY() != nova.getFileirasY()) {
-                    busca.setFileirasY(nova.getFileirasY());
-                    assentosMudaram = true;
-                }
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Fileiras Y"));
-            }
+        if (ValidaDados.validaQuantidade(String.valueOf(nova.getFileirasX()))) {
+            busca.setFileirasX(nova.getFileirasX());
+            assentosMudaram = true;
         }
-
+        if (ValidaDados.validaQuantidade(String.valueOf(nova.getFileirasY()))) {
+            busca.setFileirasY(nova.getFileirasY());
+            assentosMudaram = true;
+        }
         if (assentosMudaram) {
             busca.setCapacidade(busca.getFileirasX() * busca.getFileirasY());
             busca.initAssentos(busca.getFileirasX(), busca.getFileirasY(), busca.getCapacidade());
+
         }
 
         if (!busca.getTipoSala().equals(nova.getTipoSala())) {
             busca.setTipoSala(nova.getTipoSala());
         }
 
-        if (nova.getValorIngresso() != 0) {
-            if (ValidaDados.validaValor(String.valueOf(nova.getValorIngresso()))) {
-                if (busca.getValorIngresso() != nova.getValorIngresso()) {
-                    busca.setValorIngresso(nova.getValorIngresso());
-                }
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Valor do Ingresso"));
-            }
+        if (ValidaDados.validaValor(String.valueOf(nova.getFileirasX()))) {
+            busca.setValorIngresso(nova.getValorIngresso());
         }
 
         dao.atualizarAtomico(busca);
     }
 
     /**
+     * Atualiza a chave de identificação secundária (sendo a primaria o ID, que
+     * é identificado diretamente pelo BD)
      *
      * @param sala
      * @param chave
@@ -202,9 +199,10 @@ public class SalaController implements BaseControl<Sala> {
      */
     public void atualizarChave(Sala sala, Object chave) throws CadastroInexistenteException {
         String nomeNovo = (String) chave;
-
-        if (!nomeNovo.equalsIgnoreCase(sala.getNome())) {
-            sala.alterarNome(nomeNovo);
+        if (ValidaDados.validaNome(nomeNovo)) {
+            if (!nomeNovo.equalsIgnoreCase(sala.getNome())) {
+                sala.alterarNome(nomeNovo);
+            }
         }
     }
 
@@ -225,9 +223,9 @@ public class SalaController implements BaseControl<Sala> {
         List<Sessao> sessoes = sessaoD.consultar("sessoesDaSala", "sala", busca);
 
         if (!sessoes.isEmpty()) {
-            for (Sessao s : sessoes) {
+            sessoes.forEach((s) -> {
                 sessaoC.remover(s);
-            }
+            });
         }
 
         dao.removerDetached(busca);

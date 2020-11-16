@@ -1,13 +1,10 @@
 package br.unicap.eticket.model.usuarios;
 
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
+import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.dao.ClienteDAO;
-import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
-import br.unicap.eticket.excecoes.DadosFinanceirosInvalidosException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.locaisAuxiliares.Assento;
@@ -48,7 +45,7 @@ public class Cliente extends Usuario {
     private List<Reserva> reservas;
 
     @Embedded
-    private DadosFinanceirosCliente dadosFinanceiros = new DadosFinanceirosCliente();;
+    private DadosFinanceirosCliente dadosFinanceiros = new DadosFinanceirosCliente();
 
     public Cliente() {
     }
@@ -96,29 +93,20 @@ public class Cliente extends Usuario {
     }
 
     /**
-     * Preenche os dados financeiros deo cliente e salva
+     * Preenche os dados financeiros do cliente e salva
      *
      * @param numero
      * @param nomeNoCartao
      * @param dataExpiracao
      * @param codigoSeguranca
-     * @throws DadosFinanceirosInvalidosException
      * @throws CadastroInexistenteException
      */
-    public void preencherDadosFinanceiros(String numero, String nomeNoCartao, Calendar dataExpiracao, int codigoSeguranca) throws DadosFinanceirosInvalidosException, CadastroInexistenteException {
-        ClienteController clienteC = new ClienteController();
+    public void preencherDadosFinanceiros(String numero, String nomeNoCartao, Calendar dataExpiracao, int codigoSeguranca) {
         ClienteDAO clienteD = new ClienteDAO();
-        String validade = ValidaDados.validaDadosFinanceirosCredito(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
-
-        if (validade.equals("VALIDO")) {
-            clienteD.abrirTransacao();
-            Cliente busca = clienteC.buscar(this);
-            busca.dadosFinanceiros.cadastrarCartao(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
-            clienteD.atualizar(busca);
-            clienteD.fecharTransacao();
-        } else {
-            throw new DadosFinanceirosInvalidosException(validade);
-        }
+        clienteD.abrirTransacao();
+        this.dadosFinanceiros.cadastrarCartao(numero, nomeNoCartao, dataExpiracao, codigoSeguranca);
+        clienteD.atualizar(this);
+        clienteD.fecharTransacao();
     }
 
     /**
@@ -205,26 +193,15 @@ public class Cliente extends Usuario {
      * @throws DadosInvalidosException
      */
     public Reserva fazerReserva(Sessao sessao, String numCadeira) throws CadastroInexistenteException, DadosRepetidosException, DadosInvalidosException {
-        ReservaDAO reservaC = new ReservaDAO();
         ClienteDAO dao = new ClienteDAO();
-        SessaoController sc = new SessaoController();
-        Sessao buscaS = sessao.getId() == null ? sc.buscar(sessao) : sessao;
-
-        Reserva busca = reservaC.buscarReserva(new Reserva(buscaS, numCadeira));
-        Cliente c = this.getId() == null ? dao.buscarCliente(this) : this;
-        if (busca == null) {
-            Sala sala = sessao.getSala();
-
-            Reserva reservaFeita = sala.reservarAssento(numCadeira, sessao, c);
-            if (reservaFeita != null) {
-                c.reservas.add(reservaFeita);
-                dao.atualizarAtomico(c);
-                return reservaFeita;
-            } else {
-                throw new DadosInvalidosException("Reserva");
-            }
+        Sala sala = sessao.getSala();
+        Reserva reservaFeita = sala.reservarAssento(numCadeira, sessao, this);
+        if (reservaFeita != null) {
+            this.reservas.add(reservaFeita);
+            dao.atualizarAtomico(this);
+            return reservaFeita;
         } else {
-            throw new DadosRepetidosException("Reserva");
+            throw new DadosInvalidosException("Reserva");
         }
     }
 

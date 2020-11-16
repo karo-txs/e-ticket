@@ -173,16 +173,6 @@ public abstract class LocalGenerico implements Serializable, Cloneable {
         this.setBanner(Conversor.converterImagemEmByte(urlCapa));
     }
 
-//    public void atualizarSobre(String sobre) throws CadastroInexistenteException {
-//        LocalDAO localD = new LocalDAO();
-//        LocalController localC = new LocalController();
-//
-//        LocalGenerico busca = this.getId() == null ? localC.buscar(this) : this;
-//
-//        busca.setSobre(sobre);
-//        localD.atualizarAtomico(busca);
-//    }
-
     public abstract void inserirCapaESalvar(String urlCapa);
 
     public abstract void inserirBannerESalvar(String urlCapa);
@@ -270,7 +260,7 @@ public abstract class LocalGenerico implements Serializable, Cloneable {
         this.redeSocial_facebook = redeSocial_facebook;
     }
 
-    public String getRedeSocial_instragam() {
+    public String getRedeSocial_instagram() {
         return redeSocial_instragam;
     }
 

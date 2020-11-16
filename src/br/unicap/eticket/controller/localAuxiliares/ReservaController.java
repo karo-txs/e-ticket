@@ -15,9 +15,10 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
 
     private ReservaDAO dao;
 
-    public ReservaController(){
+    public ReservaController() {
         this.dao = new ReservaDAO();
     }
+
     /**
      * Cadastro de uma Reserva
      *
@@ -26,6 +27,10 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
      */
     @Override
     public void cadastrar(Reserva reserva) throws DadosRepetidosException {
+        SessaoController sessaoC = new SessaoController();
+        Sessao busca = reserva.getSessao().getId() == null ? sessaoC.buscar(reserva.getSessao()) : reserva.getSessao();
+        reserva.setSessao(busca);
+
         if (dao.buscarReserva(reserva) == null) {
             dao.incluirAtomico(reserva);
         } else {
@@ -42,11 +47,10 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
      */
     @Override
     public Reserva buscar(Reserva reserva) throws CadastroInexistenteException {
-
         SessaoController sessaoC = new SessaoController();
         Sessao buscaS = reserva.getId() == null ? sessaoC.buscar(reserva.getSessao()) : reserva.getSessao();
-
         Reserva busca = dao.buscarReserva(new Reserva(buscaS, reserva.getAssento()));
+
         if (busca != null) {
             return busca;
         } else {
@@ -73,11 +77,9 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
     @Override
     public void atualizar(Reserva reserva) throws CadastroInexistenteException {
         Reserva busca = this.buscar(reserva);
-        dao.abrirTransacao();
         busca.setAssento(reserva.getAssento());
         busca.setSessao(reserva.getSessao());
-        dao.atualizar(busca);
-        dao.fecharTransacao();
+        dao.atualizarAtomico(busca);
     }
 
     /**
@@ -92,47 +94,39 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
         dao.removerAtomico(busca);
     }
 
-    private double[] retornaIngresso(Cliente cliente, Reserva reserva) throws CadastroInexistenteException {
-        double[] ingresso = new double[2];
-        Reserva buscaR = reserva.getId() == null ? this.buscar(reserva) : reserva;
-        Sessao sessao = buscaR.getSessao();
-        if (cliente.isEspecial()) {
-            ClienteEspecial clienteE = (ClienteEspecial) cliente;
-            if (clienteE.getDesconto(sessao.getLocal()) != 0) {
-                ingresso[1] = clienteE.getDesconto(sessao.getLocal());
-                if (!sessao.isEventoAtivado()) {
-                    ingresso[0] = sessao.getSala().getValorIngresso() - (buscaR.getValorIngresso()
-                            * clienteE.getDesconto(sessao.getLocal()));
-                }
-            }
-        } else {
-            ingresso[0] = sessao.getValorIngresso();
-            ingresso[1] = 0;
-        }
-        return ingresso;
-    }
-
-    public double[] mostrarIngresso(Cliente cliente, Reserva r) {
+    /**
+     * Coloca os valores do ingresso em um vetor double
+     * 
+     * @param cliente
+     * @param reserva
+     * @return
+     */
+    public double[] mostrarIngresso(Cliente cliente, Reserva reserva) {
         double[] ingresso = new double[3];
-        ingresso[1] = r.getValorIngresso();
+        ingresso[1] = reserva.getValorIngresso();
 
-        Sessao sessao = r.getSessao();
+        Sessao sessao = reserva.getSessao();
         if (cliente.isEspecial()) {
             ClienteEspecial clienteE = (ClienteEspecial) cliente;
             if (clienteE.getDesconto(sessao.getLocal()) != 0) {
                 ingresso[1] = clienteE.getDesconto(sessao.getLocal());
                 if (!sessao.isEventoAtivado()) {
-                    ingresso[0] = sessao.getSala().getValorIngresso() - (r.getValorIngresso()
+                    ingresso[0] = sessao.getSala().getValorIngresso() - (reserva.getValorIngresso()
                             * clienteE.getDesconto(sessao.getLocal()));
                 }
             }
         } else {
-            ingresso[0] = r.getValorIngresso();
+            ingresso[0] = reserva.getValorIngresso();
             ingresso[2] = 0;
         }
         return ingresso;
     }
 
+    /**
+     * Transforma a lista de reservas em um vetor String com informações adicionais
+     * @param reservas
+     * @return
+     */
     @Override
     public String[] formataDados(List<Reserva> reservas) {
         String dados[];
@@ -152,7 +146,8 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
     }
 
     /**
-     *
+     * Lista os ids de uma determinada lista de reservas
+     * 
      * @param reservas
      * @return
      */

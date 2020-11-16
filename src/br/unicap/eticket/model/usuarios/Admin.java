@@ -1,8 +1,10 @@
 package br.unicap.eticket.model.usuarios;
 
+import br.unicap.eticket.dao.AdminDAO;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import java.util.Calendar;
+import br.unicap.eticket.model.usuarios.financeiro.DadosFinanceirosLocal;
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -16,10 +18,8 @@ public class Admin extends Usuario {
     @JoinColumn(unique = true)
     private LocalGenerico localAdministrado;
     
-     /*
     @Embedded
-    private DadosFinanceirosLocal dadosFinanceiros;
-    */
+    private DadosFinanceirosLocal dadosFinanceiros = new DadosFinanceirosLocal();
 
     public Admin() {
     }
@@ -37,12 +37,23 @@ public class Admin extends Usuario {
         super(nome, email, senha, idade, cpf, telefone);
         this.localAdministrado=localAdm;
     }
-    
-    //CUPOM
-    public void criarCupom(LocalGenerico local,String codigo, double valor, Calendar dataExpiracao){
-        //Cupom cupom = new Cupom(local,codigo,valor,dataExpiracao);
-        //adiciona cupom ao banco
+   
+    /**
+     * Preenche os dados financeiros do admin de um local
+     *
+     * @param titular
+     * @param numBanco
+     * @param numeracaoConta
+     * @param agencia
+     */
+    public void preencherDadosFinanceiros(String titular, String numBanco, String numeracaoConta, String agencia) {
+        AdminDAO admD = new AdminDAO();
+        admD.abrirTransacao();
+        this.dadosFinanceiros.cadastrarConta(titular, numBanco, numeracaoConta, agencia);
+        admD.atualizar(this);
+        admD.fecharTransacao();
     }
+
        
     public LocalGenerico getLocalAdministrado() {
         return localAdministrado;

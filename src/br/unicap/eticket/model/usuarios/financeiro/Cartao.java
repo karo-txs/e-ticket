@@ -6,7 +6,6 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 class Cartao implements Serializable {
-
     private String numero;
     private String nomeNoCartao;
     private Calendar dataExpiracao;

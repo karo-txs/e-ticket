@@ -2,6 +2,7 @@ package br.unicap.eticket.controller.auxiliares;
 
 import br.com.caelum.stella.ValidationMessage;
 import br.com.caelum.stella.validation.CPFValidator;
+import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.SenhaInvalidaException;
 import br.unicap.eticket.model.auxiliares.Endereco;
 import java.io.IOException;
@@ -18,21 +19,48 @@ public class ValidaDados {
      * @param nome
      * @return boolean
      */
-    public static boolean validaNome(String nome) {
-        return nome.replace(" ", "").matches("^[a-zA-Z]*$");
+    public static boolean validaNome(String nome) throws DadosInvalidosException {
+        if (!nome.equals("") && nome != null) {
+            if (nome.replace(" ", "").matches("^[a-zA-Z]*$")) {
+                return true;
+            } else {
+                throw new DadosInvalidosException("Nome");
+            }
+        }
+        return false;
     }
-    
+
     /**
-     * Valida um nickname conforme as regras (menor de 10 caracteres e não inicia com números)
+     * Validada se uma idade é válida (entre 0 e 120 anos)
+     * @param idade
+     * @return
+     */
+    public static boolean validaIdade(String idade) {
+        if (idade != null && !idade.equals("")) {
+            try {
+                int valor = Integer.parseInt(idade);
+                return valor >= 0 && valor <= 120;
+            } catch (NumberFormatException e) {
+                throw new DadosInvalidosException("Idade");
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Valida um nickname conforme as regras (menor de 10 caracteres e não
+     * inicia com números)
+     *
      * @param nick
      * @return boolean
      */
-    public static boolean validaNickName(String nick){
-        return nick.length()<=10 && !Character.isDigit(nick.charAt(0));
+    public static boolean validaNickName(String nick) {
+        return nick.length() <= 10 && !Character.isDigit(nick.charAt(0));
     }
-    
+
     /**
      * Valida dados financeiros de um cartao de credito
+     *
      * @param numero
      * @param nomeNoCartao
      * @param dataExpiracao
@@ -47,7 +75,7 @@ public class ValidaDados {
             if (!validaNome(nomeNoCartao)) {
                 dadoIncorreto = "NomeNoCartao";
             } else {
-                if (!validaNumero(String.valueOf(codigoSeguranca)) || String.valueOf(codigoSeguranca).length()!=3) {
+                if (!validaNumero(String.valueOf(codigoSeguranca)) || String.valueOf(codigoSeguranca).length() != 3) {
                     dadoIncorreto = "Codigo de Segurança";
                 }
             }
@@ -61,48 +89,67 @@ public class ValidaDados {
      * @param email
      * @return boolean
      */
-    public static boolean validaEmail(String email) {
-        boolean valido = false;
-        if (email != null && email.length() > 0) {
-            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if (matcher.matches()) {
-                valido = true;
+    public static boolean validaEmail(String email) throws DadosInvalidosException {
+        if (email != null && !email.equals("")) {
+            if (email.length() > 0) {
+                String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+                Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(email);
+                if (matcher.matches()) {
+                    return true;
+                }
+            } else {
+                throw new DadosInvalidosException("Email");
             }
         }
-        return valido;
+        return false;
     }
 
     /**
-     * Valida a estrutura de um site: 
-     * www.______.com.br
+     * Valida a estrutura de um site: www.______.com.br
+     *
      * @param site
      * @return
      */
-    public static boolean validaSite(String site){
+    public static boolean validaSite(String site) {
         return true;
     }
+
     /**
      * Validação de Telefones
      *
      * @param telefone
      * @return boolean
      */
-    public static boolean validaTelefone(String telefone) {
-        return telefone.matches("^\\d+$") && telefone.length()>=8 && telefone.length()<=11;
+    public static boolean validaTelefone(String telefone) throws DadosInvalidosException {
+        if (telefone != null && !telefone.equals("")) {
+            if (telefone.matches("^\\d+$") && telefone.length() >= 8 && telefone.length() <= 11) {
+                return true;
+            } else {
+                throw new DadosInvalidosException("Telefone");
+            }
+        }
+        return false;
     }
 
     /**
      * Validação de CPF
-     * 
+     *
      * @param cpf
      * @return boolean
      */
-    public static boolean validaCpf(String cpf) {
+    public static boolean validaCpf(String cpf) throws DadosInvalidosException{
         CPFValidator cpfValidator = new CPFValidator();
-        List<ValidationMessage> erros = cpfValidator.invalidMessagesFor(cpf);
-        return erros.size() <= 0;
+        
+          if (cpf!= null && !" ".equals(cpf) && !"".equals(cpf)) {
+              List<ValidationMessage> erros = cpfValidator.invalidMessagesFor(cpf);
+              if(erros.size()<=0){
+                  return true;
+              }else {
+                throw new DadosInvalidosException("Cpf");
+            }
+        }
+        return false;
     }
 
     /**
@@ -140,7 +187,6 @@ public class ValidaDados {
         return validaQuantidade(end.getNum());
     }
 
-
     /**
      * Valida Valores que representam dinheiro
      *
@@ -148,12 +194,15 @@ public class ValidaDados {
      * @return boolean
      */
     public static boolean validaValor(String val) {
-        try {
-            double valor = Double.parseDouble(val);
-            return valor >= 0;
-        } catch (NumberFormatException e) {
-            return false;
+        if (val != null && !val.equals("")) {
+            try {
+                double valor = Double.parseDouble(val);
+                return valor >= 0;
+            } catch (NumberFormatException e) {
+                throw new DadosInvalidosException("Quantidade");
+            }
         }
+        return false;
     }
 
     /**
@@ -163,14 +212,17 @@ public class ValidaDados {
      * @return boolean
      */
     public static boolean validaQuantidade(String val) {
-        try {
-            int valor = Integer.parseInt(val);
-            return valor >= 0;
-        } catch (NumberFormatException e) {
-            return false;
+        if (val != null && !val.equals("")) {
+            try {
+                int valor = Integer.parseInt(val);
+                return valor >= 0;
+            } catch (NumberFormatException e) {
+                throw new DadosInvalidosException("Quantidade");
+            }
         }
+        return false;
     }
-    
+
     /**
      * Valida se a string so contem numeros
      *

@@ -410,8 +410,14 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
         if (jbtEditar.getText().equalsIgnoreCase("Salvar")) {
             AdminController cc = new AdminController();
 
+            String cpf = fldCPF.getText();
+            if(fldCPF.getText().equals("   .   .   -  ")){
+                System.out.println("oie");
+                cpf = " ";
+            }
+            
             Admin novo = new Admin(fldNome.getText(), fldEmail.getText(), adm.getSenha(),
-                    Integer.parseInt(fldIdade.getText()), fldCPF.getText(), jfldTelefone.getText(),
+                    Integer.parseInt(fldIdade.getText()), cpf, jfldTelefone.getText(),
                     this.adm.getLocalAdministrado());
 
             try {

@@ -22,8 +22,7 @@ public class EventoController implements BaseControl<Evento> {
      * @throws CadastroInexistenteException
      */
     @Override
-    public void cadastrar(Evento evento) throws DadosRepetidosException, CadastroInexistenteException {
-       
+    public void cadastrar(Evento evento) throws DadosRepetidosException, CadastroInexistenteException {       
         if (dao.buscarEvento(evento) == null) {
             dao.incluirAtomico(evento);
             evento.getSessao().ativarEvento(true);

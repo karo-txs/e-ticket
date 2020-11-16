@@ -17,6 +17,9 @@ import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locais.Teatro;
 import br.unicap.eticket.model.usuarios.Admin;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +30,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
     public AdminController() {
         this.dao = new AdminDAO();
     }
-    
+
     /**
      * Cadastro de um Admin
      *
@@ -36,18 +39,28 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
      */
     @Override
     public void cadastrar(Admin adm) throws DadosRepetidosException {
+        ExecutorService es = Executors.newCachedThreadPool();
         LocalDAO localD = new LocalDAO();
 
-        if (super.buscarUser(adm) == null && localD.buscarLocal(adm.getLocalAdministrado()) == null) {
-            LocalGenerico admLocal = adm.getLocalAdministrado();
-            if (admLocal.getCapa() == null) {
-                admLocal.setImagemPadrao();
-            }
-            admLocal.setAdmin(adm);
+        boolean buscaAdm, buscaLocal;
 
-            dao.incluirAtomico(adm);
-        } else {
-            throw new DadosRepetidosException("Usuario ou Local");
+        try {
+            buscaAdm = es.submit(() -> super.buscarUser(adm) == null).get();
+            buscaLocal = es.submit(() -> localD.buscarLocal(adm.getLocalAdministrado()) == null).get();
+
+            if (buscaAdm && buscaLocal) {
+                LocalGenerico admLocal = adm.getLocalAdministrado();
+                if (admLocal.getCapa() == null) {
+                    admLocal.setImagemPadrao();
+                }
+                admLocal.setAdmin(adm);
+
+                dao.incluirAtomico(adm);
+            } else {
+                throw new DadosRepetidosException("Usuario ou Local");
+            }
+        } catch (InterruptedException | ExecutionException ex) {
+            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -72,6 +85,14 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
         c.setSenha(senha);
         LocalGenerico local = null;
 
+        if (!ValidaDados.validaEndereco(end)) {
+            throw new DadosInvalidosException("Endereço");
+        }
+
+        if (!ValidaDados.validaNome(nomeDoLocal)) {
+            throw new DadosInvalidosException("Nome do Local");
+        }
+
         switch (tipoLocal) {
             case "Cinema":
                 local = new Cinema(nomeDoLocal, end);
@@ -87,28 +108,25 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
 
         }
 
-        if (!ValidaDados.validaEndereco(end)) {
-            throw new DadosInvalidosException("Endereço");
-        }
-        if (!ValidaDados.validaNome(nomeDoLocal)) {
-            throw new DadosInvalidosException("Nome do Local");
-        }
         c.setLocalAdministrado(local);
         this.cadastrar(c);
     }
 
     public void validarDadosAdmin(String nome, String email, String senha) throws DadosInvalidosException, SenhaInvalidaException, IOException {
         Admin c = new Admin();
+
         if (ValidaDados.validaNome(nome)) {
             c.setNome(nome);
         } else {
             throw new DadosInvalidosException("Nome");
         }
+
         if (ValidaDados.validaEmail(email)) {
             c.setEmail(email);
         } else {
             throw new DadosInvalidosException("Email");
         }
+
         if (ValidaDados.validaSenha(senha)) {
             c.setSenha(senha);
         } else {
@@ -146,46 +164,18 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
 
         Admin busca = this.buscar(novo);
 
-        if (novo.getNome() != null && !novo.getNome().equals("")) {
-            if (ValidaDados.validaNome(novo.getNome())) {
-                if (!novo.getNome().equals(busca.getNome())) {
-                    busca.setNome(novo.getNome());
-                }
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Nome"));
-            }
+        if (ValidaDados.validaNome(novo.getNome())) {
+            busca.setNome(novo.getNome());
         }
-
-        if (novo.getIdade() != 0) {
-            if (ValidaDados.validaQuantidade(String.valueOf(novo.getIdade()))) {
-                if (novo.getIdade() != busca.getIdade()) {
-                    busca.setIdade(novo.getIdade());
-                }
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Idade"));
-            }
+        if (ValidaDados.validaIdade(String.valueOf(novo.getIdade()))) {
+            busca.setIdade(novo.getIdade());
         }
-
-        if (novo.getTelefone() != null && !novo.getTelefone().equals("")) {
-            if (ValidaDados.validaTelefone(novo.getTelefone())) {
-                if (!novo.getTelefone().equals(busca.getTelefone())) {
-                    busca.setTelefone(novo.getTelefone());
-                }
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Telefone"));
-            }
+        if (ValidaDados.validaTelefone(novo.getTelefone())) {
+            busca.setTelefone(novo.getTelefone());
         }
-
-        if (novo.getCpf() != null && !novo.getCpf().equals("")) {
-            if (ValidaDados.validaCpf(novo.getCpf())) {
-                if (!busca.getCpf().equals(novo.getCpf())) {
-                    busca.setCpf(novo.getCpf());
-                }
-            } else {
-                throw new AtualizacaoMalSucedidaException(new DadosInvalidosException("Cpf"));
-            }
+        if (ValidaDados.validaCpf(novo.getCpf())) {
+            busca.setCpf(novo.getCpf());
         }
-
         if (novo.getSenha() != null && !novo.getSenha().equals("")) {
             try {
                 if (ValidaDados.validaSenha(novo.getSenha())) {
@@ -199,6 +189,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
                 Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
         dao.atualizarAtomico(busca);
     }
 

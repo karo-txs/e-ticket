@@ -162,7 +162,6 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
         return senhaA.equals(senhaB);
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fldEmail;
     private javax.swing.JTextField fldNome;
