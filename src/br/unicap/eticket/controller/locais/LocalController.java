@@ -260,7 +260,10 @@ public class LocalController implements BaseControl<LocalGenerico> {
     public void remover(LocalGenerico local) throws CadastroInexistenteException {
         LocalGenerico busca = local.getId() == null ? this.buscar(local) : local;
         this.removerSalas(local);
-        dao.removerAtomico(busca);
+        
+        dao.abrirTransacao();
+        dao.removerDetached(busca);
+        dao.fecharTransacao();
     }
 
     /**
@@ -279,8 +282,14 @@ public class LocalController implements BaseControl<LocalGenerico> {
             localAux.setSala(null);
             dao.atualizarAtomico(localAux);
         }
+        
+        else if (busca instanceof Auditorio) {
+            Auditorio localAux = (Auditorio) busca;
+            localAux.setSala(null);
+            dao.atualizarAtomico(localAux);
+        }
 
-        if (salas != null) {
+        else if (salas != null) {
             salas.forEach((s) -> {
                 salaC.remover(s);
             });

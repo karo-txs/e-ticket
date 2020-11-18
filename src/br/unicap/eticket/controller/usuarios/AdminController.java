@@ -203,10 +203,12 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
     public void remover(Admin adm) throws CadastroInexistenteException {
         LocalController localC = new LocalController();
         Admin busca = adm.getId() == null ? this.buscar(adm) : adm;
-
-        localC.removerSalas(busca.getLocalAdministrado());
-        busca.setLocalAdministrado(null);
-        dao.removerAtomico(adm);
+        busca.getLocalAdministrado().setAdmin(null);
+        localC.remover(busca.getLocalAdministrado());
+        
+        dao.abrirTransacao();
+        dao.removerDetached(adm);
+        dao.fecharTransacao();
     }
 
     /**

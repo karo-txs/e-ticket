@@ -54,7 +54,6 @@ public class TelaCriarEventos extends javax.swing.JPanel {
         lblEventosDisp = new javax.swing.JLabel();
         lblEscolherEvento = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jbtDesativarEvento = new javax.swing.JButton();
         jbtAtivarEvento = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstSessoes = new javax.swing.JList<>();
@@ -227,28 +226,6 @@ public class TelaCriarEventos extends javax.swing.JPanel {
         jLabel1.setText("Escolha a sessão:");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 390, 40));
 
-        jbtDesativarEvento.setBackground(new java.awt.Color(227, 0, 0));
-        jbtDesativarEvento.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jbtDesativarEvento.setForeground(new java.awt.Color(255, 0, 0));
-        jbtDesativarEvento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido2 (1)_1.png"))); // NOI18N
-        jbtDesativarEvento.setText("<html><center>Desativar Evento");
-        jbtDesativarEvento.setBorder(null);
-        jbtDesativarEvento.setContentAreaFilled(false);
-        jbtDesativarEvento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtDesativarEvento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtDesativarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtDesativarEventoMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtDesativarEventoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtDesativarEventoMouseExited(evt);
-            }
-        });
-        add(jbtDesativarEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 560, 250, 70));
-
         jbtAtivarEvento.setBackground(new java.awt.Color(227, 0, 0));
         jbtAtivarEvento.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jbtAtivarEvento.setForeground(new java.awt.Color(0, 51, 255));
@@ -397,30 +374,6 @@ public class TelaCriarEventos extends javax.swing.JPanel {
         jbtAtivarEvento.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jbtAtivarEventoMouseExited
 
-    private void jbtDesativarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtDesativarEventoMouseClicked
-        EventoController evtC = new EventoController();
-        if (lstSessoes.getSelectedIndex() == -1) {
-            JDialogsControl.mostrarPopUp("Selecione a sessão!", true);
-        } else {
-            Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
-            try {
-                
-                evtC.remover(new Evento(selecionada));
-                JDialogsControl.mostrarPopUp("Evento Desativado!", false);
-            } catch (CadastroInexistenteException ex) {
-                 JDialogsControl.mostrarPopUp(ex.getMessage(), true);
-            }
-        }
-    }//GEN-LAST:event_jbtDesativarEventoMouseClicked
-
-    private void jbtDesativarEventoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtDesativarEventoMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtDesativarEventoMouseEntered
-
-    private void jbtDesativarEventoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtDesativarEventoMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtDesativarEventoMouseExited
-
     private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
         TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja sair?");
         if (telaConf.getConfirmarAcao()) {
@@ -451,7 +404,6 @@ public class TelaCriarEventos extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbtAtivarEvento;
-    private javax.swing.JButton jbtDesativarEvento;
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblBordaEsquerda;
     private javax.swing.JLabel lblControleOrcamento;

@@ -31,6 +31,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jbtExcluirConta = new javax.swing.JButton();
         lblRealizarCad = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
@@ -81,6 +82,32 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(1366, 768));
         setMinimumSize(new java.awt.Dimension(1366, 768));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jbtExcluirConta.setBackground(new java.awt.Color(255, 255, 255));
+        jbtExcluirConta.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jbtExcluirConta.setForeground(new java.awt.Color(255, 255, 255));
+        jbtExcluirConta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
+        jbtExcluirConta.setText("EXCLUIR CONTA");
+        jbtExcluirConta.setBorder(null);
+        jbtExcluirConta.setContentAreaFilled(false);
+        jbtExcluirConta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtExcluirConta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbtExcluirContaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtExcluirContaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtExcluirContaMouseExited(evt);
+            }
+        });
+        jbtExcluirConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExcluirContaActionPerformed(evt);
+            }
+        });
+        add(jbtExcluirConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 640, 190, 40));
 
         lblRealizarCad.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         lblRealizarCad.setForeground(new java.awt.Color(255, 255, 255));
@@ -384,7 +411,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
                 jbtAlterarPerfilActionPerformed(evt);
             }
         });
-        add(jbtAlterarPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, -1, 40));
+        add(jbtAlterarPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 640, -1, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/fundoGigante.png"))); // NOI18N
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1370, 770));
@@ -534,6 +561,31 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         jbtLocalizarCEP.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
+    private void jbtExcluirContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtExcluirContaMouseClicked
+
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Excluir conta? Não é possível reverter!");
+
+        if (telaConf.getConfirmarAcao()) {
+            ClienteController cliC = new ClienteController();
+            cliC.remover(cliente);
+
+            FrameInicio.getFrame().setContentPane(new TelaInicio());
+            FrameInicio.getFrame().revalidate();
+        }
+    }//GEN-LAST:event_jbtExcluirContaMouseClicked
+
+    private void jbtExcluirContaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtExcluirContaMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtExcluirContaMouseEntered
+
+    private void jbtExcluirContaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtExcluirContaMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtExcluirContaMouseExited
+
+    private void jbtExcluirContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirContaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtExcluirContaActionPerformed
+
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -584,6 +636,7 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     private javax.swing.JTextField fldUF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbtAlterarPerfil;
+    private javax.swing.JButton jbtExcluirConta;
     private javax.swing.JButton jbtLocalizarCEP;
     private javax.swing.JLabel lblBairro;
     private javax.swing.JLabel lblBordaEsquerda;

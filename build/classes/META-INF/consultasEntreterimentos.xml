@@ -11,7 +11,8 @@
     <named-query name="entreterimentoPorLocal">
         <query>
             select distinct s.entretenimento from Sessao s
-            where s.local = :local
+            where s.local = :local and
+            s.ativa = :ativa
         </query>
     </named-query>
     

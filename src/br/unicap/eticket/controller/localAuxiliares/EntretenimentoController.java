@@ -180,7 +180,7 @@ public class EntretenimentoController implements BaseControl<Entretenimento>, Bu
         LocalDAO localD = new LocalDAO();
         LocalGenerico busca = local.getId() == null ? localD.buscarLocal(local) : local;
 
-        List<Entretenimento> ents = dao.consultar("entreterimentoPorLocal", "local", busca);
+        List<Entretenimento> ents = dao.consultar("entreterimentoPorLocal", "local", busca, "ativa", true);
         return ents;
     }
 

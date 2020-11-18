@@ -329,7 +329,9 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
 
         if (!reservas.isEmpty()) {
             reservas.forEach((r) -> {
-                reservaD.removerAtomico(r);
+                r.setSessao(null);
+                reservaD.atualizarAtomico(r);
+                //reservaD.removerAtomico(r);
             });
         }
 

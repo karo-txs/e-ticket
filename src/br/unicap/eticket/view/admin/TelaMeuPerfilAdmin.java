@@ -52,6 +52,7 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
         lblUsername = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         lblDeslogar = new javax.swing.JLabel();
+        jbtExcluirConta = new javax.swing.JButton();
         jbtEditar = new javax.swing.JButton();
         lblEventos = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
@@ -70,33 +71,33 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
         lblNome.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblNome.setForeground(new java.awt.Color(255, 255, 255));
         lblNome.setText("nome completo");
-        add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 190, -1, -1));
+        add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, -1, -1));
 
         lblEmail.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblEmail.setForeground(new java.awt.Color(255, 255, 255));
         lblEmail.setText("e-mail");
-        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 400, -1, -1));
+        add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, -1));
 
         lblIdade.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblIdade.setForeground(new java.awt.Color(255, 255, 255));
         lblIdade.setText("idade");
-        add(lblIdade, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 260, -1, -1));
+        add(lblIdade, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, -1, -1));
 
         fldNome.setBackground(new java.awt.Color(204, 204, 204));
         fldNome.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldNome.setForeground(new java.awt.Color(102, 102, 102));
         fldNome.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 210, 250, 20));
+        add(fldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, 250, 20));
 
         fldSenhaAntiga.setBackground(new java.awt.Color(204, 204, 204));
         fldSenhaAntiga.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldSenhaAntiga.setForeground(new java.awt.Color(102, 102, 102));
-        add(fldSenhaAntiga, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 540, 250, 20));
+        add(fldSenhaAntiga, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 290, 250, 20));
 
         fldSenhaNova.setBackground(new java.awt.Color(204, 204, 204));
         fldSenhaNova.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldSenhaNova.setForeground(new java.awt.Color(102, 102, 102));
-        add(fldSenhaNova, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 590, 250, 20));
+        add(fldSenhaNova, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 340, 250, 20));
 
         fldCPF.setBackground(new java.awt.Color(204, 204, 204));
         fldCPF.setForeground(new java.awt.Color(102, 102, 102));
@@ -106,49 +107,49 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         fldCPF.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
-        add(fldCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 350, 250, 20));
+        add(fldCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 430, 250, 20));
 
         lblCPF.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblCPF.setForeground(new java.awt.Color(255, 255, 255));
         lblCPF.setText("CPF");
-        add(lblCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 330, -1, -1));
+        add(lblCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 410, -1, -1));
 
         lblSenha.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblSenha.setForeground(new java.awt.Color(255, 255, 255));
         lblSenha.setText("senha antiga");
-        add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 520, 90, -1));
+        add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 270, 90, -1));
 
         lblSenhaConf.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblSenhaConf.setForeground(new java.awt.Color(255, 255, 255));
         lblSenhaConf.setText("nova senha");
-        add(lblSenhaConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 570, -1, -1));
+        add(lblSenhaConf, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 320, -1, -1));
 
         fldEmail.setBackground(new java.awt.Color(204, 204, 204));
         fldEmail.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldEmail.setForeground(new java.awt.Color(102, 102, 102));
         fldEmail.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 420, 250, 20));
+        add(fldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 500, 250, 20));
 
         lblLinhaAltSenha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alterar senha", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-        add(lblLinhaAltSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 480, 310, 150));
+        add(lblLinhaAltSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 230, 310, 150));
 
         lblTelefone.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         lblTelefone.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefone.setText("telefone");
-        add(lblTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 260, -1, -1));
+        add(lblTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, -1, -1));
 
         fldIdade.setBackground(new java.awt.Color(204, 204, 204));
         fldIdade.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldIdade.setForeground(new java.awt.Color(102, 102, 102));
         fldIdade.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldIdade, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 280, 50, 20));
+        add(fldIdade, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 50, 20));
 
         jfldTelefone.setBackground(new java.awt.Color(204, 204, 204));
         jfldTelefone.setForeground(new java.awt.Color(102, 102, 102));
-        add(jfldTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 280, 160, -1));
+        add(jfldTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 160, -1));
 
         lblLinhaDadP.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-        add(lblLinhaDadP, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 310, 310));
+        add(lblLinhaDadP, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, 310, 310));
 
         lblPerfil.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         lblPerfil.setForeground(new java.awt.Color(255, 255, 255));
@@ -264,6 +265,32 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
         });
         add(lblDeslogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 650, 150, 40));
 
+        jbtExcluirConta.setBackground(new java.awt.Color(255, 255, 255));
+        jbtExcluirConta.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jbtExcluirConta.setForeground(new java.awt.Color(255, 255, 255));
+        jbtExcluirConta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoCompridoEdicao.png"))); // NOI18N
+        jbtExcluirConta.setText("EXCLUIR CONTA");
+        jbtExcluirConta.setBorder(null);
+        jbtExcluirConta.setContentAreaFilled(false);
+        jbtExcluirConta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbtExcluirConta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbtExcluirContaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtExcluirContaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtExcluirContaMouseExited(evt);
+            }
+        });
+        jbtExcluirConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExcluirContaActionPerformed(evt);
+            }
+        });
+        add(jbtExcluirConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 490, 190, 40));
+
         jbtEditar.setBackground(new java.awt.Color(255, 255, 255));
         jbtEditar.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
         jbtEditar.setForeground(new java.awt.Color(255, 255, 255));
@@ -288,7 +315,7 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
                 jbtEditarActionPerformed(evt);
             }
         });
-        add(jbtEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 650, 190, 40));
+        add(jbtEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 430, 190, 40));
 
         lblEventos.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         lblEventos.setForeground(new java.awt.Color(255, 255, 255));
@@ -411,18 +438,18 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
             AdminController cc = new AdminController();
 
             String cpf = fldCPF.getText();
-            if(fldCPF.getText().equals("   .   .   -  ")){
+            if (fldCPF.getText().equals("   .   .   -  ")) {
                 System.out.println("oie");
                 cpf = " ";
             }
-            
+
             Admin novo = new Admin(fldNome.getText(), fldEmail.getText(), adm.getSenha(),
                     Integer.parseInt(fldIdade.getText()), cpf, jfldTelefone.getText(),
                     this.adm.getLocalAdministrado());
 
             try {
                 cc.atualizarChave(adm, fldEmail.getText());
-                
+
                 if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.adm.getSenha())) {
                     novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));
                 }
@@ -462,6 +489,31 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblEventosMouseExited
 
+    private void jbtExcluirContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtExcluirContaMouseClicked
+
+        TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Excluir conta? Não é possível reverter!");
+
+        if (telaConf.getConfirmarAcao()) {
+            AdminController admC = new AdminController();
+            admC.remover(adm);
+
+            FrameInicio.getFrame().setContentPane(new TelaInicio());
+            FrameInicio.getFrame().revalidate();
+        }
+    }//GEN-LAST:event_jbtExcluirContaMouseClicked
+
+    private void jbtExcluirContaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtExcluirContaMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtExcluirContaMouseEntered
+
+    private void jbtExcluirContaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtExcluirContaMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtExcluirContaMouseExited
+
+    private void jbtExcluirContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirContaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtExcluirContaActionPerformed
+
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -493,6 +545,7 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
     private javax.swing.JPasswordField fldSenhaNova;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtEditar;
+    private javax.swing.JButton jbtExcluirConta;
     private javax.swing.JTextField jfldTelefone;
     private javax.swing.JLabel lblBordaEsquerda;
     private javax.swing.JLabel lblCPF;

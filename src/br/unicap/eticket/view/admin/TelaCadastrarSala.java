@@ -26,6 +26,7 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jfldValIngresso = new javax.swing.JTextField();
         lblCadastrarSala = new javax.swing.JLabel();
         lblNomeSala = new javax.swing.JLabel();
         lblQtdCadx = new javax.swing.JLabel();
@@ -33,9 +34,8 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
         lblTipoSala = new javax.swing.JLabel();
         lblValorIngresso = new javax.swing.JLabel();
         fldNomeSala = new javax.swing.JTextField();
-        fldQtdCadx = new javax.swing.JTextField();
-        fldQtdCady = new javax.swing.JTextField();
-        jfldValIngresso = new javax.swing.JFormattedTextField();
+        fldQtdCady = new javax.swing.JFormattedTextField();
+        fldQtdCadx = new javax.swing.JFormattedTextField();
         jbtCadastrar = new javax.swing.JButton();
         jcbTipoSala = new javax.swing.JComboBox<>();
         lblDeslogar = new javax.swing.JLabel();
@@ -53,6 +53,12 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(21, 17, 17));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jfldValIngresso.setBackground(new java.awt.Color(204, 204, 204));
+        jfldValIngresso.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        jfldValIngresso.setForeground(new java.awt.Color(102, 102, 102));
+        jfldValIngresso.setPreferredSize(new java.awt.Dimension(302, 38));
+        add(jfldValIngresso, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 500, 350, 40));
 
         lblCadastrarSala.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         lblCadastrarSala.setForeground(new java.awt.Color(255, 255, 255));
@@ -90,23 +96,35 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
         fldNomeSala.setPreferredSize(new java.awt.Dimension(302, 38));
         add(fldNomeSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 180, 350, 40));
 
-        fldQtdCadx.setBackground(new java.awt.Color(204, 204, 204));
-        fldQtdCadx.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
-        fldQtdCadx.setForeground(new java.awt.Color(102, 102, 102));
-        fldQtdCadx.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldQtdCadx, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 290, 160, 40));
-
         fldQtdCady.setBackground(new java.awt.Color(204, 204, 204));
-        fldQtdCady.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
         fldQtdCady.setForeground(new java.awt.Color(102, 102, 102));
-        fldQtdCady.setPreferredSize(new java.awt.Dimension(302, 38));
-        add(fldQtdCady, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 290, 160, 40));
+        try {
+            fldQtdCady.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fldQtdCady.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        fldQtdCady.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fldQtdCadyActionPerformed(evt);
+            }
+        });
+        add(fldQtdCady, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 290, 160, -1));
 
-        jfldValIngresso.setBackground(new java.awt.Color(204, 204, 204));
-        jfldValIngresso.setForeground(new java.awt.Color(102, 102, 102));
-        jfldValIngresso.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
-        jfldValIngresso.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
-        add(jfldValIngresso, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 500, 350, -1));
+        fldQtdCadx.setBackground(new java.awt.Color(204, 204, 204));
+        fldQtdCadx.setForeground(new java.awt.Color(102, 102, 102));
+        try {
+            fldQtdCadx.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fldQtdCadx.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        fldQtdCadx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fldQtdCadxActionPerformed(evt);
+            }
+        });
+        add(fldQtdCadx, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 290, 160, -1));
 
         jbtCadastrar.setBackground(new java.awt.Color(227, 0, 0));
         jbtCadastrar.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
@@ -393,6 +411,14 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblEventosMouseExited
 
+    private void fldQtdCadyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fldQtdCadyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fldQtdCadyActionPerformed
+
+    private void fldQtdCadxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fldQtdCadxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fldQtdCadxActionPerformed
+
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -404,12 +430,12 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fldNomeSala;
-    private javax.swing.JTextField fldQtdCadx;
-    private javax.swing.JTextField fldQtdCady;
+    private javax.swing.JFormattedTextField fldQtdCadx;
+    private javax.swing.JFormattedTextField fldQtdCady;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtCadastrar;
     private javax.swing.JComboBox<String> jcbTipoSala;
-    private javax.swing.JFormattedTextField jfldValIngresso;
+    private javax.swing.JTextField jfldValIngresso;
     private javax.swing.JLabel lblBordaEsquerda;
     private javax.swing.JLabel lblCadastrarSala;
     private javax.swing.JLabel lblControleOrcamento;

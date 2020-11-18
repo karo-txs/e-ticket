@@ -2,6 +2,7 @@ package br.unicap.eticket.controller.usuarios;
 
 import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
+import br.unicap.eticket.controller.localAuxiliares.ReservaController;
 import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.dao.ReservaDAO;
@@ -171,8 +172,19 @@ public class ClienteController extends UsuarioController implements BaseControl<
      */
     @Override
     public void remover(Cliente cliente) throws CadastroInexistenteException {
+        ReservaController rc = new ReservaController();
+        
         Cliente busca = cliente.getId() == null ? this.buscar(cliente) : cliente;
-        dao.removerAtomico(busca);
+        for(Reserva r: busca.getReservas()){
+            busca.getReservas().remove(r);
+            dao.atualizarAtomico(busca);
+            r.setSessao(null);
+            rc.remover(r);
+        }
+        
+        dao.abrirTransacao();
+        dao.removerDetached(busca);
+        dao.fecharTransacao();
     }
 
     /**

@@ -99,7 +99,7 @@ public class TelaInicio extends javax.swing.JPanel {
 
         lblProprietario.setFont(new java.awt.Font("Segoe UI Symbol", 0, 14)); // NOI18N
         lblProprietario.setForeground(new java.awt.Color(204, 204, 204));
-        lblProprietario.setText("Você é um proprietário de cinema ou teatro?");
+        lblProprietario.setText("Você é um proprietário de auditório, cinema ou teatro?");
         lblProprietario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblProprietario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -112,7 +112,7 @@ public class TelaInicio extends javax.swing.JPanel {
                 lblProprietarioMouseExited(evt);
             }
         });
-        add(lblProprietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 560, -1, -1));
+        add(lblProprietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 560, -1, -1));
 
         lblRodape.setFont(new java.awt.Font("Segoe UI Symbol", 0, 10)); // NOI18N
         lblRodape.setForeground(new java.awt.Color(204, 204, 204));

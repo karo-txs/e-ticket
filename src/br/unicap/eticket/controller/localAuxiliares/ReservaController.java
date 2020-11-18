@@ -91,7 +91,9 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
     @Override
     public void remover(Reserva reserva) throws CadastroInexistenteException {
         Reserva busca = reserva.getId() == null ? this.buscar(reserva) : reserva;
-        dao.removerAtomico(busca);
+        dao.abrirTransacao();
+        dao.removerDetached(busca);
+        dao.fecharTransacao();
     }
 
     /**
