@@ -150,17 +150,13 @@ public class Sala implements Serializable {
      * @throws CadastroInexistenteException
      */
     public void desativarSala() throws CadastroInexistenteException {
-        SalaController sc = new SalaController();
         SessaoController sessaoC = new SessaoController();
         SalaDAO sd = new SalaDAO();
-        Sala busca = this.getId() == null ? sc.buscar(this) : this;
-
-        busca.setAtiva(false);
-        sd.atualizarAtomico(busca);
-        List<Sessao> sessoes = sessaoC.sessoesDaSala(busca);
-        for(Sessao s: sessoes){
+        this.setAtiva(false);
+        sd.atualizarAtomico(this);
+        sessaoC.sessoesDaSala(this).forEach((s) -> {
             s.desativarSessao();
-        }
+        });
     }
 
 

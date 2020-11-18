@@ -159,13 +159,9 @@ public class Sessao implements Serializable {
          se sim: impedir que o admin desative a sessao ou ele tera que restituir os valores das reservas ja pagas
          se nao: desativamento normal
          */
-        SessaoController sc = new SessaoController();
         SessaoDAO sd = new SessaoDAO();
-        Sessao busca = this.getId() == null ? sc.buscar(this) : this;
-
-        busca.setAtiva(false);
-        sd.atualizarAtomico(busca);
-        System.out.println("Sessao " + this.getNome() + " DESATIVADA");
+        this.setAtiva(false);
+        sd.atualizarAtomico(this);
     }
 
     /**

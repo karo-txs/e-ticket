@@ -294,8 +294,7 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
                 String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
                 SalaController salaC = new SalaController();
                 try {
-                    salaC.buscar(new Sala(this.local, valSelecionado[0])).desativarSala();
-                    //salaC.remover(salaC.buscar(new Sala(this.local, valSelecionado[0]))); DESATIVAR
+                    salaC.desativar(salaC.buscar(new Sala(this.local, valSelecionado[0]))); 
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
                     FrameInicio.getFrame().revalidate();

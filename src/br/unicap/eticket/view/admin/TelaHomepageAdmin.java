@@ -71,13 +71,12 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
         lblUsername = new javax.swing.JLabel();
         lblEventos = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
-        lblEndereco = new javax.swing.JLabel();
-        lblContato = new javax.swing.JLabel();
-        lblLojinha = new javax.swing.JLabel();
-        lblSobre = new javax.swing.JLabel();
-        lblEmCartaz = new javax.swing.JLabel();
         jbtAlterarBanner = new javax.swing.JButton();
         lblEstrelas = new javax.swing.JLabel();
+        lblSobre = new javax.swing.JLabel();
+        lblEmCartaz = new javax.swing.JLabel();
+        lblContato = new javax.swing.JLabel();
+        lblEndereco = new javax.swing.JLabel();
         lblNomeDoLocal = new javax.swing.JLabel();
         lblCaixaTitulo = new javax.swing.JLabel();
         lblCategoriasBar = new javax.swing.JLabel();
@@ -232,91 +231,6 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
 
         add(jpnEsquerda, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 0, 290, 770));
 
-        lblEndereco.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
-        lblEndereco.setText("Endereço");
-        lblEndereco.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblEndereco.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEnderecoMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblEnderecoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblEnderecoMouseExited(evt);
-            }
-        });
-        add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 200, 90, 40));
-
-        lblContato.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblContato.setForeground(new java.awt.Color(255, 255, 255));
-        lblContato.setText("Contato");
-        lblContato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblContato.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblContatoMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblContatoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblContatoMouseExited(evt);
-            }
-        });
-        add(lblContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 200, 90, 40));
-
-        lblLojinha.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblLojinha.setForeground(new java.awt.Color(255, 255, 255));
-        lblLojinha.setText("Loja Virtual");
-        lblLojinha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblLojinha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblLojinhaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblLojinhaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblLojinhaMouseExited(evt);
-            }
-        });
-        add(lblLojinha, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 200, 90, 40));
-
-        lblSobre.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblSobre.setForeground(new java.awt.Color(255, 255, 255));
-        lblSobre.setText("Sobre");
-        lblSobre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblSobre.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblSobreMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblSobreMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblSobreMouseExited(evt);
-            }
-        });
-        add(lblSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 200, 70, 40));
-
-        lblEmCartaz.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblEmCartaz.setForeground(new java.awt.Color(51, 102, 255));
-        lblEmCartaz.setText("Em Cartaz");
-        lblEmCartaz.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblEmCartaz.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEmCartazMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblEmCartazMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblEmCartazMouseExited(evt);
-            }
-        });
-        add(lblEmCartaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, 90, 40));
-
         jbtAlterarBanner.setBackground(new java.awt.Color(255, 255, 255));
         jbtAlterarBanner.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
         jbtAlterarBanner.setText("Alterar Banner");
@@ -339,6 +253,74 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
         lblEstrelas.setFont(new java.awt.Font("Segoe UI Symbol", 2, 16)); // NOI18N
         lblEstrelas.setForeground(new java.awt.Color(153, 153, 153));
         add(lblEstrelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, 170, 30));
+
+        lblSobre.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
+        lblSobre.setForeground(new java.awt.Color(255, 255, 255));
+        lblSobre.setText("Sobre");
+        lblSobre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSobre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSobreMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSobreMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSobreMouseExited(evt);
+            }
+        });
+        add(lblSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 200, 70, 40));
+
+        lblEmCartaz.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
+        lblEmCartaz.setForeground(new java.awt.Color(51, 102, 255));
+        lblEmCartaz.setText("Em Cartaz");
+        lblEmCartaz.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEmCartaz.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEmCartazMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEmCartazMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEmCartazMouseExited(evt);
+            }
+        });
+        add(lblEmCartaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 90, 40));
+
+        lblContato.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
+        lblContato.setForeground(new java.awt.Color(255, 255, 255));
+        lblContato.setText("Contato");
+        lblContato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblContato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblContatoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblContatoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblContatoMouseExited(evt);
+            }
+        });
+        add(lblContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 200, 90, 40));
+
+        lblEndereco.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
+        lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
+        lblEndereco.setText("Endereço");
+        lblEndereco.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEndereco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEnderecoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEnderecoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEnderecoMouseExited(evt);
+            }
+        });
+        add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 200, 90, 40));
 
         lblNomeDoLocal.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         lblNomeDoLocal.setForeground(new java.awt.Color(255, 255, 255));
@@ -479,19 +461,18 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtAlterarBannerMouseExited
 
-    private void lblEmCartazMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseClicked
-        selecionarBotao(lblEmCartaz);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(this.adm));
+    private void lblEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseClicked
+        FrameInicio.getFrame().setContentPane(new TelaCriarEventos(this.adm.getLocalAdministrado()));
         FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_lblEmCartazMouseClicked
+    }//GEN-LAST:event_lblEventosMouseClicked
 
-    private void lblEmCartazMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseEntered
+    private void lblEventosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseEntered
 
-    }//GEN-LAST:event_lblEmCartazMouseEntered
-
-    private void lblEmCartazMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseExited
-
-    }//GEN-LAST:event_lblEmCartazMouseExited
+    private void lblEventosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblEventosMouseExited
 
     private void lblSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSobreMouseClicked
         selecionarBotao(lblSobre);
@@ -507,17 +488,19 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
 
     }//GEN-LAST:event_lblSobreMouseExited
 
-    private void lblLojinhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLojinhaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblLojinhaMouseClicked
+    private void lblEmCartazMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseClicked
+        selecionarBotao(lblEmCartaz);
+        FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(this.adm));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblEmCartazMouseClicked
 
-    private void lblLojinhaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLojinhaMouseEntered
+    private void lblEmCartazMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseEntered
 
-    }//GEN-LAST:event_lblLojinhaMouseEntered
+    }//GEN-LAST:event_lblEmCartazMouseEntered
 
-    private void lblLojinhaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLojinhaMouseExited
+    private void lblEmCartazMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseExited
 
-    }//GEN-LAST:event_lblLojinhaMouseExited
+    }//GEN-LAST:event_lblEmCartazMouseExited
 
     private void lblContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContatoMouseClicked
         selecionarBotao(lblContato);
@@ -547,19 +530,6 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
 
     }//GEN-LAST:event_lblEnderecoMouseExited
 
-    private void lblEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseClicked
-        FrameInicio.getFrame().setContentPane(new TelaCriarEventos(this.adm.getLocalAdministrado()));
-        FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_lblEventosMouseClicked
-
-    private void lblEventosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblEventosMouseEntered
-
-    private void lblEventosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEventosMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblEventosMouseExited
-
     private void acenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -571,7 +541,6 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
     private void selecionarBotao(JLabel lbl) {
         lblEmCartaz.setForeground(new java.awt.Color(255, 255, 255));
         lblContato.setForeground(new java.awt.Color(255, 255, 255));
-        lblLojinha.setForeground(new java.awt.Color(255, 255, 255));
         lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
         lblSobre.setForeground(new java.awt.Color(255, 255, 255));
         lbl.setForeground(new java.awt.Color(51, 102, 255));
@@ -600,7 +569,6 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
     private javax.swing.JLabel lblHomePage;
     private javax.swing.JLabel lblLinhinha;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblLojinha;
     private javax.swing.JLabel lblNomeDoLocal;
     private javax.swing.JLabel lblPerfil;
     private javax.swing.JLabel lblSalas;

@@ -140,10 +140,12 @@ public class SalaController implements BaseControl<Sala> {
         String[] salas = new String[s.size()];
         int i = 0;
         for (Sala a : s) {
-            if (dadosCompletos) {
-                salas[i] = a.toString();
-            } else {
-                salas[i] = a.getNome();
+            if (a.isAtiva()) {
+                if (dadosCompletos) {
+                    salas[i] = a.toString();
+                } else {
+                    salas[i] = a.getNome();
+                }
             }
             i++;
         }
@@ -230,5 +232,10 @@ public class SalaController implements BaseControl<Sala> {
 
         dao.removerDetached(busca);
         dao.fecharTransacao();
+    }
+
+    public void desativar(Sala sala) throws CadastroInexistenteException {
+        Sala busca = sala.getId() == null ? this.buscar(sala) : sala;
+        busca.desativarSala();
     }
 }

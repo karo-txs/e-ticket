@@ -63,11 +63,10 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         lblUsername = new javax.swing.JLabel();
         lblBordaEsquerda = new javax.swing.JLabel();
         jbtAlterarBanner = new javax.swing.JButton();
-        lblEndereco = new javax.swing.JLabel();
-        lblContato = new javax.swing.JLabel();
-        lblLojinha = new javax.swing.JLabel();
-        lblSobre = new javax.swing.JLabel();
         lblEmCartaz = new javax.swing.JLabel();
+        lblSobre = new javax.swing.JLabel();
+        lblContato = new javax.swing.JLabel();
+        lblEndereco = new javax.swing.JLabel();
         lblEstrelas = new javax.swing.JLabel();
         lblNomeDoLocal = new javax.swing.JLabel();
         lblCaixaTitulo = new javax.swing.JLabel();
@@ -258,38 +257,22 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         });
         add(jbtAlterarBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 160, 100, 20));
 
-        lblEndereco.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
-        lblEndereco.setText("Endereço");
-        lblEndereco.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblEndereco.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblEmCartaz.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
+        lblEmCartaz.setForeground(new java.awt.Color(51, 102, 255));
+        lblEmCartaz.setText("Em Cartaz");
+        lblEmCartaz.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEmCartaz.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEnderecoMouseClicked(evt);
+                lblEmCartazMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEmCartazMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEmCartazMouseExited(evt);
             }
         });
-        add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 200, 90, 40));
-
-        lblContato.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblContato.setForeground(new java.awt.Color(255, 255, 255));
-        lblContato.setText("Contato");
-        lblContato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblContato.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblContatoMouseClicked(evt);
-            }
-        });
-        add(lblContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 200, 90, 40));
-
-        lblLojinha.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblLojinha.setForeground(new java.awt.Color(255, 255, 255));
-        lblLojinha.setText("Loja Virtual");
-        lblLojinha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblLojinha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblLojinhaMouseClicked(evt);
-            }
-        });
-        add(lblLojinha, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 200, 90, 40));
+        add(lblEmCartaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 90, 40));
 
         lblSobre.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
         lblSobre.setForeground(new java.awt.Color(255, 255, 255));
@@ -299,19 +282,48 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblSobreMouseClicked(evt);
             }
-        });
-        add(lblSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 200, 70, 40));
-
-        lblEmCartaz.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
-        lblEmCartaz.setForeground(new java.awt.Color(51, 102, 255));
-        lblEmCartaz.setText("Em Cartaz");
-        lblEmCartaz.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblEmCartaz.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEmCartazMouseClicked(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSobreMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSobreMouseExited(evt);
             }
         });
-        add(lblEmCartaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, 90, 40));
+        add(lblSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 200, 70, 40));
+
+        lblContato.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
+        lblContato.setForeground(new java.awt.Color(255, 255, 255));
+        lblContato.setText("Contato");
+        lblContato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblContato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblContatoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblContatoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblContatoMouseExited(evt);
+            }
+        });
+        add(lblContato, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 200, 90, 40));
+
+        lblEndereco.setFont(new java.awt.Font("Impact", 0, 20)); // NOI18N
+        lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
+        lblEndereco.setText("Endereço");
+        lblEndereco.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblEndereco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEnderecoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEnderecoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEnderecoMouseExited(evt);
+            }
+        });
+        add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 200, 90, 40));
 
         lblEstrelas.setFont(new java.awt.Font("Segoe UI Symbol", 2, 16)); // NOI18N
         lblEstrelas.setForeground(new java.awt.Color(153, 153, 153));
@@ -571,34 +583,6 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         apagarBotao(lblHomePage);
     }//GEN-LAST:event_lblHomePageMouseExited
 
-    private void lblEmCartazMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseClicked
-        selecionarBotao(lblEmCartaz);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(this.adm));
-        FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_lblEmCartazMouseClicked
-
-    private void lblSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSobreMouseClicked
-        selecionarBotao(lblSobre);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageSobre(this.adm));
-        FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_lblSobreMouseClicked
-
-    private void lblLojinhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLojinhaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblLojinhaMouseClicked
-
-    private void lblContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContatoMouseClicked
-        selecionarBotao(lblContato);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageContato(this.adm));
-        FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_lblContatoMouseClicked
-
-    private void lblEnderecoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEnderecoMouseClicked
-        selecionarBotao(lblEndereco);
-        FrameInicio.getFrame().setContentPane(new TelaHomepageEndereco(this.adm));
-        FrameInicio.getFrame().revalidate();
-    }//GEN-LAST:event_lblEnderecoMouseClicked
-
     private void jbtLocalizarCEPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtLocalizarCEPMouseClicked
         if (!fldCEP.getText().equals("")) {
             HashMap<String, String> endereco = null;
@@ -681,6 +665,62 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblEventosMouseExited
 
+    private void lblEmCartazMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseClicked
+        selecionarBotao(lblEmCartaz);
+        FrameInicio.getFrame().setContentPane(new TelaHomepageAdmin(this.adm));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblEmCartazMouseClicked
+
+    private void lblEmCartazMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseEntered
+
+    }//GEN-LAST:event_lblEmCartazMouseEntered
+
+    private void lblEmCartazMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEmCartazMouseExited
+
+    }//GEN-LAST:event_lblEmCartazMouseExited
+
+    private void lblSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSobreMouseClicked
+        selecionarBotao(lblSobre);
+        FrameInicio.getFrame().setContentPane(new TelaHomepageSobre(this.adm));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblSobreMouseClicked
+
+    private void lblSobreMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSobreMouseEntered
+
+    }//GEN-LAST:event_lblSobreMouseEntered
+
+    private void lblSobreMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSobreMouseExited
+
+    }//GEN-LAST:event_lblSobreMouseExited
+
+    private void lblContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContatoMouseClicked
+        selecionarBotao(lblContato);
+        FrameInicio.getFrame().setContentPane(new TelaHomepageContato(this.adm));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblContatoMouseClicked
+
+    private void lblContatoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContatoMouseEntered
+
+    }//GEN-LAST:event_lblContatoMouseEntered
+
+    private void lblContatoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblContatoMouseExited
+
+    }//GEN-LAST:event_lblContatoMouseExited
+
+    private void lblEnderecoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEnderecoMouseClicked
+        selecionarBotao(lblEndereco);
+        FrameInicio.getFrame().setContentPane(new TelaHomepageEndereco(this.adm));
+        FrameInicio.getFrame().revalidate();
+    }//GEN-LAST:event_lblEnderecoMouseClicked
+
+    private void lblEnderecoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEnderecoMouseEntered
+
+    }//GEN-LAST:event_lblEnderecoMouseEntered
+
+    private void lblEnderecoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEnderecoMouseExited
+
+    }//GEN-LAST:event_lblEnderecoMouseExited
+
     private void ascenderBotao(JLabel lbl) {
         lbl.setForeground(new java.awt.Color(204, 204, 204));
     }
@@ -692,7 +732,6 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     private void selecionarBotao(JLabel lbl) {
         lblEmCartaz.setForeground(new java.awt.Color(255, 255, 255));
         lblContato.setForeground(new java.awt.Color(255, 255, 255));
-        lblLojinha.setForeground(new java.awt.Color(255, 255, 255));
         lblEndereco.setForeground(new java.awt.Color(255, 255, 255));
         lblSobre.setForeground(new java.awt.Color(255, 255, 255));
         lbl.setForeground(new java.awt.Color(51, 102, 255));
@@ -748,7 +787,6 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     private javax.swing.JLabel lblLinhaEnd;
     private javax.swing.JLabel lblLinhinha;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblLojinha;
     private javax.swing.JLabel lblNomeDoLocal;
     private javax.swing.JLabel lblNum;
     private javax.swing.JLabel lblPais;

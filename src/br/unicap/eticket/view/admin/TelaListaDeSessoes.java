@@ -298,8 +298,7 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
 
                 SessaoController sessaoC = new SessaoController();
                 try {
-                    sessaoC.buscar(selecionada).desativarSessao();
-                    //sessaoC.remover(sessaoC.buscar(selecionada)); DESATIVAR
+                    sessaoC.desativar(sessaoC.buscar(selecionada)); 
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
                     FrameInicio.getFrame().revalidate();

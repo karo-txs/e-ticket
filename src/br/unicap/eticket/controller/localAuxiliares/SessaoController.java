@@ -336,6 +336,11 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
         dao.removerDetached(busca);
         dao.fecharTransacao();
     }
+    
+    public void desativar(Sessao sessao)throws CadastroInexistenteException{
+        Sessao busca = sessao.getId() == null ? this.buscar(sessao) : sessao;
+        busca.desativarSessao();
+    }
 
     /**
      * Transforma uma lista de sessoes em um vetor String com seus respectivos
