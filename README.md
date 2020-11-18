@@ -15,13 +15,13 @@ O e-ticket é um gerenciador de reservas e entretenimentos de Auditórios, Cinem
   - Fazer Reservas/ Cancelar Reservas;
   - Criar Grupos de passeio e reservar para grupo; [Em andamento]
   - Dar notas a estabelecimentos, filmes e peças;
+  - Virar um cliente especial com descontos conforme sua fidelidade com o estabelecimento.
   - Acessar QR-code de suas reservas, facilitando sua identificação;
-  - Fazer buscas.
   
 - Administrador de Local:
   - Gerenciar seu estabelecimento;
   - Controlar o orçamento do seu estabelecimento; [Em andamento]
-  - Configurar eventos e promoções. [Em andamento]
+  - Configurar eventos simples e promoções.
   
 ## Estabelecimentos e eventos Aceitos
 - Auditório;
