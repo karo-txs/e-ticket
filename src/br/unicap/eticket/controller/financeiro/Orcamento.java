@@ -1,7 +1,6 @@
 package br.unicap.eticket.controller.financeiro;
 
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -19,8 +18,6 @@ public class Orcamento implements Serializable {
     private LocalGenerico local;
     private LocalDAO dao;
     private EntretenimentoDAO entD;
-    private SalaController salaC;
-    private SessaoController sessaoC;
 
     public Orcamento() {
     }
@@ -29,8 +26,6 @@ public class Orcamento implements Serializable {
         this.local = local;
         dao = new LocalDAO();
         entD = new EntretenimentoDAO();
-        salaC = new SalaController();
-        sessaoC = new SessaoController();
     }
 
     public double orcamentoTotalDia(Calendar data) {
@@ -53,7 +48,7 @@ public class Orcamento implements Serializable {
     }
 
     public double orcamentoTotalDia(Sala sala, Calendar data) throws CadastroInexistenteException {
-        Sala s = salaC.buscar(local.getId() + "-" + sala.getNome());
+        Sala s = FachadaLocais.getInstance().buscarSala(local.getId() + "-" + sala.getNome());
         String d = data.get(Calendar.DATE) + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR);
 
         List<Double> aux = dao.consultarValores("ganhosPorSalaNoDia", "local", local,
@@ -63,7 +58,7 @@ public class Orcamento implements Serializable {
     }
     
     public Double orcamentoTotalDia2(Sala sala, Calendar data) throws CadastroInexistenteException {
-        Sala s = salaC.buscar(local.getId() + "-" + sala.getNome());
+        Sala s = FachadaLocais.getInstance().buscarSala(local.getId() + "-" + sala.getNome());
         String d = data.get(Calendar.DATE) + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR);
 
         Double aux = (Double)dao.somarValores("ganhosPorSalaNoDia2", "local", local,
@@ -85,7 +80,7 @@ public class Orcamento implements Serializable {
     public double orcamentoTotalDia(Sessao sessao, Calendar data) throws CadastroInexistenteException {
        // Sessao buscaSessao = sessao.getId()==null  ? sessaoC.buscar(sessao) : sessao;
         
-        Sessao s = sessaoC.buscar(local.getId() + "-" + sessao.getSala().getNome() + ":" + sessao.getNome());
+        Sessao s = FachadaLocais.getInstance().buscarSessao(local.getId() + "-" + sessao.getSala().getNome() + ":" + sessao.getNome());
         String d = data.get(Calendar.DATE) + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR);
 
         List<Double> aux = dao.consultarValores("ganhosPorSessaoNoDia", "local", local,

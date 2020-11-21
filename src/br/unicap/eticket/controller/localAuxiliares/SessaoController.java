@@ -2,8 +2,6 @@ package br.unicap.eticket.controller.localAuxiliares;
 
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
 import br.unicap.eticket.controller.interfaces.BaseControl;
-import br.unicap.eticket.controller.interfaces.Formatador;
-import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.dao.ReservaDAO;
@@ -16,8 +14,6 @@ import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.entretenimentos.Entretenimento;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao> {
+class SessaoController implements BaseControl<Sessao>{
 
     private SessaoDAO dao;
 
@@ -41,7 +37,7 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
      * @throws CadastroInexistenteException
      */
     @Override
-    public void cadastrar(Sessao sessao) throws DadosRepetidosException, CadastroInexistenteException {
+   public void cadastrar(Sessao sessao) throws DadosRepetidosException, CadastroInexistenteException {
         ExecutorService es = Executors.newCachedThreadPool();
         LocalController localC = new LocalController();
 
@@ -344,77 +340,6 @@ public class SessaoController implements BaseControl<Sessao>, Formatador<Sessao>
         busca.desativarSessao();
     }
 
-    /**
-     * Transforma uma lista de sessoes em um vetor String com seus respectivos
-     * dados
-     *
-     * @param sessoes
-     * @return String[]
-     */
-    @Override
-    public String[] formataDados(List<Sessao> sessoes) {
-        String[] dadosFormatados;
-        dadosFormatados = new String[sessoes.size()];
-
-        int i = 0;
-        for (Sessao s : sessoes) {
-            if (s.isAtiva()) {
-                dadosFormatados[i] = s.toString();
-            }
-            i++;
-        }
-        return dadosFormatados;
-    }
-
-    /**
-     * Transforma uma lista de sessoes em um vetor String com seus respectivos
-     * dados abreviados
-     *
-     * @param sessoes
-     * @return String[]
-     */
-    public String[] formataDadosAbreviados(List<Sessao> sessoes) {
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        String[] dadosFormatados;
-        dadosFormatados = new String[sessoes.size()];
-
-        int i = 0;
-        for (Sessao s : sessoes) {
-            if (s.isAtiva()) {
-                dadosFormatados[i] = s.getSala().getTipoSala().toString() + " | " + s.getSala().getNome() + " | "
-                        + df.format(s.getDataInicial().getTime());
-            }
-            i++;
-        }
-        return dadosFormatados;
-    }
-
-    /**
-     * Retorna a lista de IDs de uma lista de sessoes
-     *
-     * @param sessoes
-     * @return Long[]
-     */
-    @Override
-    public Long[] listarIDs(List<Sessao> sessoes) {
-        Long[] idSessoes = new Long[sessoes.size()];
-        int i = 0;
-        for (Sessao s : sessoes) {
-            if (s.isAtiva()) {
-                idSessoes[i] = s.getId();
-            }
-            i++;
-        }
-        return idSessoes;
-    }
-
-    public Sessao[] converterListEmArray(List<Sessao> sessoes) {
-        Sessao[] dados = new Sessao[sessoes.size()];
-        int i = 0;
-        for (Sessao s : sessoes) {
-            dados[i] = s;
-            i++;
-        }
-        return dados;
-    }
+    
+    
 }

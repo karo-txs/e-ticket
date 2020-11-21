@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -294,10 +294,9 @@ public class TelaCadastrarSala extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadastrarMouseClicked
-        SalaController salaC = new SalaController();
         TiposDeSala tipo = TiposDeSala.valueOf(jcbTipoSala.getSelectedItem().toString());
         try {
-            salaC.cadastrar(local, tipo, fldNomeSala.getText(), Integer.parseInt(fldQtdCadx.getText()),
+            FachadaLocais.getInstance().cadastrar(local, tipo, fldNomeSala.getText(), Integer.parseInt(fldQtdCadx.getText()),
                     Integer.parseInt(fldQtdCady.getText()), Double.parseDouble(jfldValIngresso.getText()));
 
             FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));

@@ -1,8 +1,8 @@
 package br.unicap.eticket.view;
 
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.view.admin.TelaHomepageAdmin;
 import br.unicap.eticket.view.cliente.TelaHomepageCliente;
-import br.unicap.eticket.controller.usuarios.UsuarioController;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.model.usuarios.Admin;
 import br.unicap.eticket.model.usuarios.Cliente;
@@ -136,13 +136,13 @@ public class TelaInicio extends javax.swing.JPanel {
 
     private void jbtEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseClicked
 
-        UsuarioController userC = new UsuarioController();
+        
         String email = fldLogin.getText();
         String senha = String.valueOf(fldSenha.getPassword());
 
         Usuario u;
         try {
-            u = userC.login(email, senha);
+            u = FachadaUsuarios.getInstance().login(email, senha);
 
             if (u instanceof Cliente) {
                 FrameInicio.getFrame().setContentPane(new TelaHomepageCliente((Cliente) u));

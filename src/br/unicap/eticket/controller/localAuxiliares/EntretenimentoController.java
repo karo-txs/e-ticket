@@ -4,7 +4,6 @@ import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.interfaces.BuscasEntreterimento;
 import br.unicap.eticket.controller.auxiliares.Conversor;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
-import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.dao.EntretenimentoDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.function.Function;
 import br.unicap.eticket.controller.interfaces.FunctionSimple;
 
-public class EntretenimentoController implements BaseControl<Entretenimento>, BuscasEntreterimento {
+class EntretenimentoController implements BaseControl<Entretenimento>, BuscasEntreterimento {
 
     private EntretenimentoDAO dao;
 

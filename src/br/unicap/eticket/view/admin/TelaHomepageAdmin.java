@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import br.unicap.eticket.model.usuarios.Admin;
@@ -31,8 +31,7 @@ public class TelaHomepageAdmin extends javax.swing.JPanel {
         lblEntretenimentoMsg.setVisible(false);
         jpnScroll.setVisible(true);
 
-        EntretenimentoController entC = new EntretenimentoController();
-        List<Entretenimento> entretenimento = entC.entreterimentosEmCartaz(local);
+        List<Entretenimento> entretenimento = FachadaLocais.getInstance().entreterimentosEmCartaz(local);
 
         if (entretenimento.isEmpty()) {
             lblEntretenimentoMsg.setVisible(true);

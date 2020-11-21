@@ -1,7 +1,7 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.localAuxiliares.EventoController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.auxiliares.Formatador;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.auxiliares.Evento;
@@ -26,9 +26,8 @@ public class TelaCriarEventos extends javax.swing.JPanel {
     }
 
     private void initSessoes(LocalGenerico local) {
-        SessaoController sc = new SessaoController();
-        String[] dados = sc.formataDados(local.getSessoes());
-        sessoesAux = sc.converterListEmArray(local.getSessoes());
+        String[] dados = Formatador.formataDadosSessao(local.getSessoes());
+        sessoesAux = Formatador.converterListEmArray(local.getSessoes());
         
         lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
         lstEventos.setModel(new javax.swing.DefaultComboBoxModel<>(TipoEvento.eventos()));
@@ -347,7 +346,6 @@ public class TelaCriarEventos extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomePageMouseExited
 
     private void jbtAtivarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAtivarEventoMouseClicked
-        EventoController evtC = new EventoController();
         if (lstSessoes.getSelectedIndex() == -1) {
             JDialogsControl.mostrarPopUp("Selecione a sessão!", true);
         } else if (lstEventos.getSelectedIndex() == -1) {
@@ -357,7 +355,7 @@ public class TelaCriarEventos extends javax.swing.JPanel {
             Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
 
             try {
-                evtC.cadastrar(new Evento(selecionada, TipoEvento.eventoSelecionado(lstEventos.getSelectedValue())));
+                FachadaLocais.getInstance().cadastrar(new Evento(selecionada, TipoEvento.eventoSelecionado(lstEventos.getSelectedValue())));
                 JDialogsControl.mostrarPopUp("Evento Ativado!", false);
             } catch (CadastroInexistenteException | DadosRepetidosException ex) {
                 JDialogsControl.mostrarPopUp(ex.getMessage(), true);

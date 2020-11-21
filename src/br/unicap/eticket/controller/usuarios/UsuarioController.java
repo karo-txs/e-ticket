@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class UsuarioController {
+class UsuarioController {
 
     private UsuarioDAO dao;
 
@@ -53,5 +53,4 @@ public class UsuarioController {
         }
         return null;
     }
-
 }

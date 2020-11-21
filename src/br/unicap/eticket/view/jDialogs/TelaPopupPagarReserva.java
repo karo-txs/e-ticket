@@ -1,7 +1,7 @@
 package br.unicap.eticket.view.jDialogs;
 
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosFinanceirosInvalidosException;
 import br.unicap.eticket.model.auxiliares.Reserva;
@@ -31,11 +31,9 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTotal = new javax.swing.JLabel();
-        lblTotalApagar = new javax.swing.JLabel();
         fldCod = new javax.swing.JTextField();
-        jcbMes = new javax.swing.JComboBox<String>();
-        jcbAno = new javax.swing.JComboBox<String>();
+        jcbMes = new javax.swing.JComboBox<>();
+        jcbAno = new javax.swing.JComboBox<>();
         lblData = new javax.swing.JLabel();
         lblCodigo = new javax.swing.JLabel();
         fldNomeNoCartao = new javax.swing.JTextField();
@@ -52,16 +50,6 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblTotal.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        lblTotal.setForeground(new java.awt.Color(255, 255, 255));
-        lblTotal.setText("R$20,00");
-        getContentPane().add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 100, 30));
-
-        lblTotalApagar.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
-        lblTotalApagar.setForeground(new java.awt.Color(255, 255, 255));
-        lblTotalApagar.setText("Total a pagar:");
-        getContentPane().add(lblTotalApagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 100, 30));
-
         fldCod.setBackground(new java.awt.Color(204, 204, 204));
         fldCod.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         fldCod.setForeground(new java.awt.Color(102, 102, 102));
@@ -71,13 +59,13 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
         jcbMes.setBackground(new java.awt.Color(204, 204, 204));
         jcbMes.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         jcbMes.setForeground(new java.awt.Color(102, 102, 102));
-        jcbMes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-    Mês   -", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        jcbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-    Mês   -", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
         getContentPane().add(jcbMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 80, -1));
 
         jcbAno.setBackground(new java.awt.Color(204, 204, 204));
         jcbAno.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
         jcbAno.setForeground(new java.awt.Color(102, 102, 102));
-        jcbAno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-    Ano   -", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028" }));
+        jcbAno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-    Ano   -", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028" }));
         getContentPane().add(jcbAno, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 80, -1));
 
         lblData.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
@@ -143,7 +131,6 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
 
         jbtNao.setBackground(new java.awt.Color(227, 0, 0));
         jbtNao.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        jbtNao.setForeground(new java.awt.Color(0, 0, 0));
         jbtNao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
         jbtNao.setText("Cancelar");
         jbtNao.setBorder(null);
@@ -170,7 +157,6 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
 
         jbtSim.setBackground(new java.awt.Color(227, 0, 0));
         jbtSim.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        jbtSim.setForeground(new java.awt.Color(0, 0, 0));
         jbtSim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagensRework/botoes/BotaoComprido (1).png"))); // NOI18N
         jbtSim.setText("Concluir Pagamento");
         jbtSim.setBorder(null);
@@ -204,19 +190,7 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
             fldNumeroCartao.setText(dados.getNumero());
             fldNomeNoCartao.setText(dados.getNomeNoCartao());
             fldCod.setText(String.valueOf(dados.getCodigoSeguranca()));
-
-            double total;
-            if (cliente.isEspecial()) {
-                ReservaController rv = new ReservaController();
-                double[] ingresso = rv.mostrarIngresso(cliente, reserva);
-                total = ingresso[0];
-                //double desconto = this.reserva.getValorIngresso() * clienteE.getDesconto(this.reserva.getSessao().getLocal());
-                //total = this.reserva.getValorIngresso() - desconto;
-                lblTotal.setText(String.format("R$%.2f", total));
-            } else {
-                total = this.reserva.getValorIngresso();
-                lblTotal.setText(String.format("R$%.2f", total));
-            }
+    
         }
     }
 
@@ -242,16 +216,16 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtSimMouseExited
 
     private void jbtAlterarDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarDadosMouseClicked
-        ClienteController clienteC = new ClienteController();
+       
         if (jbtAlterarDados.getText().equalsIgnoreCase("Salvar")) {
             Calendar data = Calendar.getInstance();
             if (jcbAno.getSelectedIndex() != -1 && jcbMes.getSelectedIndex() != -1) {
                 data.set(Calendar.YEAR, Integer.parseInt(jcbAno.getSelectedItem().toString()));
                 data.set(Calendar.MONTH, jcbMes.getSelectedIndex() - 1);
                 try {
-                    clienteC.preencherDadosFinanceiros(cliente,fldNumeroCartao.getText(), fldNomeNoCartao.getText(),
+                    FachadaUsuarios.getInstance().preencherDadosFinanceiros(cliente,fldNumeroCartao.getText(), fldNomeNoCartao.getText(),
                             data, Integer.parseInt(fldCod.getText()));
-                    cliente = clienteC.buscar(cliente);
+                    cliente = FachadaUsuarios.getInstance().buscar(cliente);
                 } catch (DadosFinanceirosInvalidosException | CadastroInexistenteException ex) {
                     JDialogsControl.mostrarPopUp(ex.getMessage(), true);
                 }
@@ -328,7 +302,5 @@ public class TelaPopupPagarReserva extends javax.swing.JDialog {
     private javax.swing.JLabel lblLinhaDadP;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNum;
-    private javax.swing.JLabel lblTotal;
-    private javax.swing.JLabel lblTotalApagar;
     // End of variables declaration//GEN-END:variables
 }

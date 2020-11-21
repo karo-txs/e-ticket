@@ -1,7 +1,7 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -511,9 +511,9 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_lblDeslogarMouseExited
 
     private void jbtAlterarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarPerfilMouseClicked
-        ClienteController clienteC = new ClienteController();
+        
         if (jbtAlterarPerfil.getText().equalsIgnoreCase("Salvar")) {
-            ClienteController cc = new ClienteController();
+            
             Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                         fldRua.getText(), fldNum.getText(), fldComplemento.getText());
             
@@ -522,13 +522,13 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
 
             try {
                 if (fldEmail.getText() != null && !fldEmail.getText().equalsIgnoreCase(cliente.getEmail())) {
-                    clienteC.atualizarChave(cliente,fldEmail.getText());
+                    FachadaUsuarios.getInstance().atualizarChave(cliente,fldEmail.getText());
                 }
                 if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.cliente.getSenha())) {
                     novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));
                 }
-                cc.atualizar(novo);
-                this.cliente = cc.buscar(cliente);
+                FachadaUsuarios.getInstance().atualizar(novo);
+                this.cliente = FachadaUsuarios.getInstance().buscar(cliente);
                 this.initDados(cliente);
                 JDialogsControl.mostrarPopUp("Atualizado Com Sucesso!", false);
 
@@ -566,8 +566,8 @@ public class TelaMeuPerfilCliente extends javax.swing.JPanel {
         TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Excluir conta? Não é possível reverter!");
 
         if (telaConf.getConfirmarAcao()) {
-            ClienteController cliC = new ClienteController();
-            cliC.remover(cliente);
+           
+            FachadaUsuarios.getInstance().remover(cliente);
 
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();

@@ -2,8 +2,7 @@ package br.unicap.eticket.controller.usuarios;
 
 import br.unicap.eticket.controller.interfaces.BaseControl;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
@@ -25,7 +24,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClienteController extends UsuarioController implements BaseControl<Cliente> {
+class ClienteController extends UsuarioController implements BaseControl<Cliente> {
 
     private ClienteDAO dao;
 
@@ -172,14 +171,12 @@ public class ClienteController extends UsuarioController implements BaseControl<
      */
     @Override
     public void remover(Cliente cliente) throws CadastroInexistenteException {
-        ReservaController rc = new ReservaController();
-        
         Cliente busca = cliente.getId() == null ? this.buscar(cliente) : cliente;
         for(Reserva r: busca.getReservas()){
             busca.getReservas().remove(r);
             dao.atualizarAtomico(busca);
             r.setSessao(null);
-            rc.remover(r);
+            FachadaLocais.getInstance().remover(r);
         }
         
         dao.abrirTransacao();
@@ -269,8 +266,7 @@ public class ClienteController extends UsuarioController implements BaseControl<
     public Reserva fazerReserva(Cliente cliente, Sessao sessao, String numCadeira) throws CadastroInexistenteException, DadosInvalidosException, DadosRepetidosException {
         ReservaDAO reservaC = new ReservaDAO();
         ClienteDAO dao = new ClienteDAO();
-        SessaoController sc = new SessaoController();
-        Sessao buscaS = sessao.getId() == null ? sc.buscar(sessao) : sessao;
+        Sessao buscaS = sessao.getId() == null ? FachadaLocais.getInstance().buscar(sessao) : sessao;
 
         Reserva busca = reservaC.buscarReserva(new Reserva(buscaS, numCadeira));
         Cliente c = cliente.getId() == null ? dao.buscarCliente(cliente) : cliente;

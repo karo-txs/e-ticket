@@ -1,8 +1,8 @@
 package br.unicap.eticket.view.cliente;
 
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.viewAuxiliares.VetorEntretenimentos;
-import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.entretenimentos.Entretenimento;
 import br.unicap.eticket.model.usuarios.Cliente;
@@ -44,10 +44,9 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
     }
 
     private void initCliente() {
-        ClienteController cc = new ClienteController();
         this.lblTier.setVisible(false);
         this.lblUsername.setText("@" + cliente.getNickName());
-        String img = cc.retornaImagemTier(cliente, this.local);
+        String img = FachadaUsuarios.getInstance().retornaImagemTier(cliente, this.local);
         if (img != null) {
             lblTier.setVisible(true);
             lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
@@ -57,8 +56,7 @@ public class TelaHomepageLocal extends javax.swing.JPanel {
     private void initEntretenimentos() {
         lblEntretenimentoMsg.setVisible(false);
         jpnScroll.setVisible(true);
-        EntretenimentoController entC = new EntretenimentoController();
-        List<Entretenimento> entretenimento = entC.entreterimentosEmCartaz(local);
+        List<Entretenimento> entretenimento = FachadaLocais.getInstance().entreterimentosEmCartaz(local);
 
         if (entretenimento.isEmpty()) {
             lblEntretenimentoMsg.setVisible(true);

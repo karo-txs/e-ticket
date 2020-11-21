@@ -1,8 +1,8 @@
 package br.unicap.eticket.model.locais;
 
-import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.controller.auxiliares.Conversor;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -112,9 +112,8 @@ public abstract class LocalGenerico implements Serializable, Cloneable {
      * @throws AtualizacaoMalSucedidaException
      */
     public void atualizarEnd(Endereco end) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
-        LocalController localC = new LocalController();
         LocalDAO localD = new LocalDAO();
-        LocalGenerico busca = this.getId() == null ? localC.buscar(this) : this;
+        LocalGenerico busca = this.getId() == null ? FachadaLocais.getInstance().buscarLocal(this) : this;
 
         if (!busca.getEndereco().equals(end)) {
             if (ValidaDados.validaEndereco(end)) {

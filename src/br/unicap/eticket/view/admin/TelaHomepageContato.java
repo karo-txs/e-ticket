@@ -1,7 +1,7 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.locais.LocalController;
-import br.unicap.eticket.controller.usuarios.AdminController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
@@ -14,12 +14,10 @@ import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
 import java.awt.Image;
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 public class TelaHomepageContato extends javax.swing.JPanel {
@@ -423,10 +421,9 @@ public class TelaHomepageContato extends javax.swing.JPanel {
 
     private void initContato() {
         this.trocarEditable();
-        LocalController localC = new LocalController();
         LocalGenerico atual;
         try {
-            atual = localC.buscarPorId(this.local.getId());
+            atual = FachadaLocais.getInstance().buscarLocalPorId(this.local.getId());
             fldTelefone.setText(atual.getTelefone());
             fldEmailLocal.setText(atual.getEmail());
             fldEmailAdm.setText(atual.getAdmin().getEmail());
@@ -522,8 +519,7 @@ public class TelaHomepageContato extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomePageMouseExited
 
     private void jbtAlterarContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarContatoMouseClicked
-        AdminController admC = new AdminController(); 
-        LocalController localC = new LocalController();
+      
         if (jbtAlterarContato.getText().equalsIgnoreCase("Salvar")) {
            
             LocalGenerico novo;
@@ -533,9 +529,9 @@ public class TelaHomepageContato extends javax.swing.JPanel {
                 novo.setEmail(fldEmailLocal.getText());
                 novo.setRedeSocial_facebook(fldFacebook.getText());
                 novo.setRedeSocial_instragam(fldInstagram.getText());
-                localC.atualizar(novo);
+                FachadaLocais.getInstance().atualizar(novo);
                 
-                admC.atualizarChave(adm, fldEmailAdm.getText());
+                FachadaUsuarios.getInstance().atualizarChave(adm, fldEmailAdm.getText());
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(TelaHomepageContato.class.getName()).log(Level.SEVERE, null, ex);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {

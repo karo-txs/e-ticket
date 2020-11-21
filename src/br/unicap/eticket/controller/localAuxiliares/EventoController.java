@@ -7,7 +7,7 @@ import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.auxiliares.Evento;
 
-public class EventoController implements BaseControl<Evento> {
+class EventoController implements BaseControl<Evento> {
 
     private EventoDAO dao;
 

@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.viewAuxiliares.MatrizCadeiras;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
@@ -11,13 +11,14 @@ import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
 import java.awt.GridLayout;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JLabel;
 
 public class TelaSelecionarAssentos extends javax.swing.JPanel {
 
     private Cliente cliente;
     private Sessao sessao;
-    private HashMap<String, Boolean> ocupacao;
+    private Map<String, Boolean> ocupacao;
     MatrizCadeiras assentos;
 
     public TelaSelecionarAssentos(Cliente cliente, Sessao sessao) throws CadastroInexistenteException {
@@ -30,10 +31,10 @@ public class TelaSelecionarAssentos extends javax.swing.JPanel {
     }
 
     private void initCliente() {
-        ClienteController cc = new ClienteController();
+       
         this.lblTier1.setVisible(false);
         this.lblUsername.setText("@" + cliente.getNickName());
-        String img = cc.retornaImagemTier(cliente, this.sessao.getLocal());
+        String img = FachadaUsuarios.getInstance().retornaImagemTier(cliente, this.sessao.getLocal());
         if (img != null) {
             lblTier1.setVisible(true);
             lblTier1.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));

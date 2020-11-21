@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.jDialogs;
 
-import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.model.entretenimentos.Classificacao;
@@ -17,17 +17,11 @@ public class TelaPopupCadPalestra extends javax.swing.JDialog {
     private CapturarCapa captura = new CapturarCapa();
     private Auditorio local;
 
-    public TelaPopupCadPalestra(java.awt.Frame parent, boolean modal, LocalGenerico l) {
-        super(parent, modal);
-        initComponents();
-        this.local = (Auditorio) l;
-        this.setBackground(new java.awt.Color(0, 0, 0, 0));
-    }
-    
     public TelaPopupCadPalestra(LocalGenerico local) {
         initComponents();
-        this.local = (Auditorio)local;
+        this.local = (Auditorio) local;
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
+        jcbClassif.setModel(new javax.swing.DefaultComboBoxModel<>(Classificacao.tipos()));
     }
 
     @SuppressWarnings("unchecked")
@@ -153,21 +147,6 @@ public class TelaPopupCadPalestra extends javax.swing.JDialog {
     private void jbtSelecionarImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarImgMouseClicked
         captura.setLocationRelativeTo(null);
         captura.setVisible(true);
-       
-//        
-//        
-//        EntretenimentoController entC = new EntretenimentoController();
-//        try {
-//
-//            entC.cadastrar(new Palestra(fldNome.getText(), fldPalestrante.getText(), Integer.parseInt(fldDuracao.getText()),
-//                    Classificacao.getClassificacao(this.jcbClassif.getSelectedItem().toString()),
-//                    jTextSinopse.getText(),this.local), this.local, null);
-//            p = new Palestra(fldNome.getText(), this.local);
-//            this.dispose();
-//
-//        } catch (DadosInvalidosException ex) {
-//            JDialogsControl.mostrarPopUp(ex.getMessage(), true);
-//        }
     }//GEN-LAST:event_jbtSelecionarImgMouseClicked
 
     private void jbtSelecionarImgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarImgMouseEntered
@@ -179,29 +158,28 @@ public class TelaPopupCadPalestra extends javax.swing.JDialog {
     }//GEN-LAST:event_jbtSelecionarImgMouseExited
 
     private void jbtSelecionarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSelecionarImgActionPerformed
-        
+
     }//GEN-LAST:event_jbtSelecionarImgActionPerformed
 
     private void jbtConfirmaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtConfirmaMouseClicked
-        EntretenimentoController entC = new EntretenimentoController();
-        Entretenimento ent =  new Palestra(fldNome.getText(), fldPalestrante.getText(),
+        Entretenimento ent = new Palestra(fldNome.getText(), fldPalestrante.getText(),
                 Integer.parseInt(fldDuracao.getText()), Classificacao.getClassificacao(this.jcbClassif.getSelectedItem().toString()),
-                jTextSinopse.getText(),local);
-        
+                jTextSinopse.getText(), local);
+
         try {
-            entC.cadastrar(ent);
+            FachadaLocais.getInstance().cadastrar(ent);
         } catch (DadosInvalidosException ex) {
             Logger.getLogger(TelaPopupCadPalestra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-             if (captura.getImagemSelecionada() != null) {
-                try {
-                    entC.modificarCapa(ent,captura.getImagemSelecionada());
-                } catch (CadastroInexistenteException ex) {
-                    Logger.getLogger(TelaPopupCadPalestra.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+        if (captura.getImagemSelecionada() != null) {
+            try {
+                FachadaLocais.getInstance().modificarCapa(ent, captura.getImagemSelecionada());
+            } catch (CadastroInexistenteException ex) {
+                Logger.getLogger(TelaPopupCadPalestra.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.dispose();
+        }
+        this.dispose();
     }//GEN-LAST:event_jbtConfirmaMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

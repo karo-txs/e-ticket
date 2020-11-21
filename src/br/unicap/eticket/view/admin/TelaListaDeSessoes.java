@@ -1,6 +1,7 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.auxiliares.Formatador;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
@@ -22,9 +23,8 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
     }
 
     private void initSessoes(LocalGenerico local) {
-        SessaoController sesC = new SessaoController();
-        String[] dados = sesC.formataDados(local.getSessoes());
-        sessoesAux = sesC.converterListEmArray(local.getSessoes());
+        String[] dados = Formatador.formataDadosSessao(local.getSessoes());
+        sessoesAux = Formatador.converterListEmArray(local.getSessoes());
         lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(dados));
     }
 
@@ -295,10 +295,8 @@ public class TelaListaDeSessoes extends javax.swing.JPanel {
             TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja Desativar?");
             if (telaConf.getConfirmarAcao()) {
                 Sessao selecionada = sessoesAux[lstSessoes.getSelectedIndex()];
-
-                SessaoController sessaoC = new SessaoController();
                 try {
-                    sessaoC.desativar(sessaoC.buscar(selecionada)); 
+                    FachadaLocais.getInstance().desativarSessao(FachadaLocais.getInstance().buscar(selecionada));
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
                     FrameInicio.getFrame().revalidate();

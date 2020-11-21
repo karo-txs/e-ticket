@@ -1,7 +1,7 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -45,10 +45,10 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }
 
     private void initCliente() {
-        ClienteController cc = new ClienteController();
+        
         this.lblTier.setVisible(false);
         this.lblUsername.setText("@" + cliente.getNickName());
-        String img = cc.retornaImagemTier(cliente, sessao.getLocal());
+        String img = FachadaUsuarios.getInstance().retornaImagemTier(cliente, sessao.getLocal());
         if (img != null) {
             lblTier.setVisible(true);
             lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
@@ -357,7 +357,6 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initReserva() {
-        ReservaController rv = new ReservaController();
         DateFormat df = new SimpleDateFormat("HH:mm");
         DateFormat dfDia = new SimpleDateFormat("dd/MM/yyyy");
         double[] ingresso = null;
@@ -375,7 +374,7 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
         lblDataCompleta.setText(dfDia.format(this.sessao.getDataInicial().getTime()));
         lblAssento.setText(numCadeira);
 
-        ingresso = rv.mostrarIngresso(cliente, reserva);
+        ingresso = FachadaLocais.getInstance().mostrarIngresso(cliente, reserva);
         lblTotal.setText(String.format("R$ %.2f", ingresso[0]));
         lblPreco.setText(String.format("R$ %.2f", ingresso[1]));
         lblDesconto.setText(String.format("%.2f%%", ingresso[2] * 100));
@@ -396,9 +395,9 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
     }
 
     private void jbtFinalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtFinalizarMouseClicked
-        ClienteController clienteC = new ClienteController();
+        
         try {
-            Reserva rFeita = clienteC.fazerReserva(cliente, sessao, numCadeira); 
+            Reserva rFeita = FachadaUsuarios.getInstance().fazerReserva(cliente, sessao, numCadeira); 
 
             TelaPopupPagarReserva ppPagar = new TelaPopupPagarReserva(FrameInicio.getFrame(), true, cliente, this.reserva);
             ppPagar.setLocationRelativeTo(null);
@@ -407,20 +406,20 @@ public class TelaFinalizarReserva extends javax.swing.JPanel {
 
             if (ppPagar.getConfirmarAcao()) {
                 try {
-                    double valor = clienteC.pagaReserva(cliente, rFeita);
+                    double valor = FachadaUsuarios.getInstance().pagaReserva(cliente, rFeita);
                 } catch (SubiuDeTierException ex) {
                     JDialogsControl.mostrarPopUp(new TelaPopupSubiuTier(FrameInicio.getFrame(), true, (ClienteEspecial) cliente,
                             this.reserva.getSessao().getLocal()));
                 }
 
-                ClienteController cc = new ClienteController();
-                cliente = cc.buscar(cliente);
+                
+                cliente = FachadaUsuarios.getInstance().buscar(cliente);
 
                 TelaPopupQRCode ppQrCode = new TelaPopupQRCode(FrameInicio.getFrame(), true, rFeita.getQrCode(), cliente);
                 ppQrCode.setLocationRelativeTo(null);
                 ppQrCode.setVisible(true);
             } else {
-                clienteC.cancelarReserva(cliente, rFeita);
+                FachadaUsuarios.getInstance().cancelarReserva(cliente, rFeita);
                 JDialogsControl.mostrarPopUp("Operação Cancelada!", true);
             }
         } catch (CadastroInexistenteException | DadosRepetidosException | DadosInvalidosException ex) {

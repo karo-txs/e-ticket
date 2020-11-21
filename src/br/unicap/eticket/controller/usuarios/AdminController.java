@@ -1,8 +1,8 @@
 package br.unicap.eticket.controller.usuarios;
 
 import br.unicap.eticket.controller.interfaces.BaseControl;
-import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.dao.AdminDAO;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AdminController extends UsuarioController implements BaseControl<Admin> {
+class AdminController extends UsuarioController implements BaseControl<Admin> {
 
     private AdminDAO dao;
 
@@ -201,10 +201,9 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
      */
     @Override
     public void remover(Admin adm) throws CadastroInexistenteException {
-        LocalController localC = new LocalController();
         Admin busca = adm.getId() == null ? this.buscar(adm) : adm;
         busca.getLocalAdministrado().setAdmin(null);
-        localC.remover(busca.getLocalAdministrado());
+        FachadaLocais.getInstance().remover(busca.getLocalAdministrado());
         
         dao.abrirTransacao();
         dao.removerDetached(adm);
@@ -218,7 +217,6 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
      * @throws CadastroInexistenteException
      */
     public void removerLocalAdm(Admin adm) throws CadastroInexistenteException {
-        LocalController localC = new LocalController();
         dao.abrirTransacao();
         Admin busca = adm.getId() == null ? this.buscar(adm) : adm;
         LocalGenerico auxLocal = busca.getLocalAdministrado();
@@ -228,7 +226,7 @@ public class AdminController extends UsuarioController implements BaseControl<Ad
             dao.atualizar(busca);
             dao.fecharTransacao();
 
-            localC.remover(auxLocal);
+            FachadaLocais.getInstance().remover(auxLocal);
         }
     }
 

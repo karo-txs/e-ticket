@@ -1,7 +1,6 @@
 package br.unicap.eticket.controller.localAuxiliares;
 
 import br.unicap.eticket.controller.interfaces.BaseControl;
-import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.dao.SalaDAO;
@@ -21,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class SalaController implements BaseControl<Sala> {
+class SalaController implements BaseControl<Sala> {
 
     private SalaDAO dao;
 

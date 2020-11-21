@@ -1,10 +1,9 @@
-package br.unicap.eticket.controller.locais;
+package br.unicap.eticket.controller.localAuxiliares;
 
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
 import br.unicap.eticket.controller.interfaces.BaseControl;
-import br.unicap.eticket.controller.usuarios.AdminController;
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
 import br.unicap.eticket.controller.interfaces.FunctionSimple;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -24,7 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LocalController implements BaseControl<LocalGenerico> {
+class LocalController implements BaseControl<LocalGenerico> {
 
     private LocalDAO dao;
 
@@ -44,7 +43,7 @@ public class LocalController implements BaseControl<LocalGenerico> {
     @Override
     public void cadastrar(LocalGenerico local) throws DadosRepetidosException, DadosInvalidosException, CadastroInexistenteException {
         ExecutorService es = Executors.newCachedThreadPool();
-        AdminController admDao = new AdminController();
+        
 
         if (!ValidaDados.validaEndereco(local.getEndereco())) {
             throw new DadosInvalidosException("Endereço");
@@ -60,7 +59,7 @@ public class LocalController implements BaseControl<LocalGenerico> {
         LocalGenerico buscaLocal = null;
 
         try {
-            adm = es.submit(() -> admDao.buscar(local.getAdmin())).get();
+            adm = es.submit(() -> FachadaUsuarios.getInstance().buscar(local.getAdmin())).get();
             buscaLocal = es.submit(() -> dao.buscarLocal(local)).get();
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(LocalController.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +70,7 @@ public class LocalController implements BaseControl<LocalGenerico> {
             adm.setLocalAdministrado(local);
             dao.incluir(local);
             try {
-                admDao.atualizar(adm);
+                FachadaUsuarios.getInstance().atualizar(adm);
             } catch (AtualizacaoMalSucedidaException ex) {
                 throw new DadosInvalidosException(ex.getMessage());
             }
@@ -94,7 +93,7 @@ public class LocalController implements BaseControl<LocalGenerico> {
         ExecutorService es = Executors.newCachedThreadPool();
         SalaController sd = new SalaController();
         if (local instanceof Teatro) {
-            Teatro busca = null;
+            Teatro busca = null; 
             Sala buscaSala = null;
 
             try {
@@ -158,36 +157,6 @@ public class LocalController implements BaseControl<LocalGenerico> {
         } else {
             throw new CadastroInexistenteException("Local");
         }
-    }
-
-    /**
-     * Retorna todos os Teatros Cadastrados
-     *
-     * @return locais
-     */
-    public List<LocalGenerico> todosTeatros() {
-        List<LocalGenerico> locais = dao.consultar("todosTeatros");
-        return locais;
-    }
-
-    /**
-     * Retorna Todos os Cinemas Cadastrados
-     *
-     * @return
-     */
-    public List<LocalGenerico> todosCinemas() {
-        List<LocalGenerico> locais = dao.consultar("todosCinemas");
-        return locais;
-    }
-
-    /**
-     * Retorna Todos os Auditorios Cadastrados
-     *
-     * @return
-     */
-    public List<LocalGenerico> todosAuditorios() {
-        List<LocalGenerico> locais = dao.consultar("todosAuditorios");
-        return locais;
     }
 
     public List<LocalGenerico> todosLocais(Class c) {

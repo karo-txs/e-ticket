@@ -1,7 +1,6 @@
 package br.unicap.eticket.controller.localAuxiliares;
 
 import br.unicap.eticket.controller.interfaces.BaseControl;
-import br.unicap.eticket.controller.interfaces.Formatador;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
@@ -9,9 +8,8 @@ import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.model.usuarios.ClienteEspecial;
-import java.util.List;
 
-public class ReservaController implements BaseControl<Reserva>, Formatador<Reserva> {
+class ReservaController implements BaseControl<Reserva> {
 
     private ReservaDAO dao;
 
@@ -122,47 +120,5 @@ public class ReservaController implements BaseControl<Reserva>, Formatador<Reser
             ingresso[2] = 0;
         }
         return ingresso;
-    }
-
-    /**
-     * Transforma a lista de reservas em um vetor String com informações adicionais
-     * @param reservas
-     * @return
-     */
-    @Override
-    public String[] formataDados(List<Reserva> reservas) {
-        String dados[];
-        dados = new String[reservas.size()];
-        int i = 0;
-        if (reservas != null) {
-            for (Reserva r : reservas) {
-                if (!r.getSessao().isAtiva() && r.isAvaliacaoDisp()) {
-                    dados[i] = r.toString() + " - Avaliação Disponível!";
-                } else {
-                    dados[i] = r.toString();
-                }
-                i++;
-            }
-        }
-        return dados;
-    }
-
-    /**
-     * Lista os ids de uma determinada lista de reservas
-     * 
-     * @param reservas
-     * @return
-     */
-    @Override
-    public Long[] listarIDs(List<Reserva> reservas) {
-        int i = 0;
-        Long[] idReservas = new Long[reservas.size()];
-        if (reservas != null) {
-            for (Reserva r : reservas) {
-                idReservas[i] = r.getId();
-                i++;
-            }
-        }
-        return idReservas;
     }
 }

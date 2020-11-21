@@ -1,15 +1,12 @@
 package br.unicap.eticket.testes;
 
-import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.controller.financeiro.Orcamento;
-import br.unicap.eticket.controller.locais.LocalController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
-import br.unicap.eticket.dao.ClienteDAO;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.dao.LocalDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
-import br.unicap.eticket.model.locais.Cinema;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.entretenimentos.Filme;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
@@ -17,13 +14,9 @@ import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.locaisAuxiliares.TiposDeSala;
 import br.unicap.eticket.model.usuarios.Cliente;
 import java.util.Calendar;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TesteOrcamento {
     public static void main(String[] args) throws CadastroInexistenteException{
-        LocalController tC = new LocalController();
         
         //Considerando a existencia de:
         LocalDAO localC = new LocalDAO();
@@ -38,8 +31,8 @@ public class TesteOrcamento {
         data.set(Calendar.MONTH, 11);
         data.set(Calendar.DAY_OF_MONTH, 9);
         
-        ClienteController cc = new ClienteController();
-        Cliente c = cc.buscar(new Cliente("kah@hotmail.com","ka"));
+        
+        Cliente c = FachadaUsuarios.getInstance().buscar(new Cliente("kah@hotmail.com","ka"));
         try {
             c.fazerReserva(sessao1, "A3");
         } catch (DadosRepetidosException ex) {
@@ -50,7 +43,7 @@ public class TesteOrcamento {
         
         
         //Fazendo orçamentos
-        LocalGenerico cine = tC.buscar(cine1);
+        LocalGenerico cine = FachadaLocais.getInstance().buscarLocal(cine1);
         Orcamento o = new Orcamento(cine); //criando orcamento do cinema
         
         double orcamentoDia = o.orcamentoTotalDia(data);

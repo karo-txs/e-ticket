@@ -1,15 +1,16 @@
 package br.unicap.eticket.model.locaisAuxiliares;
 
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.model.entretenimentos.Entretenimento;
-import br.unicap.eticket.controller.localAuxiliares.EventoController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.dao.SessaoDAO;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Evento;
 import br.unicap.eticket.model.auxiliares.Reserva;
+import br.unicap.eticket.model.factoryMethod.GerenciadorMap;
 import br.unicap.eticket.model.locais.LocalGenerico;
+import br.unicap.eticket.model.usuarios.TierCliente;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -87,7 +89,6 @@ public class Sessao implements Serializable {
         this.entretenimento = entreterimento;
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         data = df.format(this.getDataFinal().getTime());
-
     }
 
     /**
@@ -99,12 +100,11 @@ public class Sessao implements Serializable {
      */
     public void atualizarNome(String novoNome) throws CadastroInexistenteException, AtualizacaoMalSucedidaException {
         SessaoDAO sd = new SessaoDAO();
-        SessaoController sc = new SessaoController();
-        Sessao busca = this.getId() == null ? sc.buscar(this) : this;
+        Sessao busca = this.getId() == null ? FachadaLocais.getInstance().buscar(this) : this;
         String nomeSessao = busca.getLocal().getId() + "-" + busca.getSala().getNome() + ":" + novoNome;
         //Se uma sessao com mesmo nome não existe, logo é possivel modificar seu nome
         try {
-            Sessao buscaNovoNome = sc.buscar(nomeSessao);
+            Sessao buscaNovoNome = FachadaLocais.getInstance().buscarSessao(nomeSessao);
             throw new AtualizacaoMalSucedidaException("Nome da Sessao");
         } catch (CadastroInexistenteException ex) {
             busca.setNome(novoNome);
@@ -118,10 +118,9 @@ public class Sessao implements Serializable {
      * @return HashMap
      * @throws CadastroInexistenteException
      */
-    public HashMap<String, Boolean> ocupacaoDeAssentosDaSessao() throws CadastroInexistenteException {
+    public Map<String, Boolean> ocupacaoDeAssentosDaSessao() throws CadastroInexistenteException {
         ReservaDAO reservaD = new ReservaDAO();
-        SessaoController sc = new SessaoController();
-        Sessao busca = this.getId() == null ? sc.buscar(this) : this;
+        Sessao busca = this.getId() == null ? FachadaLocais.getInstance().buscar(this) : this;
 
         Sala sala = busca.getSala();
         List<Reserva> reservas = reservaD.consultar("reservasDaSessao", "sessao", busca);
@@ -131,8 +130,8 @@ public class Sessao implements Serializable {
         String nomeCadeira;
         char numLinha = 'A';
         int numColuna = 1;
-
-        LinkedHashMap<String, Boolean> assentos = new LinkedHashMap<>();
+        GerenciadorMap<String, Boolean> gm = new GerenciadorMap<>();
+        Map<String, Boolean> assentos = gm.criaMap();
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 nomeCadeira = numLinha + "" + numColuna;
@@ -143,9 +142,9 @@ public class Sessao implements Serializable {
             numLinha++;
         }
 
-        for (Reserva r : reservas) {
+        reservas.forEach((r) -> {
             assentos.replace(r.getAssento(), Boolean.FALSE, Boolean.TRUE);
-        }
+        });
         return assentos;
     }
 
@@ -172,8 +171,7 @@ public class Sessao implements Serializable {
      * @throws CadastroInexistenteException
      */
     public boolean permitirAvaliacao() throws CadastroInexistenteException {
-        SessaoController sc = new SessaoController();
-        Sessao busca = this.getId() == null ? sc.buscar(this) : this;
+        Sessao busca = this.getId() == null ? FachadaLocais.getInstance().buscar(this) : this;
         return !busca.isAtiva();
     }
 
@@ -189,10 +187,9 @@ public class Sessao implements Serializable {
 
     public void ativarEvento(boolean b) throws CadastroInexistenteException {
         SessaoDAO sd = new SessaoDAO();
-        SessaoController sc = new SessaoController();
         sd.abrirTransacao();
 
-        Sessao busca = sc.buscar(this);
+        Sessao busca = FachadaLocais.getInstance().buscar(this);
         busca.setEventoAtivado(b);
 
         sd.atualizar(busca);
@@ -201,12 +198,10 @@ public class Sessao implements Serializable {
 
     //Gets e Sets
     public double getValorIngresso() throws CadastroInexistenteException {
-        SessaoController sc = new SessaoController();
-        Sessao buscaS = this.getId() == null ? sc.buscar(this) : this;
-        EventoController ec = new EventoController();
+        Sessao buscaS = this.getId() == null ? FachadaLocais.getInstance().buscar(this) : this;
 
         if (buscaS.isEventoAtivado()) {
-            Evento ev = ec.buscar(new Evento(buscaS));
+            Evento ev = FachadaLocais.getInstance().buscar(new Evento(buscaS));
             if (buscaS.getQtdAssentosOcupados() < ev.getTipoEvento().getQtd()) {
                 return 0;
             } else {

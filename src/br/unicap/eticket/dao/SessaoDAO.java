@@ -1,7 +1,6 @@
 package br.unicap.eticket.dao;
 
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
-import br.unicap.eticket.controller.locais.LocalController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
@@ -38,8 +37,7 @@ public class SessaoDAO extends BaseDAO<Sessao> {
     }
 
     public List<Sessao> sessoesPorData(Sala sala, Calendar inicio, Calendar fim) throws CadastroInexistenteException {
-        SalaController sc = new SalaController();
-        Sala buscaSala = sala.getId() == null ? sc.buscar(sala) : sala;
+        Sala buscaSala = sala.getId() == null ? FachadaLocais.getInstance().buscar(sala) : sala;
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String data1 = df.format(inicio.getTime());
@@ -58,8 +56,7 @@ public class SessaoDAO extends BaseDAO<Sessao> {
     }
 
     public List<Sessao> sessoesPorData(LocalGenerico local, Calendar inicio, Calendar fim) throws CadastroInexistenteException {
-        LocalController lc = new LocalController();
-        LocalGenerico buscaLocal = local.getId() == null ? lc.buscar(local) : local;
+        LocalGenerico buscaLocal = local.getId() == null ? FachadaLocais.getInstance().buscarLocal(local) : local;
         System.out.println("LOCALID"+buscaLocal.getId());
         
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

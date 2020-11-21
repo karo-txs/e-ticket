@@ -1,7 +1,7 @@
 package br.unicap.eticket.view.admin;
 
 import br.unicap.eticket.controller.auxiliares.Conversor;
-import br.unicap.eticket.controller.locais.LocalController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -609,13 +609,12 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtLocalizarCEPMouseExited
 
     private void jbtAlterarEndMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarEndMouseClicked
-        LocalController localC = new LocalController();
-        if (jbtAlterarEnd.getText().equalsIgnoreCase("Salvar")) {
+       if (jbtAlterarEnd.getText().equalsIgnoreCase("Salvar")) {
             try {
                 Endereco novoEnd = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(), fldBairro.getText(),
                         fldRua.getText(), fldNum.getText(), fldComplemento.getText());
                 if (!this.local.getEndereco().equals(novoEnd)) {
-                    localC.atualizarChave(local, novoEnd);
+                    FachadaLocais.getInstance().atualizarChave(local, novoEnd);
                 }
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException ex) {
                 JDialogsControl.mostrarPopUp(ex.getMessage(), true);
@@ -639,9 +638,8 @@ public class TelaHomepageEndereco extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtAlterarEndActionPerformed
 
     private void jbtAlterarBannerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseClicked
-        LocalController localC = new LocalController();
         String caminho = EntradaImagens.caminhoBanner(jlbBanner, this);
-        localC.inserirBanner(local, caminho);
+        FachadaLocais.getInstance().inserirBanner(local, caminho);
     }//GEN-LAST:event_jbtAlterarBannerMouseClicked
 
     private void jbtAlterarBannerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarBannerMouseEntered

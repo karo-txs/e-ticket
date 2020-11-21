@@ -1,6 +1,6 @@
 package br.unicap.eticket.model.auxiliares;
 
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.dao.ReservaDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
@@ -27,38 +27,38 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "reservas")
 public class Reserva implements Serializable, Comparable<Reserva> {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    
+
     @Lob
     @Column(name = "codigo", columnDefinition = "mediumblob")
     private byte[] qrCode;
-    
+
     @ManyToOne
     private Sessao sessao;
-    
+
     @Column
     private String assento;
-    
+
     @Column
     private Double valorIngresso;
-    
+
     @Column
     private boolean avaliacaoDisp;
-    
+
     public Reserva() {
     }
-    
+
     public Reserva(Sessao sessao, String assento) throws CadastroInexistenteException {
         this.sessao = sessao;
         this.assento = assento;
         this.valorIngresso = sessao.getValorIngresso();
         this.avaliacaoDisp = true;
     }
-    
+
     public Reserva(Sessao sessao, String assento, byte[] codigo) throws CadastroInexistenteException {
         this(sessao, assento);
         this.qrCode = codigo;
@@ -85,7 +85,7 @@ public class Reserva implements Serializable, Comparable<Reserva> {
             MatrixToImageWriter.writeToPath(bitMatrix, "PNG", filePath);
             salvarCodigo(urlCodigo);
             return true;
-            
+
         } catch (NumberFormatException e) {
             System.err.println("Erro na conversão para inteiro. Garanta que o 2o argumento seja um número inteiro");
         } catch (WriterException | IOException e) {
@@ -93,14 +93,14 @@ public class Reserva implements Serializable, Comparable<Reserva> {
         } catch (Exception e) {
             System.err.println("Algo deu errado. " + e.toString());
         }
-        
+
         return false;
     }
-    
+
     private void salvarCodigo(String urlCodigo) {
         File file = new File(urlCodigo);
         byte[] bFile = new byte[(int) file.length()];
-        
+
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             fileInputStream.read(bFile);
@@ -110,70 +110,69 @@ public class Reserva implements Serializable, Comparable<Reserva> {
         }
         this.setQrCode(bFile);
     }
-    
+
     public void finalizarReserva() throws CadastroInexistenteException {
-        ReservaController rc = new ReservaController();
-        Reserva busca = this.getId() == null ? rc.buscar(this) : this;
+        Reserva busca = this.getId() == null ? FachadaLocais.getInstance().buscar(this) : this;
         busca.setAvaliacaoDisp(false);
-        rc.atualizar(busca);
+        FachadaLocais.getInstance().atualizar(busca);
     }
 
     //Gets e Sets
     public String getAssento() {
         return this.assento;
     }
-    
+
     public byte[] getQrCode() {
         return qrCode;
     }
-    
+
     public void setQrCode(byte[] qrCode) {
         this.qrCode = qrCode;
     }
-    
+
     public void setAssento(String assento) {
         this.assento = assento;
     }
-    
+
     public Sessao getSessao() {
         return this.sessao;
     }
-    
+
     public void setSessao(Sessao Sessao) {
         this.sessao = Sessao;
     }
-    
+
     public Long getId() {
         return id;
     }
-    
+
     public Double getValorIngresso() {
         return valorIngresso;
     }
-    
+
     public void setValorIngresso(Double valorIngresso) {
         this.valorIngresso = valorIngresso;
     }
-    
+
     public boolean isAvaliacaoDisp() {
         return avaliacaoDisp;
     }
-    
+
     public void setAvaliacaoDisp(boolean avaliacaoDisp) {
         ReservaDAO rd = new ReservaDAO();
         Reserva busca = this.getId() == null ? rd.buscarReserva(this) : this;
         busca.avaliacaoDisp = avaliacaoDisp;
         rd.atualizarAtomico(busca);
     }
-    
+
     @Override
     public String toString() {
         return "Local=" + this.getSessao().getLocal().getNome() + " | Sessão=" + this.getSessao().getNome() + " | Assento=" + assento;
     }
-    
+
     @Override
     public int compareTo(Reserva o) {
         return this.getId().compareTo(o.getId());
     }
-    
+
 }

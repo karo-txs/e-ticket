@@ -1,6 +1,6 @@
 package br.unicap.eticket.model.usuarios;
 
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,7 @@ public class Grupo {
     }
     
     public void adicionarIntegrante(Cliente cliente) throws CadastroInexistenteException{
-        ClienteController clienteC = new ClienteController();
-        Cliente busca = cliente.getId()==null ? clienteC.buscar(cliente) : cliente;
+        Cliente busca = cliente.getId()==null ? FachadaUsuarios.getInstance().buscar(cliente) : cliente;
         
         if(busca!=null){
             grupo.add(busca);
@@ -26,8 +25,7 @@ public class Grupo {
     }
     
     public void removerIntegrante(Cliente cliente) throws CadastroInexistenteException{
-        ClienteController clienteC = new ClienteController();
-        Cliente busca = cliente.getId()==null ? clienteC.buscar(cliente) : cliente;
+        Cliente busca = cliente.getId()==null ? FachadaUsuarios.getInstance().buscar(cliente) : cliente;
         
         if(busca!=null){
           grupo.remove(cliente);

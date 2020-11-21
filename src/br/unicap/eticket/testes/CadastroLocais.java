@@ -1,6 +1,6 @@
 package br.unicap.eticket.testes;
 
-import br.unicap.eticket.controller.usuarios.AdminController;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.auxiliares.Endereco;
@@ -30,12 +30,11 @@ public class CadastroLocais {
         Admin adm4 = new Admin("admMovieMax", "adm@MovieMax.com", "cine123", cine4);
         Admin adm5 = new Admin("admKinoplex", "adm@Kinoplex.com", "cine123", cine5);
 
-        AdminController admC = new AdminController();
-        admC.cadastrar(adm1);
-        admC.cadastrar(adm2);
-        admC.cadastrar(adm3);
-        admC.cadastrar(adm4);
-        admC.cadastrar(adm5);
+        FachadaUsuarios.getInstance().cadastrar(adm1);
+        FachadaUsuarios.getInstance().cadastrar(adm2);
+        FachadaUsuarios.getInstance().cadastrar(adm3);
+        FachadaUsuarios.getInstance().cadastrar(adm4);
+        FachadaUsuarios.getInstance().cadastrar(adm5);
         
         cine1.inserirCapaESalvar("src\\br\\unicap\\eticket\\imagens\\locais\\Cinemark.png");
         
@@ -66,11 +65,11 @@ public class CadastroLocais {
         adm4 = new Admin("admRioMar", "adm@RioMar.com", "teatro123", teatro4);
         adm5 = new Admin("admSantaIsabel", "adm@SantaIsabel.com", "teatro123", teatro5);
         
-        admC.cadastrar(adm1);
-        admC.cadastrar(adm2);
-        admC.cadastrar(adm3);
-        admC.cadastrar(adm4);
-        admC.cadastrar(adm5);
+        FachadaUsuarios.getInstance().cadastrar(adm1);
+        FachadaUsuarios.getInstance().cadastrar(adm2);
+        FachadaUsuarios.getInstance().cadastrar(adm3);
+        FachadaUsuarios.getInstance().cadastrar(adm4);
+        FachadaUsuarios.getInstance().cadastrar(adm5);
         
         teatro1.inserirCapaESalvar("src\\br\\unicap\\eticket\\imagens\\locais\\Barreto Junior.png");
         teatro2.inserirCapaESalvar("src\\br\\unicap\\eticket\\imagens\\locais\\Guararapes.png");

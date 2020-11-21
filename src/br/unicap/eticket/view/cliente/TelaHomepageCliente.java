@@ -1,14 +1,12 @@
 package br.unicap.eticket.view.cliente;
 
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.viewAuxiliares.VetorLocais;
-import br.unicap.eticket.controller.locais.LocalController;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.view.FrameInicio;
 import br.unicap.eticket.view.TelaInicio;
 import br.unicap.eticket.view.jDialogs.JDialogsControl;
 import br.unicap.eticket.view.jDialogs.TelaPopupConfirmar;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -339,14 +337,13 @@ public class TelaHomepageCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_lblMeuPerfilMouseExited
 
     private void mostrarLocais() {//colocar em outro canto
-        LocalController localC = new LocalController();
         VetorLocais locais;
 
-        locais = new VetorLocais(localC.todosCinemas());
+        locais = new VetorLocais(FachadaLocais.getInstance().todosLocais(br.unicap.eticket.model.locais.Cinema.class));
         locais.mostrarLocais(lblCinemasMsg, jpnScrollCinemas, jpnScrollInternoCinema, cliente);
-        locais = new VetorLocais(localC.todosTeatros());
+        locais = new VetorLocais(FachadaLocais.getInstance().todosLocais(br.unicap.eticket.model.locais.Teatro.class));
         locais.mostrarLocais(lblTeatrosMsg, jpnScrollTeatro, jpnScrollInternoTeatro, cliente);
-        locais = new VetorLocais(localC.todosAuditorios());
+        locais = new VetorLocais(FachadaLocais.getInstance().todosLocais(br.unicap.eticket.model.locais.Auditorio.class));
         locais.mostrarLocais(lblAuditorioMsg, jpnScrollAuditorios, jpnScrollInternoAuditorios, cliente);
 
         FrameInicio.getFrame().revalidate();

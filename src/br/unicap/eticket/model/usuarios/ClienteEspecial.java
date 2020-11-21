@@ -1,13 +1,12 @@
 package br.unicap.eticket.model.usuarios;
 
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.locais.LocalController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Endereco;
 import br.unicap.eticket.model.auxiliares.Reserva;
+import br.unicap.eticket.model.factoryMethod.GerenciadorMap;
 import br.unicap.eticket.model.locais.LocalGenerico;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.persistence.Column;
@@ -26,21 +25,29 @@ public class ClienteEspecial extends Cliente {
     @JoinTable(name = "cliente_fidelidades", joinColumns = @JoinColumn(name = "id"))
     @MapKeyColumn(name = "Local")
     @Column(name = "TierCliente")
-    private Map<LocalGenerico, TierCliente> fidelidades = new LinkedHashMap<>();;
+    private Map<LocalGenerico, TierCliente> fidelidades = new LinkedHashMap<>();
 
     public ClienteEspecial() {
+        GerenciadorMap<LocalGenerico, TierCliente> gm = new GerenciadorMap<>();
+        this.fidelidades = gm.criaMap();
     }
 
     public ClienteEspecial(String nome, String nick, String email, String senha) {
         super(nome, nick, email, senha);
+        GerenciadorMap<LocalGenerico, TierCliente> gm = new GerenciadorMap<>();
+        this.fidelidades = gm.criaMap();
     }
 
     public ClienteEspecial(String nome, String email, String senha, int idade, String cpf, String telefone) {
         super(nome, email, senha, idade, cpf, telefone);
+        GerenciadorMap<LocalGenerico, TierCliente> gm = new GerenciadorMap<>();
+        this.fidelidades = gm.criaMap();
     }
 
     public ClienteEspecial(String nome, String nick, String email, String senha, int idade, String cpf, String telefone, Endereco endereco) {
         super(nome, nick, email, senha, idade, cpf, telefone, endereco);
+        GerenciadorMap<LocalGenerico, TierCliente> gm = new GerenciadorMap<>();
+        this.fidelidades = gm.criaMap();
     }
 
     @Override
@@ -48,8 +55,7 @@ public class ClienteEspecial extends Cliente {
         ClienteDAO clienteD = new ClienteDAO();
         ClienteEspecial buscaC = this.getId() == null ? (ClienteEspecial) clienteD.buscarCliente(this) : this;
 
-        ReservaController reservaC = new ReservaController();
-        Reserva buscaR = reserva.getId() == null ? reservaC.buscar(reserva) : reserva;
+        Reserva buscaR = reserva.getId() == null ? FachadaLocais.getInstance().buscar(reserva) : reserva;
         LocalGenerico local = buscaR.getSessao().getLocal();
 
         double valorPago;
@@ -75,16 +81,14 @@ public class ClienteEspecial extends Cliente {
     }
 
     public void criarFidelidade(LocalGenerico local) throws CadastroInexistenteException {
-        LocalController localC = new LocalController();
-        LocalGenerico busca = local.getId() == null ? localC.buscar(local) : local;
+        LocalGenerico busca = local.getId() == null ? FachadaLocais.getInstance().buscarLocal(local) : local;
         this.fidelidades.put(busca, TierCliente.TIER3);
     }
 
     private void subirDeTier(LocalGenerico local) throws CadastroInexistenteException {
-        LocalController localC = new LocalController();
         TierCliente novoTier = null;
         TierCliente tierAtual = this.fidelidades.get(local);
-        LocalGenerico busca = local.getId() == null ? localC.buscar(local) : local;
+        LocalGenerico busca = local.getId() == null ? FachadaLocais.getInstance().buscarLocal(local) : local;
 
         switch (tierAtual) {
             case TIER3:
@@ -115,8 +119,8 @@ public class ClienteEspecial extends Cliente {
             return null;
         }
     }
-    
-    public TierCliente getTier(LocalGenerico local){
+
+    public TierCliente getTier(LocalGenerico local) {
         if (fidelidades.containsKey(local)) {
             return fidelidades.get(local).getTier(fidelidades.get(local).getDesconto());
         } else {

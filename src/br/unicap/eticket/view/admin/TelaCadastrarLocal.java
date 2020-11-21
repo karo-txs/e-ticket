@@ -1,8 +1,8 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.usuarios.AdminController;
 import br.unicap.eticket.controller.auxiliares.Conversor;
-import br.unicap.eticket.controller.locais.LocalController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -259,17 +259,16 @@ public class TelaCadastrarLocal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEntrarMouseClicked
-        AdminController admC = new AdminController();
-        LocalController localC = new LocalController();
+        
         
         Endereco end = new Endereco(fldCEP.getText(), fldUF.getText(), fldCidade.getText(),
                 fldBairro.getText(), fldRua.getText(), fldNum.getText(), fldComplemento.getText());
         try {
-            admC.cadastrar(adm.getNome(), adm.getEmail(), adm.getSenha(), jcbCategoria.getSelectedItem().toString(), fldNomeDoLocal.getText(), end);
+            FachadaUsuarios.getInstance().cadastrar(adm.getNome(), adm.getEmail(), adm.getSenha(), jcbCategoria.getSelectedItem().toString(), fldNomeDoLocal.getText(), end);
             
-            Admin cadastrado = admC.buscar(adm);
+            Admin cadastrado = FachadaUsuarios.getInstance().buscar(adm);
             if (captura.getImagemSelecionada() != null) {
-                localC.inserirCapa(cadastrado.getLocalAdministrado(), captura.getImagemSelecionada());
+                FachadaLocais.getInstance().inserirCapa(cadastrado.getLocalAdministrado(), captura.getImagemSelecionada());
             }
             JDialogsControl.mostrarPopUp("Admin e local Cadastrados", false);
             FrameInicio.getFrame().setContentPane(new TelaInicio());

@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
 import br.unicap.eticket.view.FrameInicio;
@@ -41,10 +41,10 @@ public class TelaHomepageLocalContato extends javax.swing.JPanel {
     }
 
     private void initCliente() {
-        ClienteController cc = new ClienteController();
+        
         this.lblTier.setVisible(false);
         this.lblUsername.setText("@" + cliente.getNickName());
-        String img = cc.retornaImagemTier(cliente, this.local);
+        String img = FachadaUsuarios.getInstance().retornaImagemTier(cliente, this.local);
         if (img != null) {
             lblTier.setVisible(true);
             lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));

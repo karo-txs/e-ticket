@@ -1,7 +1,8 @@
 package br.unicap.eticket.view.cliente;
 
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.auxiliares.Formatador;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.auxiliares.Reserva;
 import br.unicap.eticket.model.usuarios.Cliente;
@@ -31,10 +32,9 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }
 
     private void initReservas(Cliente cliente) {
-        ReservaController rv = new ReservaController();
         List<Reserva> reservas = cliente.getReservas();
-        String[] dados = rv.formataDados(reservas);
-        this.idReservas = rv.listarIDs(reservas);
+        String[] dados = Formatador.formataDadosReservas(reservas);
+        this.idReservas = Formatador.listarIDsReservas(reservas);
         this.lstReservas.setModel(new DefaultComboBoxModel<>(dados));
     }
 
@@ -205,17 +205,16 @@ public class TelaListaDeReservas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtRemoverSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtRemoverSalaMouseClicked
-        ReservaController reservaC = new ReservaController();
-        ClienteController clienteC = new ClienteController();
+        
         int valSelecionado = lstReservas.getSelectedIndex();
 
         if (valSelecionado != -1) {
             Long idSelecionado = this.idReservas[valSelecionado];
-            Reserva reserva = reservaC.buscaPorId(idSelecionado);
+            Reserva reserva = FachadaLocais.getInstance().buscaPorId(idSelecionado);
             TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Confirmar Exclusão?");
             if (telaConf.getConfirmarAcao()) {
                 try {
-                    clienteC.cancelarReserva(cliente, reserva);
+                    FachadaUsuarios.getInstance().cancelarReserva(cliente, reserva);
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeReservas(cliente));
                     FrameInicio.getFrame().revalidate();

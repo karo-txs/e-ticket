@@ -1,9 +1,7 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.locais.LocalGenerico;
@@ -29,19 +27,16 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }
 
     private void initEntretenimentos() {
-        EntretenimentoController entC = new EntretenimentoController();
-
         if (local instanceof Auditorio) {
             jbtCadPalestra.setVisible(true);
         } else {
             jbtCadPalestra.setVisible(false);
         }
-        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(entC.todosEntretenimentosDoLocal(local)));
+        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(FachadaLocais.getInstance().todosEntretenimentosDoLocal(local)));
     }
 
     private void initSalas() {
-        SalaController salaC = new SalaController();
-        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salaC.salasDoLocal(local,false)));
+        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(FachadaLocais.getInstance().salasDoLocal(local,false)));
     }
 
     @SuppressWarnings("unchecked")
@@ -357,10 +352,7 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_jfldHoraActionPerformed
 
     private void jbtCadastrarSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCadastrarSessaoMouseClicked
-        EntretenimentoController entC = new EntretenimentoController();
-        SessaoController sessaoC = new SessaoController();
-
-        if (jcbDia.getSelectedIndex() == 0 || jcbMes.getSelectedIndex() == 0 || jcbAno.getSelectedIndex() == 0) {
+       if (jcbDia.getSelectedIndex() == 0 || jcbMes.getSelectedIndex() == 0 || jcbAno.getSelectedIndex() == 0) {
             JDialogsControl.mostrarPopUp("Data inicial inválida!", true);
         } else {
             Calendar dataInicial
@@ -371,8 +363,8 @@ public class TelaCadastrarSessao extends javax.swing.JPanel {
                             Integer.parseInt(jfldMinutos.getText()));
 
             try {
-                sessaoC.cadastrar(this.local, new Sala(this.local, String.valueOf(jcbSalas.getSelectedItem())), fldNomeSessao.getText(),
-                        dataInicial, entC.buscar(String.valueOf(jcbEntretenimento.getSelectedItem())));
+                FachadaLocais.getInstance().cadastrar(this.local, new Sala(this.local, String.valueOf(jcbSalas.getSelectedItem())), fldNomeSessao.getText(),
+                        dataInicial, FachadaLocais.getInstance().buscarEnt(String.valueOf(jcbEntretenimento.getSelectedItem())));
             } catch (DadosRepetidosException | CadastroInexistenteException ex) {
                 JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }

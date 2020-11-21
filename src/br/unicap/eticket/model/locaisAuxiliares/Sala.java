@@ -1,17 +1,15 @@
 package br.unicap.eticket.model.locaisAuxiliares;
 
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.dao.SalaDAO;
 import br.unicap.eticket.dao.SessaoDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
 import br.unicap.eticket.model.auxiliares.Reserva;
+import br.unicap.eticket.model.factoryMethod.GerenciadorLista;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.usuarios.Cliente;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CollectionTable;
@@ -53,7 +51,7 @@ public class Sala implements Serializable {
     private List<Assento> assentos;
 
     private int fileirasX, fileirasY;
-    
+
     @Column
     private boolean ativa;
 
@@ -61,9 +59,10 @@ public class Sala implements Serializable {
     }
 
     public Sala(String nome) {
+        GerenciadorLista<Assento> gl = new GerenciadorLista<>();
         this.nome = nome;
-        this.assentos = new ArrayList<>();
-        this.ativa=true;
+        this.assentos = gl.criaLista();
+        this.ativa = true;
     }
 
     public Sala(LocalGenerico local, String nome) {
@@ -125,14 +124,12 @@ public class Sala implements Serializable {
     public void alterarNome(String nome) throws CadastroInexistenteException {
         SalaDAO salaD = new SalaDAO();
         SessaoDAO sessaoD = new SessaoDAO();
-        SalaController salaC = new SalaController();
-        SessaoController sessaoC = new SessaoController();
 
-        Sala busca = this.getId() == null ? salaC.buscar(this) : this;
+        Sala busca = this.getId() == null ? FachadaLocais.getInstance().buscar(this) : this;
 
         Sala nova = salaD.buscarSala(busca.getLocal().getId() + "-" + nome);
         if (nova == null) {
-            List<Sessao> sessoesDaSala = sessaoC.sessoesDaSala(busca);
+            List<Sessao> sessoesDaSala = FachadaLocais.getInstance().sessoesDaSala(busca);
             for (Sessao s : sessoesDaSala) {
                 String nomeSessao = s.getNome();
                 s.setNome(busca.getLocal().getId() + "-" + nome + ":" + nomeSessao);
@@ -143,22 +140,20 @@ public class Sala implements Serializable {
             salaD.atualizarAtomico(busca);
         }
     }
-    
+
     /**
      * Desativa uma sala e as suas sessoes
      *
      * @throws CadastroInexistenteException
      */
     public void desativarSala() throws CadastroInexistenteException {
-        SessaoController sessaoC = new SessaoController();
         SalaDAO sd = new SalaDAO();
         this.setAtiva(false);
         sd.atualizarAtomico(this);
-        sessaoC.sessoesDaSala(this).forEach((s) -> {
+        FachadaLocais.getInstance().sessoesDaSala(this).forEach((s) -> {
             s.desativarSessao();
         });
     }
-
 
     /**
      * Reserva um assento
@@ -173,14 +168,13 @@ public class Sala implements Serializable {
     public Reserva reservarAssento(String numCadeira, Sessao sessao, Cliente cliente) throws DadosRepetidosException, CadastroInexistenteException {
         Assento assento = this.buscaAssentoPorNum(numCadeira);
         if (assento != null) {
-            ReservaController rc = new ReservaController();
             Reserva reserva = new Reserva(sessao, numCadeira);
 
             String urlCodigo = "src\\br\\unicap\\eticket\\imagens\\qrcodes\\" + cliente.getNome() + "-QrCode.png";
             reserva.gerarCodigo(cliente.getEmail() + "\\" + sessao.getNome() + "\\" + numCadeira, urlCodigo);
-            rc.cadastrar(reserva);
+            FachadaLocais.getInstance().cadastrar(reserva);
 
-            Reserva reservaCriada = rc.buscar(reserva);
+            Reserva reservaCriada = FachadaLocais.getInstance().buscar(reserva);
             assento.preencherAssento(reservaCriada);
             return reservaCriada;
         } else {
@@ -213,21 +207,17 @@ public class Sala implements Serializable {
      */
     public void esvaziarAssentoDaSessao(Assento a, Sessao sessao) throws CadastroInexistenteException {
         SalaDAO sdao = new SalaDAO();
-        SalaController sd = new SalaController();
-        SessaoController sc = new SessaoController();
-        ReservaController rc = new ReservaController();
-
-        Sala s = sd.buscar(new Sala(this.getLocal(),this.getNome()));
-        Sessao ses = sc.buscar(sessao);
+        Sala s = FachadaLocais.getInstance().buscar(new Sala(this.getLocal(), this.getNome()));
+        Sessao ses = FachadaLocais.getInstance().buscar(sessao);
 
         Assento assento = s.buscaAssentoPorNum(a.getNumeracao());
         if (ses != null && assento != null) {
             Reserva reserva = new Reserva(ses, assento.getNumeracao());
 
-            if (rc.buscar(reserva) != null) {
+            if (FachadaLocais.getInstance().buscar(reserva) != null) {
                 sdao.abrirTransacao();
                 assento.getReservas().remove(reserva);
-                rc.remover(reserva);
+                FachadaLocais.getInstance().remover(reserva);
                 sdao.atualizar(s);
                 sdao.fecharTransacao();
             }
@@ -324,7 +314,7 @@ public class Sala implements Serializable {
     public void setAtiva(boolean ativa) {
         this.ativa = ativa;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;

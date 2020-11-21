@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.usuarios.AdminController;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -435,7 +435,6 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
 
     private void jbtEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarMouseClicked
         if (jbtEditar.getText().equalsIgnoreCase("Salvar")) {
-            AdminController cc = new AdminController();
 
             String cpf = fldCPF.getText();
             if (fldCPF.getText().equals("   .   .   -  ")) {
@@ -448,14 +447,14 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
                     this.adm.getLocalAdministrado());
 
             try {
-                cc.atualizarChave(adm, fldEmail.getText());
+               FachadaUsuarios.getInstance().atualizarChave(adm, fldEmail.getText());
 
                 if (String.valueOf(fldSenhaAntiga.getPassword()).equals(this.adm.getSenha())) {
                     novo.setSenha(String.valueOf(fldSenhaNova.getPassword()));
                 }
-                cc.atualizar(novo);
+                FachadaUsuarios.getInstance().atualizar(novo);
                 JDialogsControl.mostrarPopUp("Atualizado Com Sucesso!", false);
-                this.adm = cc.buscar(adm);
+                this.adm = FachadaUsuarios.getInstance().buscar(adm);
             } catch (CadastroInexistenteException | AtualizacaoMalSucedidaException | DadosInvalidosException ex) {
                 JDialogsControl.mostrarPopUp(ex.getMessage(), true);
             }
@@ -494,8 +493,8 @@ public class TelaMeuPerfilAdmin extends javax.swing.JPanel {
         TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Excluir conta? Não é possível reverter!");
 
         if (telaConf.getConfirmarAcao()) {
-            AdminController admC = new AdminController();
-            admC.remover(adm);
+            
+            FachadaUsuarios.getInstance().remover(adm);
 
             FrameInicio.getFrame().setContentPane(new TelaInicio());
             FrameInicio.getFrame().revalidate();

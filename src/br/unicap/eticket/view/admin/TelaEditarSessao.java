@@ -1,9 +1,7 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.localAuxiliares.EntretenimentoController;
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
 import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
@@ -32,19 +30,17 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     }
 
     private void initEntretenimentos() {
-        EntretenimentoController entC = new EntretenimentoController();
-        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(entC.todosEntretenimentosDoLocal(local)));
+        jcbEntretenimento.setModel(new javax.swing.DefaultComboBoxModel<>(FachadaLocais.getInstance()
+                .todosEntretenimentosDoLocal(local)));
     }
 
     private void initSalas() {
-        SalaController salaC = new SalaController();
-        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salaC.salasDoLocal(local,false)));
+        jcbSalas.setModel(new javax.swing.DefaultComboBoxModel<>(FachadaLocais.getInstance().salasDoLocal(local,false)));
     }
 
     private void initSessao() {
-        SessaoController sessaoC = new SessaoController();
         try {
-            busca = sessaoC.buscar(sessao);
+            busca = FachadaLocais.getInstance().buscar(sessao);
             fldNome.setText(busca.getNome());
             Calendar data = busca.getDataInicial();
             jcbDia.setSelectedItem(String.valueOf(data.get(Calendar.DAY_OF_MONTH)));
@@ -363,9 +359,6 @@ public class TelaEditarSessao extends javax.swing.JPanel {
     }//GEN-LAST:event_jfldHoraActionPerformed
 
     private void jbtEditarSessaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtEditarSessaoMouseClicked
-        EntretenimentoController entC = new EntretenimentoController();
-        SessaoController sessaoC = new SessaoController();
-        
         if (jcbDia.getSelectedIndex() == 0 || jcbMes.getSelectedIndex() == 0 || jcbAno.getSelectedIndex() == 0) {
             JDialogsControl.mostrarPopUp("Data inicial inválida!", true);
         } else {
@@ -378,10 +371,10 @@ public class TelaEditarSessao extends javax.swing.JPanel {
 
             try {
                 Sessao s = new Sessao(this.local, new Sala(this.local, String.valueOf(jcbSalas.getSelectedItem())), this.sessao.getNome(),
-                        dataInicial, entC.buscar(String.valueOf(jcbEntretenimento.getSelectedItem())));
+                        dataInicial, FachadaLocais.getInstance().buscarEnt(String.valueOf(jcbEntretenimento.getSelectedItem())));
 
-                sessaoC.atualizar(s);
-                sessaoC.atualizarChave(s, fldNome.getText());
+                FachadaLocais.getInstance().atualizar(s);
+                FachadaLocais.getInstance().atualizarChave(s, fldNome.getText());
 
                 FrameInicio.getFrame().setContentPane(new TelaListaDeSessoes(local));
                 FrameInicio.getFrame().revalidate();

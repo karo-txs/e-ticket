@@ -1,8 +1,10 @@
 package br.unicap.eticket.model.locaisAuxiliares;
 
 import br.unicap.eticket.model.auxiliares.Reserva;
+import br.unicap.eticket.model.factoryMethod.GerenciadorLista;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -15,8 +17,9 @@ public class Assento implements Serializable {
     }
 
     public Assento(String numeracao) {
+        GerenciadorLista<Long> gl = new GerenciadorLista<>();
         this.numeracao = numeracao;
-        this.idReservas = new ArrayList();
+        this.idReservas = (ArrayList)gl.criaLista();
     }
 
     /**
@@ -31,7 +34,7 @@ public class Assento implements Serializable {
      * Retorna as reservas feitas no assento
      * @return List
      */
-    public ArrayList<Long> getReservas() {
+    public List<Long> getReservas() {
         return idReservas;
     }
 

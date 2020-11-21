@@ -1,6 +1,6 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.localAuxiliares.SalaController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.locaisAuxiliares.Sala;
@@ -21,8 +21,7 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
     }
 
     private void initSalas(LocalGenerico local) {
-        SalaController salaC = new SalaController();
-        lstSalas.setModel(new javax.swing.DefaultComboBoxModel<>(salaC.salasDoLocal(local,true)));
+        lstSalas.setModel(new javax.swing.DefaultComboBoxModel<>(FachadaLocais.getInstance().salasDoLocal(local,true)));
     }
 
     @SuppressWarnings("unchecked")
@@ -292,9 +291,8 @@ public class TelaListaDeSalas extends javax.swing.JPanel {
             TelaPopupConfirmar telaConf = JDialogsControl.mostrarConfirmacao("Deseja Remover?");
             if (telaConf.getConfirmarAcao()) {
                 String[] valSelecionado = lstSalas.getSelectedValue().split(" ");
-                SalaController salaC = new SalaController();
                 try {
-                    salaC.desativar(salaC.buscar(new Sala(this.local, valSelecionado[0]))); 
+                    FachadaLocais.getInstance().desativarSala(FachadaLocais.getInstance().buscar(new Sala(this.local, valSelecionado[0]))); 
                     Thread.sleep(1L);
                     FrameInicio.getFrame().setContentPane(new TelaListaDeSalas(local));
                     FrameInicio.getFrame().revalidate();

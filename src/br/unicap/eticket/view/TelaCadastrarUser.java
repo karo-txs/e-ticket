@@ -1,8 +1,7 @@
 package br.unicap.eticket.view;
 
 import br.unicap.eticket.view.admin.TelaCadastrarLocal;
-import br.unicap.eticket.controller.usuarios.AdminController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
 import br.unicap.eticket.excecoes.DadosRepetidosException;
@@ -119,21 +118,20 @@ public class TelaCadastrarUser extends javax.swing.JPanel {
 
     private void jbtCriarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtCriarContaMouseClicked
 
-        ClienteController clienteC = new ClienteController();
-        AdminController admC = new AdminController();
+        
         Usuario user;
         if (senhaIgual(String.valueOf(fldSenha.getPassword()), String.valueOf(fldSenhaConf.getPassword()))) {
             try {
                 if (!this.isAdmin) {
-                    clienteC.cadastrar(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
-                    Cliente busca = clienteC.buscar(new Cliente(fldEmail.getText(), String.valueOf(fldSenha.getPassword())));
+                    FachadaUsuarios.getInstance().cadastrar(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
+                    Cliente busca = FachadaUsuarios.getInstance().buscar(new Cliente(fldEmail.getText(), String.valueOf(fldSenha.getPassword())));
                     TelaPopupNickname telaConf = JDialogsControl.mostrarNick(busca);
                     if (telaConf.getConfirmarAcao()) {
                         FrameInicio.getFrame().setContentPane(new TelaInicio());
                         FrameInicio.getFrame().revalidate();
                     }
                 } else {
-                    admC.validarDadosAdmin(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
+                    FachadaUsuarios.getInstance().validarDadosAdmin(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
                     user = new Admin(fldNome.getText(), fldEmail.getText(), String.valueOf(fldSenha.getPassword()));
                     FrameInicio.getFrame().setContentPane(new TelaCadastrarLocal((Admin) user));
                     FrameInicio.getFrame().revalidate();

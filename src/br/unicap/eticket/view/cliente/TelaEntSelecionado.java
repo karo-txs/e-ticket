@@ -1,9 +1,10 @@
 package br.unicap.eticket.view.cliente;
 
 import br.unicap.eticket.controller.auxiliares.Conversor;
+import br.unicap.eticket.controller.auxiliares.Formatador;
 import br.unicap.eticket.controller.auxiliares.Gerador;
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.entretenimentos.Entretenimento;
@@ -44,10 +45,10 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     }
 
     private void initCliente() {
-        ClienteController cc = new ClienteController();
+        
         this.lblTier.setVisible(false);
         this.lblUsername.setText("@" + cliente.getNickName());
-        String img = cc.retornaImagemTier(cliente, local);
+        String img = FachadaUsuarios.getInstance().retornaImagemTier(cliente, local);
         if (img != null) {
             lblTier.setVisible(true);
             lblTier.setIcon(new javax.swing.ImageIcon(getClass().getResource(img)));
@@ -55,10 +56,9 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     }
 
     private void initSessoes(Calendar dia) throws CadastroInexistenteException {
-        SessaoController sc = new SessaoController();
-        List<Sessao> sessoes = sc.sessoesPorEntEData(ent, this.local, dia);
-        this.idSessoes = sc.listarIDs(sessoes);
-        lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(sc.formataDadosAbreviados(sessoes)));
+        List<Sessao> sessoes = FachadaLocais.getInstance().sessoesPorEntEData(ent, this.local, dia);
+        this.idSessoes = Formatador.listarIDsSessao(sessoes);
+        lstSessoes.setModel(new javax.swing.DefaultComboBoxModel<>(Formatador.formataDadosAbreviados(sessoes)));
     }
 
     private void initDatas() {
@@ -493,10 +493,10 @@ public class TelaEntSelecionado extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtSelecionarAssentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtSelecionarAssentosMouseClicked
-        SessaoController sessaoC = new SessaoController();
         Long idSelecionado = this.idSessoes[lstSessoes.getSelectedIndex()];
         try {
-            FrameInicio.getFrame().setContentPane(new TelaSelecionarAssentos(cliente, sessaoC.buscarPorId(idSelecionado)));
+            FrameInicio.getFrame().setContentPane(new TelaSelecionarAssentos(cliente, FachadaLocais.getInstance()
+                    .buscarSessaoPorId(idSelecionado)));
         } catch (CadastroInexistenteException ex) {
             Logger.getLogger(TelaEntSelecionado.class.getName()).log(Level.SEVERE, null, ex);
         }

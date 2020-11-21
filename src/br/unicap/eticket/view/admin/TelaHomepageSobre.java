@@ -1,6 +1,7 @@
 package br.unicap.eticket.view.admin;
 
-import br.unicap.eticket.controller.locais.LocalController;
+
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.AtualizacaoMalSucedidaException;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locais.LocalGenerico;
@@ -13,8 +14,6 @@ import br.unicap.eticket.viewAuxiliares.EntradaImagens;
 import br.unicap.eticket.viewAuxiliares.Notas;
 import java.awt.Color;
 import java.awt.Image;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -461,12 +460,11 @@ public class TelaHomepageSobre extends javax.swing.JPanel {
     }//GEN-LAST:event_lblHomePageMouseExited
 
     private void jbtAlterarSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtAlterarSobreMouseClicked
-        LocalController localC = new LocalController();
         if (jbtAlterarSobre.getText().equalsIgnoreCase("Salvar")) {
                 local.setSobre(txtSobre.getText());
                 try {
-                    localC.atualizar(local);
-                    local = localC.buscar(local);
+                    FachadaLocais.getInstance().atualizar(local);
+                    local = FachadaLocais.getInstance().buscarLocal(local);
                 } catch (AtualizacaoMalSucedidaException | CadastroInexistenteException ex) {
                     JDialogsControl.mostrarPopUp(ex.getMessage(), true);
                 }

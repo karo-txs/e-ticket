@@ -1,8 +1,8 @@
 package br.unicap.eticket.model.usuarios;
 
 import br.unicap.eticket.controller.auxiliares.ValidaDados;
-import br.unicap.eticket.controller.localAuxiliares.ReservaController;
-import br.unicap.eticket.controller.usuarios.ClienteController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
+import br.unicap.eticket.controller.usuarios.FachadaUsuarios;
 import br.unicap.eticket.dao.ClienteDAO;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.excecoes.DadosInvalidosException;
@@ -14,6 +14,7 @@ import br.unicap.eticket.model.locaisAuxiliares.Sala;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import br.unicap.eticket.model.locais.LocalGenerico;
 import br.unicap.eticket.model.entretenimentos.Entretenimento;
+import br.unicap.eticket.model.factoryMethod.GerenciadorLista;
 import br.unicap.eticket.model.usuarios.financeiro.DadosFinanceirosCliente;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,24 +53,28 @@ public class Cliente extends Usuario {
 
     public Cliente(String email, String senha) {
         super(email, senha);
-        this.reservas = new ArrayList<>();
+        GerenciadorLista<Reserva> gl = new GerenciadorLista<>();
+        this.reservas = gl.criaLista();
     }
 
     public Cliente(String nome, String nick, String email, String senha) {
         super(nome, email, senha);
         this.nickName = nick;
-        this.reservas = new ArrayList<>();
+        GerenciadorLista<Reserva> gl = new GerenciadorLista<>();
+        this.reservas = gl.criaLista();
     }
 
     public Cliente(String nome, String email, String senha, int idade, String cpf, String telefone) {
         super(nome, email, senha, idade, cpf, telefone);
-        this.reservas = new ArrayList<>();
+        GerenciadorLista<Reserva> gl = new GerenciadorLista<>();
+        this.reservas = gl.criaLista();
     }
 
     public Cliente(String nome, String nick, String email, String senha, int idade, String cpf, String telefone, Endereco endereco) {
         super(nome, email, senha, idade, cpf, telefone, endereco);
         this.nickName = nick;
-        this.reservas = new ArrayList<>();
+        GerenciadorLista<Reserva> gl = new GerenciadorLista<>();
+        this.reservas = gl.criaLista();
     }
 
     /**
@@ -119,10 +124,8 @@ public class Cliente extends Usuario {
      * @throws CadastroInexistenteException
      */
     public double pagarReserva(Reserva reserva) throws CadastroInexistenteException {
-        ClienteController clienteC = new ClienteController();
-        ReservaController reservaC = new ReservaController();
-        Cliente busca = this.getId() == null ? clienteC.buscar(this) : this;
-        Reserva buscaR = reservaC.buscar(reserva);
+        Cliente busca = this.getId() == null ? FachadaUsuarios.getInstance().buscar(this) : this;
+        Reserva buscaR = FachadaLocais.getInstance().buscar(reserva);
 
         busca.trasformarEmClienteEspecial(buscaR.getSessao().getLocal());
         return buscaR.getValorIngresso();
@@ -156,7 +159,6 @@ public class Cliente extends Usuario {
     private void trasformarEmClienteEspecial(LocalGenerico local) throws CadastroInexistenteException {
         if (this.qtdeTickets(local) == TierCliente.TIER3.getQtdeTickets()) {
             ClienteDAO clienteD = new ClienteDAO();
-            ClienteController clienteC = new ClienteController();
 
             ClienteEspecial e = new ClienteEspecial(this.getNome(), this.nickName, this.getEmail(),
                     this.getSenha(), this.getIdade(), this.getCpf(), this.getTelefone(), this.getEndereco());
@@ -169,10 +171,10 @@ public class Cliente extends Usuario {
 
             clienteD.incluirAtomico(e);
 
-            ClienteEspecial buscaE = (ClienteEspecial) clienteC.buscar(e);
-            for (Reserva r : this.reservas) {
+            ClienteEspecial buscaE = (ClienteEspecial) FachadaUsuarios.getInstance().buscar(e);
+            this.reservas.forEach((r) -> {
                 buscaE.getReservas().add(r);
-            }
+            });
             clienteD.atualizarAtomico(buscaE);
         }
     }
@@ -212,9 +214,8 @@ public class Cliente extends Usuario {
      * @throws CadastroInexistenteException
      */
     public void cancelarReserva(Reserva r) throws CadastroInexistenteException {
-        ReservaController rc = new ReservaController();
         ClienteDAO dao = new ClienteDAO();
-        Reserva reserva = rc.buscar(r);
+        Reserva reserva = FachadaLocais.getInstance().buscar(r);
 
         dao.abrirTransacao();
         Cliente c = this.getId() == null ? dao.buscarCliente(this) : this;
@@ -244,8 +245,7 @@ public class Cliente extends Usuario {
      * @throws CadastroInexistenteException
      */
     public List<Reserva> listaReservas() throws CadastroInexistenteException {
-        ClienteController cc = new ClienteController();
-        Cliente c = this.getId() == null ? cc.buscar(this) : this;
+        Cliente c = this.getId() == null ? FachadaUsuarios.getInstance().buscar(this) : this;
         return c.getReservas();
     }
 

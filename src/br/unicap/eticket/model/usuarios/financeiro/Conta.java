@@ -1,9 +1,10 @@
 package br.unicap.eticket.model.usuarios.financeiro;
 
+import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Conta {
+public class Conta implements Serializable {
     private String titular;
     private String numBanco;
     private String numeracaoConta;

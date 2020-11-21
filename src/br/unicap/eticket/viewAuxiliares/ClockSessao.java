@@ -1,6 +1,6 @@
 package br.unicap.eticket.viewAuxiliares;
 
-import br.unicap.eticket.controller.localAuxiliares.SessaoController;
+import br.unicap.eticket.controller.localAuxiliares.FachadaLocais;
 import br.unicap.eticket.excecoes.CadastroInexistenteException;
 import br.unicap.eticket.model.locaisAuxiliares.Sessao;
 import java.util.Calendar;
@@ -16,8 +16,7 @@ public class ClockSessao {
             new Thread() {
                 @Override
                 public void run() {
-                    SessaoController sc = new SessaoController();
-                    List<Sessao> sessoes = sc.sessoesPassadas(getDateTimeC());
+                    List<Sessao> sessoes = FachadaLocais.getInstance().sessoesPassadas(getDateTimeC());
                     sessoes.stream().filter((s) -> (s.isAtiva())).forEachOrdered((s) -> {
                         try {
                             s.desativarSessao();
