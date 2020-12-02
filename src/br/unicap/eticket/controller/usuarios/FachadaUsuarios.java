@@ -32,7 +32,7 @@ public class FachadaUsuarios {
         this.admC = new AdminController();
     }
 
-    public static FachadaUsuarios getInstance() {
+    public static synchronized FachadaUsuarios getInstance() {
         if (instance != null) {
             return instance;
         } else {

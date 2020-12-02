@@ -37,7 +37,7 @@ public class FachadaLocais {
         this.evtC = new EventoController();
     }
 
-    public static FachadaLocais getInstance() {
+    public static synchronized FachadaLocais getInstance() {
         if (instance != null) {
             return instance;
         } else {
